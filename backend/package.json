@@ -12,8 +12,18 @@
   "dependencies": {
     "@fastify/cors": "^11.1.0",
     "@fastify/jwt": "^10.0.0",
-    "@fastify/postgres": "^6.0.2",
+    "@fastify/mysql": "^5.0.2",
+    "@fastify/swagger": "^9.6.1",
+    "@fastify/swagger-ui": "^5.2.3",
     "bcrypt": "^6.0.0",
-    "fastify": "^5.6.2"
+    "dotenv": "^17.2.3",
+    "fastify": "^5.6.2",
+    "mysql2": "^3.15.3"
+  },
+  "devDependencies": {
+    "@types/mysql": "^2.15.27",
+    "@types/node": "^24.10.1",
+    "@types/pg": "^8.15.6",
+    "typescript": "^5.9.3"
   }
 }
