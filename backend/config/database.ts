@@ -10,14 +10,14 @@ async function databaseConnector(
     options: FastifyPluginOptions
 ): Promise<void> {
     await fastify.register(fastifyMysql, {
+        promise: true, // ← IMPORTANT: Enable promise support
         connectionString: `mysql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
     });
 
     fastify.addHook('onReady', async () => {
         try {
-            const connection = await fastify.mysql.getConnection();
+            await fastify.mysql.query('SELECT 1');
             console.log('✅ Database connected successfully');
-            connection.release();
         } catch (err) {
             console.error('❌ Database connection error:', err);
             process.exit(1);
