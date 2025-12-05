@@ -5,6 +5,7 @@ import cors from '@fastify/cors';
 import swagger from '@fastify/swagger';
 import swaggerUI from '@fastify/swagger-ui';
 import databaseConnector from './config/database';
+import routes from './routes';
 
 dotenv.config();
 
@@ -39,14 +40,7 @@ fastify.register(swaggerUI, {
 });
 
 fastify.register(databaseConnector);
-
-fastify.get('/', async (request, reply) => {
-    return { message: 'Reflect Journal API is running!' };
-});
-
-fastify.get('/health', async (request, reply) => {
-    return { status: 'ok', timestamp: new Date().toISOString() };
-});
+fastify.register(routes);
 
 const start = async (): Promise<void> => {
     try {
