@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { prisma } from '../prisma';
+import { prisma } from '../prisma/prisma';
 
 export default async function questionsRoutes(fastify: FastifyInstance) {
     fastify.get('/questions', async (request, reply) => {
