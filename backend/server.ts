@@ -6,6 +6,7 @@ import swagger from '@fastify/swagger';
 import swaggerUI from '@fastify/swagger-ui';
 import databaseConnector from './config/database';
 import routes from './routes';
+import {prisma} from "./prisma";
 
 dotenv.config();
 
@@ -39,7 +40,7 @@ fastify.register(swaggerUI, {
     },
 });
 
-fastify.register(databaseConnector);
+// fastify.register(databaseConnector);
 fastify.register(routes);
 
 const start = async (): Promise<void> => {
@@ -55,3 +56,8 @@ const start = async (): Promise<void> => {
 };
 
 start();
+
+process.on('SIGINT', async () => {
+    await prisma.$disconnect();
+    process.exit(0);
+});
