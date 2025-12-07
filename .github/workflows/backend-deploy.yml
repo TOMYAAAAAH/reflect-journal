@@ -36,5 +36,5 @@ jobs:
           username: ${{ secrets.FTP_BACK_USERNAME }}
           password: ${{ secrets.FTP_BACK_PASSWORD }}
           local-dir: ./deploy/api/
-          server-dir: /backend/
+          server-dir: /
           skip-identical: true
