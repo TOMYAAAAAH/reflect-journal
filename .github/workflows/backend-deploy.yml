@@ -22,12 +22,15 @@ jobs:
         working-directory: ./backend
         run: npm ci
 
-      - name: Create deployment package
+      - name: Build backend (TS → JS)
+        working-directory: ./backend
+        run: npm run build   # assumes "build": "tsc" in package.json
+
+      - name: Prepare deploy folder
         run: |
           mkdir -p deploy/api
-          cp -r backend/* deploy/api/
-          rm -rf deploy/api/node_modules
-          cd deploy/api && npm ci --production
+          cp -r backend/dist deploy/api/
+          cp backend/package.json backend/package-lock.json deploy/api/
 
       - name: Deploy backend via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
