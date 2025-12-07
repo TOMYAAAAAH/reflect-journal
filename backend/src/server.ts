@@ -4,9 +4,7 @@ import dotenv from 'dotenv';
 import cors from '@fastify/cors';
 import swagger from '@fastify/swagger';
 import swaggerUI from '@fastify/swagger-ui';
-import databaseConnector from './config/database';
 import routes from './routes';
-import {prisma} from "./prisma/prisma";
 
 dotenv.config();
 
@@ -40,7 +38,6 @@ fastify.register(swaggerUI, {
     },
 });
 
-// fastify.register(databaseConnector);
 fastify.register(routes);
 
 const start = async (): Promise<void> => {

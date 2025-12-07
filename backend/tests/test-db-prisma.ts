@@ -1,4 +1,4 @@
-import { prisma } from '../prisma/prisma';
+import { prisma } from '../src/prisma/prisma';
 
 async function test() {
     try {
