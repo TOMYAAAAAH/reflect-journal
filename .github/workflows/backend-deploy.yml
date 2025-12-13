@@ -29,6 +29,11 @@ jobs:
         working-directory: ./backend
         run: npm run build
 
+      - name: List compiled artefacts (debug)
+        run: |
+          echo "=== backend/dist contents ==="
+          ls -Rla backend/dist
+
       - name: Prepare deploy folder
         run: |
           mkdir -p staging/backend
