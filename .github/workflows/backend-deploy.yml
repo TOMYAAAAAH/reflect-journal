@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'backend/**'
-      - '.github/workflows/**'
+      - '.github/workflows/backend-deploy.yml'
   workflow_dispatch:
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
         run: |
           mkdir -p staging/backend/src
           cp -R backend/dist/* staging/backend/src/
-          cp backend/package.json  staging/backend/
+          cp backend/package.json staging/backend/
           cp backend/package-lock.json staging/backend/
 
 
@@ -49,4 +49,4 @@ jobs:
           skip-identical: true
           deleteRemote: true
           exclude: |
-            dist              
+            //dist              
