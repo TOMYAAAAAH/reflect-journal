@@ -32,9 +32,10 @@ jobs:
 
       - name: Prepare deploy folder
         run: |
-          mkdir -p staging/backend
-          cp -r backend/* staging/backend/
-          rm -r staging/backend/node_modules
+          mkdir -p staging/backend/src
+          cp -R backend/dist/* staging/backend/src/
+          cp backend/package.json staging/backend/
+          cp backend/package-lock.json staging/backend/
 
       - name: Deploy backend via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -44,4 +45,3 @@ jobs:
           password: ${{ secrets.FTP_BACK_PASSWORD }}
           local-dir: ./staging/backend/
           server-dir: /
-          skip-identical: true
