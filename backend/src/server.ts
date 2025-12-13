@@ -24,6 +24,7 @@ fastify.register(swagger, {
             version: '1.0',
         },
         host: 'localhost:3000',
+        basePath: '/v1',
         schemes: ['http'],
         consumes: ['application/json'],
         produces: ['application/json'],
@@ -38,7 +39,7 @@ fastify.register(swaggerUI, {
     },
 });
 
-fastify.register(routes);
+fastify.register(routes, { prefix: '/v1' });
 
 const start = async (): Promise<void> => {
     try {
