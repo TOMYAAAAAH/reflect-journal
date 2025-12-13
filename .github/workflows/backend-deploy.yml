@@ -37,7 +37,7 @@ jobs:
       - name: Prepare deploy folder
         run: |
           mkdir -p staging/backend
-          cp backend/dist/src/server.js staging/backend/server.js
+          cp backend/dist/server.js staging/backend/server.js
           cp backend/package.json  staging/backend/
           cp backend/package-lock.json staging/backend/
 
