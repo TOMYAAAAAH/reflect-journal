@@ -31,9 +31,15 @@ jobs:
 
       - name: Prepare deploy folder
         run: |
-          mkdir -p deploy/api
-          cp backend/dist/src/server.js deploy/api/
-          cp backend/package.json backend/package-lock.json deploy/api/
+          mkdir -p staging/backend
+          cp backend/dist/src/server.js staging/backend/server.js
+          cp backend/package.json  staging/backend/
+          cp backend/package-lock.json staging/backend/
+
+      - name: Show staging contents
+        run: |
+          echo "=== Staging folder structure ==="
+          ls -Rla staging
 
       - name: Deploy backend via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -41,6 +47,6 @@ jobs:
           server: ${{ secrets.FTP_BACK_HOST }}
           username: ${{ secrets.FTP_BACK_USERNAME }}
           password: ${{ secrets.FTP_BACK_PASSWORD }}
-          local-dir: ./deploy/api/
+          local-dir: ./staging/backend/
           server-dir: /
           skip-identical: true
