@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'backend/**'
 
 jobs:
   deploy-backend:
@@ -24,12 +26,12 @@ jobs:
 
       - name: Build backend (TS → JS)
         working-directory: ./backend
-        run: npm run build   # assumes "build": "tsc" in package.json
+        run: npm run build
 
       - name: Prepare deploy folder
         run: |
           mkdir -p deploy/api
-          cp -r backend/dist deploy/api/
+          cp backend/dist/server.js deploy/api/
           cp backend/package.json backend/package-lock.json deploy/api/
 
       - name: Deploy backend via FTP
