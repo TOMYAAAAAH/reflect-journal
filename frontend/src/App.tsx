@@ -1,15 +1,11 @@
 import './App.css'
 import {useQuery} from "@tanstack/react-query";
 import {api} from "./api/client.ts";
+import Today from "./pages/Today.tsx";
 
 
 function App() {
 
-
-    const { data: questionData, isLoading: questionLoading, error: questionError } = useQuery({
-        queryKey: ['todayQuestion'],
-        queryFn: () => api('/questions')
-    });
 
     const { data: indexData, isLoading: indexLoading, error: indexError } = useQuery({
         queryKey: ['index'],
@@ -19,15 +15,12 @@ function App() {
 
   return (
     <>
+
+        <Today/>
+
+        <hr/>
       <h1>Reflect journal</h1>
-        {questionLoading && <p>Loading...</p>}
-        {questionError && <p>Error loading question</p>}
-        {questionData && questionData.questions.length > 0 && (
-            <div>
-                <h2>Today's Question:</h2>
-                <p>{questionData.questions[0].question_text}</p>
-            </div>
-        )}
+
 
         <br/>
         {indexLoading && <p>Loading...</p>}
