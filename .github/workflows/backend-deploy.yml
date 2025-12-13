@@ -29,6 +29,14 @@ jobs:
         working-directory: ./backend
         run: npm run build
 
+      - name: Prepare deploy folder
+        run: |
+          mkdir -p staging/backend
+          cp -R backend/dist/* staging/backend/          
+          cp backend/package.json  staging/backend/
+          cp backend/package-lock.json staging/backend/
+
+
       - name: Deploy backend via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -36,5 +44,5 @@ jobs:
           username: ${{ secrets.FTP_BACK_USERNAME }}
           password: ${{ secrets.FTP_BACK_PASSWORD }}
           local-dir: ./backend/dist/
-          server-dir: /src/
+          server-dir: /
           skip-identical: true
