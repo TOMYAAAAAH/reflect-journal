@@ -32,7 +32,7 @@ jobs:
       - name: Prepare deploy folder
         run: |
           mkdir -p deploy/api
-          cp backend/dist/server.js deploy/api/
+          cp backend/dist/src/server.js deploy/api/
           cp backend/package.json backend/package-lock.json deploy/api/
 
       - name: Deploy backend via FTP
