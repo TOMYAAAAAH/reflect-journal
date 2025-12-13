@@ -47,3 +47,6 @@ jobs:
           local-dir: ./staging/backend/
           server-dir: /
           skip-identical: true
+          deleteRemote: true
+          exclude: |
+            dist              
