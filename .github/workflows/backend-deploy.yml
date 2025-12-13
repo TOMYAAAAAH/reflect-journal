@@ -24,14 +24,14 @@ jobs:
         working-directory: ./backend
         run: npm ci
 
-      - name: Build backend (TS → JS)
+      - name: Build backend (TS -> JS)
         working-directory: ./backend
         run: npm run build
 
       - name: Prepare deploy folder
         run: |
           mkdir -p deploy/api
-          cp backend/dist/server.js deploy/api/
+          cp backend/dist/src/server.js deploy/api/
           cp backend/package.json backend/package-lock.json deploy/api/
 
       - name: Deploy backend via FTP
