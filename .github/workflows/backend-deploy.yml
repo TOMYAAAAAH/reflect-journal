@@ -29,29 +29,12 @@ jobs:
         working-directory: ./backend
         run: npm run build
 
-      - name: List compiled artefacts (debug)
-        run: |
-          echo "=== backend/dist contents ==="
-          ls -Rla backend/dist
-
-      - name: Prepare deploy folder
-        run: |
-          mkdir -p staging/backend
-          cp -R backend/dist/* staging/backend/server.js
-          cp backend/package.json  staging/backend/
-          cp backend/package-lock.json staging/backend/
-
-      - name: Show staging contents
-        run: |
-          echo "=== Staging folder structure ==="
-          ls -Rla staging
-
       - name: Deploy backend via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_BACK_HOST }}
           username: ${{ secrets.FTP_BACK_USERNAME }}
           password: ${{ secrets.FTP_BACK_PASSWORD }}
-          local-dir: ./staging/backend/
-          server-dir: /
+          local-dir: ./backend/dist/
+          server-dir: /src/
           skip-identical: true
