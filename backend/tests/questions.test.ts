@@ -1,33 +1,86 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest'
+import {describe, it, expect, beforeAll, afterAll} from 'vitest'
 import request from 'supertest'
-import { FastifyInstance } from "fastify";
-import { buildApp } from '../src/server';
+import {FastifyInstance} from "fastify";
+import {buildApp} from '../src/server';
 
 let app: FastifyInstance;
 
-describe('GET /v1/questions/:id', () => {
+beforeAll(async () => {
+    app = buildApp();
+    await app.ready();
+});
+afterAll(async () => {
+    await app.close();
+});
 
-    beforeAll(async () => {
-        app = buildApp();
-        await app.ready();
-    });
-    afterAll(async () => {
-        await app.close();
-    });
+describe('GET /questions/:id', () => {
 
-    it('returns 400 for invalid id', async () => {
+    it('✖️ 400 invalid id type', async () => {
         const res = await request(app.server).get('/v1/questions/abc')
         expect(res.statusCode).toBe(400)
     })
 
-    it('returns 404 if not found', async () => {
+    it('✖️ 404 no id correspond', async () => {
         const res = await request(app.server).get('/v1/questions/99999')
         expect(res.statusCode).toBe(404)
     })
-
-    it('returns 200 if valid', async () => {
-        // Assuming ID 20 exists in your test database (or a mock is used)
+    it('✔️ 200 id matches', async () => {
         const res = await request(app.server).get('/v1/questions/20')
         expect(res.statusCode).toBe(200)
+        expect(res.body.question.id).toBe(20)
+    })
+})
+
+
+describe('GET /questions/date/:month/:day', () => {
+
+    it('✖️ 400 invalid date type', async () => {
+        const res = await request(app.server).get('/v1/questions/date/ab/5')
+        expect(res.statusCode).toBe(400)
+    })
+
+    it('✖️ 404 no date correspond', async () => {
+        const res = await request(app.server).get('/v1/questions/date/13/32')
+        expect(res.statusCode).toBe(404)
+    })
+
+    it('✔️ 200 date matches', async () => {
+        const res = await request(app.server).get('/v1/questions/date/1/1')
+        expect(res.statusCode).toBe(200)
+        expect(res.body.question.month).toBe(1)
+        expect(res.body.question.day).toBe(1)
+    })
+})
+
+describe('GET /questions/today', () => {
+
+    const today = new Date();
+    const todayDay = today.getDate();
+    const todayMonth = today.getMonth() + 1;
+
+    it('✔️ 200 today date matches', async () => {
+        const res = await request(app.server).get('/v1/questions/today')
+        expect(res.statusCode).toBe(200)
+        expect(res.body.question.month).toBe(todayMonth)
+        expect(res.body.question.day).toBe(todayDay)
+    })
+})
+
+describe('playlist handling (depends on today)', () => {
+
+    it('✖️ 404 no playlist_id correspond', async () => {
+        const res = await request(app.server).get('/v1/questions/today?playlist_id=99999')
+        expect(res.statusCode).toBe(404)
+    })
+
+    it('✖️ 400 invalid playlist_id', async () => {
+        const res = await request(app.server).get('/v1/questions/today?playlist_id=abc')
+        expect(res.statusCode).toBe(400)
+    })
+
+    it('✔️ 200 playlist_id matches', async () => {
+        const res = await request(app.server).get('/v1/questions/today?playlist_id=1')
+        expect(res.statusCode).toBe(200)
+        expect(res.body.question.playlist_id).toBe(1)
     })
 })
