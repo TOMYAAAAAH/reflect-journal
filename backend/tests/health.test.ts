@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import request from 'supertest'
 import { FastifyInstance } from "fastify";
-import { buildApp } from '../src/server';
+import { buildApp } from '../src/app';
 
 let app: FastifyInstance;
 
