@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "server.ts",
   "scripts": {
+    "test": "vitest",
     "build": "tsc",
     "dev": "npx ts-node src/server.ts",
     "start": "npx ts-node src/server.ts"
@@ -29,6 +30,8 @@
     "@types/node": "^24.10.1",
     "@types/pg": "^8.15.6",
     "prisma": "^7.1.0",
-    "typescript": "^5.9.3"
+    "supertest": "^7.1.4",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.15"
   }
 }

@@ -1,0 +1,80 @@
+month,day,question,playlist_id
+1,1,"Quelle est votre mission dans la vie ?",1
+1,2,"Les gens peuvent-ils évoluer ?",1
+1,3,"Que lisez-vous en ce moment ?",1
+1,4,"Le meilleur moment de cette journée ?",1
+1,5,"Dans quel restaurant êtes-vous allé dernièrement ?",1
+1,6,"La journée a-t-elle été difficile ? Pourquoi ?",1
+1,7,"Vous avez de la chance... Pourquoi ou pourquoi pas ?",1
+1,8,"La chanson qui tourne en boucle dans votre tête ?",1
+1,9,"Une journée ordinaire ? Pourquoi ou pourquoi pas ?",1
+1,10,"Quelque chose qui vous a marqué aujourd'hui ?",1
+1,11,"Aujourd'hui, qu'avez vous perdu ?",1
+1,12,"Votre accessoire préféré ?",1
+1,13,"La destination idéale de votre prochain voyage ?",1
+1,14,"Plutôt maître ou disciple ?",1
+1,15,"Comment était le déjeuner aujourd'hui ?",1
+1,16,"Devez-vous de l'argent à quelqu'un ? Quelqu'un vous en doit-il ?",1
+1,17,"La plus vieille chose que vous portez aujourd'hui ?",1
+1,18,"En quoi la journée a-t-elle été douce ?",1
+1,19,"Trois aliments que vous avez mangés aujourd'hui ?",1
+1,20,"Une rancœur persistante ? À quel propos ?",1
+1,21,"Qu'attendez-vous avez impatience ?",1
+1,22,"Vous cherchez plutôt la sécurité ou l'aventure ?",1
+1,23,"Besoin d'une petite pause ? Qu'est-ce qui vous épuise",1
+1,24,"Si vous deviez créer votre propre entreprise, quel serait son objet ?",1
+1,25,"Qu'est ce qui fait que vous êtes vous ?",1
+1,26,"De quoi auriez-vous le plus besoin ?",1
+1,27,"Le mouvement artistique qui vous décrirait le mieux à ce jour ? Surréalisme ? Modernisme ? Dadaïsme ?",1
+1,28,"Comment décririez-vous votre ""chez vous"" ?",1
+1,29,"La dernière émission télé que vous ayez regardé ?",1
+1,30,"Que voudriez-vous oublier ?",1
+1,31,"Qui voudriez-vous être ?",1
+2,1,"Votre résolution pour demain ?",1
+2,2,"Avec qui vivez-vous ?",1
+2,3,"Un petit coup de mou ? Grand comment ? Et pourquoi ?",1
+2,4,"Quel temps fait-il ?",1
+2,5,"Le morceau que vous écoutez constamment ?",1
+2,6,"À la recherche de la plénitude ou de l'exaltation ?",1
+2,7,"Trois choses à acheter ?",1
+2,8,"Amoureux ?",1
+2,9,"À quelle heure vous êtes-vous endormi ?",1
+2,10,"Si cette journée était un animal, quel serait-il ?",1
+2,11,"Comment êtes-vous allé travaillé aujourd'hui ?",1
+2,12,"Aujourd'hui qu'est-ce qui vous empêche le plus d'avancer ?",1
+2,13,"La question que vous adorez poser ?",1
+2,14,"Avez-vous embrassé quelqu'un aujourd'hui ?",1
+2,15,"Quel remède pour un cœur brisé ?",1
+2,16,"Le dernier spectacle auquel vous ayez assisté ?",1
+2,17,"Si vous pouviez changer quelque chose à cette journée, ce serait...",1
+2,18,"La chose la plus chère que vous portez en ce moment ?",1
+2,19,"La personne la plus folle de votre entourage ?",1
+2,20,"De quel mot avez-vous abusé aujourd'hui ?",1
+2,21,"Le mot tendance du moment ?",1
+2,22,"L'émotion persistante de ce jour ?",1
+2,23,"L'achat le moins avouable de votre relevé bancaire ?",1
+2,24,"Qu'avez-vous de trop ?",1
+2,25,"Le dernier rêve dont vous vous souvenez ?",1
+2,26,"Une chose dont vous ne pouvez pas vous passer ?",1
+2,27,"Vous préférez les orignaux ou les remix ? Pourquoi ?",1
+2,28,"Un peu malade dernièrement ?",1
+2,29,"Tiens, une année bissextile... Qu'avez-vous fait de cette journée supplémentaire ?",1
+3,1,"En quoi cette journée était perfectible ?",1
+12,14,"En quoi êtes-vous remarquable ?",1
+12,15,"Modération ou excès ?",1
+12,16,"Un truc irrésistible ?",1
+12,17,"Si vous deviez déménager pour une nouvelle ville, où iriez-vous ?",1
+12,18,"De quoi aimez-vous parler ?",1
+12,19,"Si vous pouviez changer une chose à cette journée, quelle serait-elle ?",1
+12,20,"Des vacances de rêve ?",1
+12,21,"Si vous pouviez exceller dans un domaine, lequel choisiriez-vous ?",1
+12,22,"Une nouvelle rencontre récemment ? Qui donc ?",1
+12,23,"Vos céréales préférées ?",1
+12,24,"Une évolution récente ?",1
+12,25,"Cinq mots pour décrire la journée ?",1
+12,26,"Êtes-vous détendu aujourd'hui ?",1
+12,27,"Votre dernière expérience de paix intérieure ?",1
+12,28,"Rester sous la couette ou partir à l'aventure ?",1
+12,29,"Vos trois vœux prioritaires ?",1
+12,30,"Ce que vous avez mangé de remarquable au cours de la semaine passée ?",1
+12,31,"Le meilleur souvenir de cette année ?",1

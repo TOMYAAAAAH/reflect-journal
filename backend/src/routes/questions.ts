@@ -2,17 +2,29 @@ import { FastifyInstance } from 'fastify';
 import { prisma } from '../prisma/prisma';
 
 export default async function questionsRoutes(fastify: FastifyInstance) {
-    fastify.get('/questions', async (request, reply) => {
+    fastify.get('/questions/:id', async (request, reply) => {
 
+        const { id } = request.params as { id: string }
+        if (!Number.isInteger(Number(id))) {
+            return reply.status(400).send({ error: 'Invalid question ID' });
+        }
 
         try {
-            // Fetch all questions (or add filters if you want)
-            const questions = await prisma.questions.findMany();
+            const question = await prisma.questions.findUnique({
+                where:{
+                    id: Number(id)
+                }
+            });
 
-            return { questions };
+            if (!question) {
+                return reply.status(404).send({ error: 'Question not found' });
+            }
+
+            return { question };
+
         } catch (err) {
             console.error(err);
-            return reply.status(500).send({ error: 'Failed to fetch questions' });
+            return reply.status(500).send({ error: 'Failed to fetch question' });
         }
 
     });
