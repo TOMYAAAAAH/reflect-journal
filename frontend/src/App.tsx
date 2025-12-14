@@ -7,32 +7,27 @@ import Today from "./pages/Today.tsx";
 function App() {
 
 
-    const { data: indexData, isLoading: indexLoading, error: indexError } = useQuery({
-        queryKey: ['index'],
-        queryFn: () => api('/')
+    const {data: indexData, isLoading: indexLoading, error: indexError} = useQuery({
+        queryKey: ['health'],
+        queryFn: () => api('/health')
     });
 
 
-  return (
-    <>
+    return (
+        <>
 
-        <Today/>
+            <Today/>
 
-        <hr/>
-      <h1>Reflect journal</h1>
-
-
-        <br/>
-        {indexLoading && <p>Loading...</p>}
-        {indexError && <p>Error loading index</p>}
-        {indexData && (
-            <div>
-                <h2>Index</h2>
-                <p>{indexData.message}</p>
-            </div>
-        )}
-    </>
-  )
+            <hr/>
+            <p>Health :
+                {indexLoading && <p>Loading...</p>}
+                {indexError && <p>Error loading index</p>}
+                {indexData && (
+                    indexData.message
+                )}
+            </p>
+        </>
+    )
 }
 
 export default App
