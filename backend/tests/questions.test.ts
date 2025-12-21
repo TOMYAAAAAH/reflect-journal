@@ -1,7 +1,7 @@
 import {describe, it, expect, beforeAll, afterAll} from 'vitest'
 import request from 'supertest'
 import {FastifyInstance} from "fastify";
-import {buildApp} from '../src/server';
+import {buildApp} from '../src/app';
 
 let app: FastifyInstance;
 
@@ -74,8 +74,12 @@ describe('playlist handling (depends on today)', () => {
     })
 
     it('✖️ 400 invalid playlist_id', async () => {
-        const res = await request(app.server).get('/v1/questions/today?playlist_id=abc')
-        expect(res.statusCode).toBe(400)
+        const res1 = await request(app.server).get('/v1/questions/today?playlist_id=abc')
+        const res2 = await request(app.server).get('/v1/questions/20?playlist_id=abc')
+        const res3 = await request(app.server).get('/v1/questions/date/1/1?playlist_id=abc')
+        expect(res1.statusCode).toBe(400)
+        expect(res1.statusCode).toBe(400)
+        expect(res3.statusCode).toBe(400)
     })
 
     it('✔️ 200 playlist_id matches', async () => {

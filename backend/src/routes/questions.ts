@@ -29,7 +29,7 @@ export default async function questionsRoutes(fastify: FastifyInstance) {
                 return reply.status(404).send({error: 'Question not found'});
             }
 
-            return {question};
+            return reply.status(200).send({question});
 
         } catch (err) {
             console.error(err);
@@ -66,7 +66,7 @@ export default async function questionsRoutes(fastify: FastifyInstance) {
                 return reply.status(404).send({error: 'Question not found'});
             }
 
-            return {question};
+            return reply.status(200).send({question});
 
         } catch (err) {
             console.error(err);
@@ -100,7 +100,7 @@ export default async function questionsRoutes(fastify: FastifyInstance) {
                 return reply.status(404).send({error: 'Question not found'});
             }
 
-            return {question};
+            return reply.status(200).send({question});
 
         } catch (err) {
             console.error(err);

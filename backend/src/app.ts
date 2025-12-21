@@ -29,7 +29,7 @@ export function buildApp(): FastifyInstance {
     });
 
     app.register(swaggerUI, {
-        routePrefix: '/documentation',
+        routePrefix: '/v1/documentation',
         uiConfig: {
             docExpansion: 'list',
             deepLinking: false,

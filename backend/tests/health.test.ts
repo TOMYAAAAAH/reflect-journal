@@ -15,6 +15,11 @@ describe('Overall health check', () => {
         await app.close();
     });
 
+    it('API index should return 200', async () => {
+        const res = await request(app.server).get('/v1')
+        expect(res.statusCode).toBe(200)
+    })
+
     it('API should be healthy', async () => {
         const res = await request(app.server).get('/v1/health')
         expect(res.statusCode).toBe(200)

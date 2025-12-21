@@ -4,6 +4,7 @@
   "main": "server.ts",
   "scripts": {
     "test": "vitest",
+    "coverage": "vitest run --coverage",
     "build": "tsc",
     "dev": "npx ts-node src/server.ts",
     "start": "npx ts-node src/server.ts"
@@ -29,6 +30,7 @@
     "@types/mysql": "^2.15.27",
     "@types/node": "^24.10.1",
     "@types/pg": "^8.15.6",
+    "@vitest/coverage-v8": "^4.0.16",
     "prisma": "^7.1.0",
     "supertest": "^7.1.4",
     "typescript": "^5.9.3",

@@ -13,5 +13,5 @@ const adapter = new PrismaMariaDb({
 
 export const prisma = new PrismaClient({
     adapter,
-    log: ['query', 'error'], // optional, useful for debugging
+    log: ['error'],
 });
