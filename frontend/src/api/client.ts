@@ -1,9 +1,9 @@
 const BASE_URL = import.meta.env.VITE_API_URL;
 const API_VERSION = import.meta.env.VITE_API_VERSION || "/v1";
 
-export async function api(path: string, options = {}) {
+export async function api(path: string, options: RequestInit = {}) {
     const res = await fetch(BASE_URL + API_VERSION + path, {
-        headers: { "Content-Type": "application/json" },
+        headers: options.method !== 'DELETE' ? { "Content-Type": "application/json" } : undefined,
         ...options
     });
 
