@@ -23,17 +23,23 @@ export default async function answersRoutes(fastify: FastifyInstance) {
                 return reply.status(404).send({error: 'Question not found'});
             }
 
+            try {
+                const answer = await prisma.answers.create({
+                    data: {
+                        user_id: Number(userId),
+                        question_id: Number(questionId),
+                        answer_text: content,
+                        year: Number(year)
+                    }
+                });
 
-            const answer = await prisma.answers.create({
-                data: {
-                    user_id: Number(userId),
-                    question_id: Number(questionId),
-                    answer_text: content,
-                    year: Number(year)
+                return reply.status(200).send({answer});
+
+            } catch (err: any) {
+                if (err.code === 'P2002') {
+                    return reply.status(409).send({error: 'Answer already exists'})
                 }
-            });
-
-            return reply.status(200).send({answer});
+            }
 
         } catch (err) {
             console.error(err);
@@ -42,12 +48,10 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
     });
 
-
     fastify.put('/answers/:id', async (request, reply) => {
-
         const {id} = request.params as { id: string }
         if (!Number.isInteger(Number(id))) {
-            return reply.status(400).send({error: 'Invalid answer ID'});
+            return reply.status(400).send({error: 'Invalid answer ID'})
         }
 
         const {content} = request.body as { content: string }
@@ -56,14 +60,36 @@ export default async function answersRoutes(fastify: FastifyInstance) {
         }
 
         try {
+            const answer = await prisma.answers.update({
+                where: {id: Number(id)},
+                data: {answer_text: content},
+            })
+            return reply.status(200).send({answer})
+
+        } catch (err: any) {
+            if (err.code === 'P2025') {
+                return reply.status(404).send({error: 'Answer not found'})
+            }
+            console.error(err)
+            return reply.status(500).send({error: 'Failed to update answer'})
+        }
+    })
+
+    fastify.delete('/answers/:id', async (request, reply) => {
+
+        const {id} = request.params as { id: string }
+        if (!Number.isInteger(Number(id))) {
+            return reply.status(400).send({error: 'Invalid answer ID'});
+        }
+
+        try {
 
             try {
-                const answer = await prisma.answers.update({
-                    where: { id: Number(id) },
-                    data: { answer_text: content },
+                const answer = await prisma.answers.delete({
+                    where: {id: Number(id)},
                 })
 
-                return reply.status(200).send({ answer })
+                return reply.status(200).send({message: 'Answer deleted'})
 
             } catch (err: any) {
                 if (err.code === 'P2025') {
@@ -75,8 +101,6 @@ export default async function answersRoutes(fastify: FastifyInstance) {
             console.error(err);
             return reply.status(500).send({error: 'Failed to post answer'});
         }
-
     });
-
 
 }
