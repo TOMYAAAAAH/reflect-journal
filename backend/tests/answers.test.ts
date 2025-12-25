@@ -110,3 +110,24 @@ describe('DELETE /answers/:id', () => {
         expect(res.statusCode).toBe(200)
     })
 })
+
+describe('GET /answers/question/:id', () => {
+
+    it('✖️ 400 invalid question id', async () => {
+        const res = await request(app.server)
+            .get('/v1/answers/question/abc')
+        expect(res.statusCode).toBe(400)
+    })
+    it('✔️ 200 no answer found', async () => {
+        const res = await request(app.server)
+            .get('/v1/answers/question/99999')
+        expect(res.statusCode).toBe(200)
+        expect(res.body.answers).toHaveLength(0)
+    })
+    it('✔️ 200', async () => {
+        const res = await request(app.server)
+            .get('/v1/answers/question/23')
+        expect(res.statusCode).toBe(200)
+        expect(res.body.answers.length).toBeGreaterThan(0)
+    })
+})

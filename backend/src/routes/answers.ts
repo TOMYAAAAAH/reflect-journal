@@ -45,7 +45,6 @@ export default async function answersRoutes(fastify: FastifyInstance) {
             console.error(err);
             return reply.status(500).send({error: 'Failed to post answer'});
         }
-
     });
 
     fastify.put('/answers/:id', async (request, reply) => {
@@ -96,6 +95,27 @@ export default async function answersRoutes(fastify: FastifyInstance) {
                     return reply.status(404).send({error: 'Answer not found'})
                 }
             }
+
+        } catch (err) {
+            console.error(err);
+            return reply.status(500).send({error: 'Failed to post answer'});
+        }
+    });
+
+    fastify.get('/answers/question/:id', async (request, reply) => {
+
+        const {id} = request.params as { id: string }
+        if (!Number.isInteger(Number(id))) {
+            return reply.status(400).send({error: 'Invalid question ID'});
+        }
+
+        try {
+
+            const answers = await prisma.answers.findMany({
+                where: {question_id: Number(id)},
+            })
+
+            return reply.status(200).send({answers})
 
         } catch (err) {
             console.error(err);
