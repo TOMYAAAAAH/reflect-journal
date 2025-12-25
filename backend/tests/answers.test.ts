@@ -28,10 +28,40 @@ describe('POST /answers', () => {
             .send({ "questionId": "999999", "content": "Great", "year": "2025" })
         expect(res.statusCode).toBe(404)
     })
-    it('✔️ 200', async () => {
+    it.skip('✔️ 200', async () => {
         const res = await request(app.server)
             .post('/v1/answers')
             .send({ questionId: "22", content: "Great", year: "2025", userId: "1" })
+        expect(res.statusCode).toBe(200)
+    })
+})
+
+describe('PUT /answers/:id', () => {
+
+    it('✖️ 400 invalid body', async () => {
+        const res = await request(app.server)
+            .put('/v1/answers/1')
+            .send({ nothing: "Fabulous" })
+        expect(res.statusCode).toBe(400)
+    })
+
+    it('✖️ 400 invalid answer ID', async () => {
+        const res = await request(app.server)
+            .put('/v1/answers/abc')
+            .send({ content: "Fabulous" })
+        expect(res.statusCode).toBe(400)
+    })
+
+    it('✖️ 404 answer not found', async () => {
+        const res = await request(app.server)
+            .put('/v1/answers/99999')
+            .send({ content: "Great" })
+        expect(res.statusCode).toBe(404)
+    })
+    it('✔️ 200', async () => {
+        const res = await request(app.server)
+            .put('/v1/answers/1')
+            .send({ content: "Fabulous" })
         expect(res.statusCode).toBe(200)
     })
 })

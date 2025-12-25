@@ -25,7 +25,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
 
             const answer = await prisma.answers.create({
-                data : {
+                data: {
                     user_id: Number(userId),
                     question_id: Number(questionId),
                     answer_text: content,
@@ -34,6 +34,42 @@ export default async function answersRoutes(fastify: FastifyInstance) {
             });
 
             return reply.status(200).send({answer});
+
+        } catch (err) {
+            console.error(err);
+            return reply.status(500).send({error: 'Failed to post answer'});
+        }
+
+    });
+
+
+    fastify.put('/answers/:id', async (request, reply) => {
+
+        const {id} = request.params as { id: string }
+        if (!Number.isInteger(Number(id))) {
+            return reply.status(400).send({error: 'Invalid answer ID'});
+        }
+
+        const {content} = request.body as { content: string }
+        if (!content) {
+            return reply.status(400).send({error: 'Invalid body'})
+        }
+
+        try {
+
+            try {
+                const answer = await prisma.answers.update({
+                    where: { id: Number(id) },
+                    data: { answer_text: content },
+                })
+
+                return reply.status(200).send({ answer })
+
+            } catch (err: any) {
+                if (err.code === 'P2025') {
+                    return reply.status(404).send({error: 'Answer not found'})
+                }
+            }
 
         } catch (err) {
             console.error(err);
