@@ -31,7 +31,7 @@ describe('POST /answers', () => {
     it('✔️ 200', async () => {
         const res = await request(app.server)
             .post('/v1/answers')
-            .send({ questionId: "20", content: "Great", year: "2025", userId: "1" })
+            .send({ questionId: "22", content: "Great", year: "2025", userId: "1" })
         expect(res.statusCode).toBe(200)
     })
 })
