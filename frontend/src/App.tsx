@@ -19,8 +19,8 @@ function App() {
 
             <hr/>
             <p>Health :
-                {indexLoading && <p>Loading...</p>}
-                {indexError && <p>Error loading index</p>}
+                {indexLoading && <>Loading...</>}
+                {indexError && <>Error loading index</>}
                 {indexData && (
                     indexData.message
                 )}
