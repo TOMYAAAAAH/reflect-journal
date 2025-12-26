@@ -3,16 +3,17 @@ import {useState} from "react";
 import {api} from "../api/client.ts";
 import {useMutation} from "@tanstack/react-query";
 
-export default function Login() {
 
+export default function Register() {
+
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-
     const registerMutation = useMutation({
         mutationFn: (user: { email: string; password: string }) =>
-            api('/login',
+            api('/register',
                 {
                     method: 'POST',
                     body: JSON.stringify(user),
@@ -42,14 +43,16 @@ export default function Login() {
             <Link to="/">today</Link>
 
             <form className={'flex flex-col gap-4 p-8'} onSubmit={handleSubmit}>
+                <input value={name} onChange={e => setName(e.target.value)} placeholder="Name"/>
                 <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email"/>
                 <input type="password" value={password} onChange={e => setPassword(e.target.value)}
                        placeholder="Password"/>
-                <button type="submit">Login</button>
+                <button type="submit">Register</button>
 
             </form>
 
-            <Link to="/register">no account ? Register</Link>
+            <Link to="/login">an account ? Login</Link>
+
         </div>
     )
 }

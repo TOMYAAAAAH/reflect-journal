@@ -25,7 +25,6 @@ export default function AnswerInput({answers}: { answers: Answer[] }) {
         mutationFn: (data: { id: number, answer_text: string }) =>
             api('/answers/' + data.id, {
                 method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({content: data.answer_text}),
             }),
         onSuccess: () => {

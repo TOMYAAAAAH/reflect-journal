@@ -30,9 +30,13 @@ export default function Day({today}: { today: boolean }) {
     return (
         <>
 
-            <Link to="/profile">Profile</Link>
-            <Link to="/year">Year</Link>
-            <Link to="/">Today</Link>
+            <div className={'flex gap-4 justify-center text-2xl'}>
+                <Link to="/profile">Profile</Link>
+                <Link to="/year">Year</Link>
+                <Link to="/">Today</Link>
+                <Link to="/login">Login</Link>
+            </div>
+
 
             <h1>{today ? 'today' : 'other day'}</h1>
 

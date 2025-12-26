@@ -3,6 +3,7 @@ import cors from '@fastify/cors';
 import swagger from '@fastify/swagger';
 import swaggerUI from '@fastify/swagger-ui';
 import routes from './routes';
+import fastifyJwt from "@fastify/jwt";
 
 export function buildApp(): FastifyInstance {
     const app: FastifyInstance = Fastify({
@@ -12,6 +13,12 @@ export function buildApp(): FastifyInstance {
     app.register(cors, {
         origin: true,
         methods: ['GET', 'POST', 'PUT', 'DELETE']
+    });
+
+    // JWT authentication
+    app.register(fastifyJwt, {
+        secret: process.env.JWT_SECRET || 'supersecret',
+        sign: { expiresIn: '7d' }
     });
 
     app.register(swagger, {
