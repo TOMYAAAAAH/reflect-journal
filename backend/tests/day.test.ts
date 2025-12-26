@@ -57,6 +57,16 @@ describe('GET /today', () => {
 })
 describe('GET /day/:month/:day', () => {
 
+    it('✖️ 400 invalid date', async () => {
+        const res = await request(app.server)
+            .get(`/v1/day/ab/bc`)
+        expect(res.statusCode).toBe(400)
+    })
+    it('✖️ 404 question not found', async () => {
+        const res = await request(app.server)
+            .get(`/v1/day/15/12`)
+        expect(res.statusCode).toBe(404)
+    })
     it('✔️ 200 not connected', async () => {
         const res = await request(app.server)
             .get(`/v1/day/${month}/${day}`)
