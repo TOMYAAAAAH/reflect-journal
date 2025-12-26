@@ -1,17 +1,24 @@
 import {FastifyInstance} from 'fastify';
 import {prisma} from '../prisma/prisma';
-import getValidatedPlaylistId from '../helper/validatePlaylistId';
+import JwtPayload from "../types/JwtPayload";
 
 export default async function answersRoutes(fastify: FastifyInstance) {
 
     fastify.post('/answers', async (request, reply) => {
 
+        let userId: string | null = null;
+        try {
+            const payload = await request.jwtVerify<JwtPayload>();
+            userId = payload.userId;
+        } catch {}
+        if (!userId) {
+            return reply.status(401).send({error: 'Not authenticated'})
+        }
+
         const {questionId, content, year} = request.body as { questionId: string, content: string, year: string }
         if (!questionId || !content || !year) {
             return reply.status(400).send({error: 'Invalid body'})
         }
-
-        const {userId} = request.body as { userId: string }
 
         try {
             const question = await prisma.questions.findUnique({
@@ -48,6 +55,16 @@ export default async function answersRoutes(fastify: FastifyInstance) {
     });
 
     fastify.put('/answers/:id', async (request, reply) => {
+
+        let userId: string | null = null;
+        try {
+            const payload = await request.jwtVerify<JwtPayload>();
+            userId = payload.userId;
+        } catch {}
+        if (!userId) {
+            return reply.status(401).send({error: 'Not authenticated'})
+        }
+
         const {id} = request.params as { id: string }
         if (!Number.isInteger(Number(id))) {
             return reply.status(400).send({error: 'Invalid answer ID'})
@@ -60,7 +77,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
         try {
             const answer = await prisma.answers.update({
-                where: {id: Number(id)},
+                where: {id: Number(id), user_id: Number(userId)},
                 data: {answer_text: content},
             })
             return reply.status(200).send({answer})
@@ -76,6 +93,15 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
     fastify.delete('/answers/:id', async (request, reply) => {
 
+        let userId: string | null = null;
+        try {
+            const payload = await request.jwtVerify<JwtPayload>();
+            userId = payload.userId;
+        } catch {}
+        if (!userId) {
+            return reply.status(401).send({error: 'Not authenticated'})
+        }
+
         const {id} = request.params as { id: string }
         if (!Number.isInteger(Number(id))) {
             return reply.status(400).send({error: 'Invalid answer ID'});
@@ -85,7 +111,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
             try {
                 await prisma.answers.delete({
-                    where: {id: Number(id)},
+                    where: {id: Number(id), user_id: Number(userId)},
                 })
 
                 return reply.status(200).send({message: 'Answer deleted'})
@@ -103,6 +129,15 @@ export default async function answersRoutes(fastify: FastifyInstance) {
     });
 
     fastify.get('/answers/question/:id', async (request, reply) => {
+
+        let userId: string | null = null;
+        try {
+            const payload = await request.jwtVerify<JwtPayload>();
+            userId = payload.userId;
+        } catch {}
+        if (!userId) {
+            return reply.status(401).send({error: 'Not authenticated'})
+        }
 
         const {id} = request.params as { id: string }
         if (!Number.isInteger(Number(id))) {

@@ -1,6 +1,7 @@
 import {FastifyInstance} from 'fastify';
 import {prisma} from '../prisma/prisma';
 import getValidatedPlaylistId from '../helper/validatePlaylistId';
+import JwtPayload from "../types/JwtPayload";
 
 export default async function dayRoutes(fastify: FastifyInstance) {
 
@@ -8,15 +9,10 @@ export default async function dayRoutes(fastify: FastifyInstance) {
 
         let userId: string | null = null;
 
-        interface JwtPayload {
-            userId: string;
-        }
-
         try {
             const payload = await request.jwtVerify<JwtPayload>();
             userId = payload.userId;
-        } catch {
-        }
+        } catch {}
 
         const today = new Date();
         const todayDay = today.getDate();
