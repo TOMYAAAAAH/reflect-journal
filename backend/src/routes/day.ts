@@ -7,13 +7,6 @@ export default async function dayRoutes(fastify: FastifyInstance) {
 
     fastify.get('/today', async (request, reply) => {
 
-        let userId: string | null = null;
-
-        try {
-            const payload = await request.jwtVerify<JwtPayload>();
-            userId = payload.userId;
-        } catch {}
-
         const today = new Date();
         const todayDay = today.getDate();
         const todayMonth = today.getMonth() + 1;
@@ -23,6 +16,12 @@ export default async function dayRoutes(fastify: FastifyInstance) {
         if (validatedPlaylistId === -1) {
             return reply.status(400).send({error: 'Invalid playlist ID'});
         }
+
+        let userId: string | null = null;
+        try {
+            const payload = await request.jwtVerify<JwtPayload>();
+            userId = payload.userId;
+        } catch {}
 
         try {
             const question = await prisma.questions.findFirst({
@@ -38,7 +37,6 @@ export default async function dayRoutes(fastify: FastifyInstance) {
             }
 
             if (userId) {
-
                 const answers = await prisma.answers.findMany({
                     where: {
                         question_id: Number(question.id),
@@ -71,6 +69,12 @@ export default async function dayRoutes(fastify: FastifyInstance) {
             return reply.status(400).send({error: 'Invalid playlist ID'});
         }
 
+        let userId: string | null = null;
+        try {
+            const payload = await request.jwtVerify<JwtPayload>();
+            userId = payload.userId;
+        } catch {}
+
         try {
             const question = await prisma.questions.findFirst({
                 where: {
@@ -84,11 +88,17 @@ export default async function dayRoutes(fastify: FastifyInstance) {
                 return reply.status(404).send({error: 'Question not found'});
             }
 
-            const answers = await prisma.answers.findMany({
-                where: {question_id: Number(question.id)},
-            })
+            if (userId) {
+                const answers = await prisma.answers.findMany({
+                    where: {
+                        question_id: Number(question.id),
+                        user_id: Number(userId)
+                    },
+                })
+                return reply.status(200).send({question, answers});
+            }
+            return reply.status(200).send({question, answers: []});
 
-            return reply.status(200).send({question, answers});
 
         } catch (err) {
             console.error(err);
