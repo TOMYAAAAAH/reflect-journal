@@ -11,6 +11,7 @@ export function buildApp(): FastifyInstance {
 
     app.register(cors, {
         origin: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE']
     });
 
     app.register(swagger, {

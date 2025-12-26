@@ -1,24 +1,26 @@
 import Question from "../components/Question.tsx";
 import {useQuery} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
+import AnswerInput from "../components/AnswerInput.tsx";
 
 export default function Today() {
 
-    const playlistId = 1;
 
-    const {data: questionData, isLoading: questionLoading, error: questionError} = useQuery({
-        queryKey: ['todayQuestion'],
-        queryFn: () => api(`/questions/today?playlist_id=${playlistId}`)
+    const {data: todayData, isLoading: todayLoading, error: todayError} = useQuery({
+        queryKey: ['today'],
+        queryFn: () => api(`/today`)
     });
 
     return (
         <>
-            View calendar
 
-            {questionLoading && <p>Loading...</p>}
-            {questionError && <p>Error loading question</p>}
-            {questionData && (
-                <Question question={questionData.question}/>
+            {todayLoading && <p>Loading...</p>}
+            {todayError && <p>Error loading question</p>}
+            {todayData && (
+                <>
+                <Question question={todayData.question}/>
+                <AnswerInput answers={todayData.answers}/>
+                </>
             )}
 
         </>
