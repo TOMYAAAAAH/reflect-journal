@@ -14,7 +14,7 @@ export async function api(path: string, options: RequestInit = {}) {
     const res = await fetch(BASE_URL + API_VERSION + path, {
         ...options,
         headers,
-        body: options.body ? JSON.stringify(options.body) : undefined,
+        body: options.body ? options.body : undefined,
     });
 
     if (!res.ok) throw new Error("API error");

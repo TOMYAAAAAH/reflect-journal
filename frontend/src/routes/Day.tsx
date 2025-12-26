@@ -20,12 +20,12 @@ export default function Day({today}: { today: boolean }) {
         queryFn: () => api(dayUrl)
     });
 
-
+/*
     const {data: indexData, isLoading: indexLoading, error: indexError} = useQuery({
         queryKey: ['health'],
         queryFn: () => api('/health')
     });
-
+*/
 
     return (
         <>
@@ -48,7 +48,7 @@ export default function Day({today}: { today: boolean }) {
                     <AnswerInput answers={todayData.answers}/>
                 </>
             )}
-
+            {/*
             <hr/>
             <p>Health :
                 {indexLoading && <>Loading...</>}
@@ -56,7 +56,7 @@ export default function Day({today}: { today: boolean }) {
                 {indexData && (
                     indexData.message
                 )}
-            </p>
+            </p>*/}
         </>
     )
 }

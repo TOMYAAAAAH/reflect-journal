@@ -84,7 +84,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
         try {
 
             try {
-                const answer = await prisma.answers.delete({
+                await prisma.answers.delete({
                     where: {id: Number(id)},
                 })
 
