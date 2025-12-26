@@ -7,6 +7,7 @@ export default function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordsDisplay, setPasswordsDisplay] = useState(false);
     const navigate = useNavigate();
 
 
@@ -42,9 +43,11 @@ export default function Login() {
             <Link to="/">today</Link>
 
             <form className={'flex flex-col gap-4 p-8'} onSubmit={handleSubmit}>
-                <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email"/>
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)}
-                       placeholder="Password"/>
+                <input name={'email'} value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" type={'email'} autoComplete={'on'} required={true}/>
+                <input name={'password'} type={passwordsDisplay ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)}
+                       placeholder="Password" required={true}/>
+                <i className={`pi ${passwordsDisplay ? 'pi-eye-slash' : 'pi-eye'}`} onClick={() => setPasswordsDisplay(v => !v)}></i>
+
                 <button type="submit">Login</button>
 
             </form>

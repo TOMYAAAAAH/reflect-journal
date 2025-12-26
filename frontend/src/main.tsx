@@ -14,7 +14,7 @@ import Register from './routes/Register.tsx'
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
-    { path: "/", element: <Day today={true} /> },
+    { path: "/", element: <Day today={true} key={'today'}/> },
     { path: "/day/:month/:day", element: <Day today={false}/> },
     { path: "/year", element: <Year /> },
     { path: "/month/:targetMonth?", element: <Month /> },
