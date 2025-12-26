@@ -30,7 +30,7 @@ export default function Month() {
                             <div className={'grid grid-cols-7 gap-4'}>
                             {days.map((day) => {
 
-                                    return (<Link to={`/day/${month}-${day}`} key={day}>
+                                    return (<Link to={`/day/${month}/${day}`} key={day}>
 
                                         <div className={'p-4 text-2xl'}>
                                             {day}

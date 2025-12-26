@@ -2,15 +2,17 @@ import Question from "../components/Question.tsx";
 import {useQuery} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
 import AnswerInput from "../components/AnswerInput.tsx";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 export default function Day({today}: { today: boolean }) {
 
+    const {month, day} = useParams()
     let dayUrl: string;
+
     if (today) {
         dayUrl = '/today'
     } else {
-        dayUrl = '/day/:month/:day'
+        dayUrl = `/day/${month}/${day}`
     }
 
     const {data: todayData, isLoading: todayLoading, error: todayError} = useQuery({
@@ -30,6 +32,7 @@ export default function Day({today}: { today: boolean }) {
 
             <Link to="/profile">Profile</Link>
             <Link to="/year">Year</Link>
+            <Link to="/">Today</Link>
 
             <h1>{today ? 'today' : 'other day'}</h1>
 

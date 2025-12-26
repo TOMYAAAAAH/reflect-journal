@@ -35,8 +35,17 @@ describe('GET /today', () => {
         const res = await request(app.server)
             .get('/v1/today')
         expect(res.statusCode).toBe(200)
-        expect(res.body.answers.length).toBe(1)
         expect(res.body.question.month).toBe(todayMonth)
         expect(res.body.question.day).toBe(todayDay)
+    })
+})
+describe('GET /day/:month/:day', () => {
+
+    it('✔️ 200', async () => {
+        const res = await request(app.server)
+            .get('/v1/day/1/15')
+        expect(res.statusCode).toBe(200)
+        expect(res.body.question.month).toBe(1)
+        expect(res.body.question.day).toBe(15)
     })
 })

@@ -14,7 +14,7 @@ const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
     { path: "/", element: <Day today={true} /> },
-    { path: "/day/:date", element: <Day today={false}/> },
+    { path: "/day/:month/:day", element: <Day today={false}/> },
     { path: "/year", element: <Year /> },
     { path: "/month/:targetMonth?", element: <Month /> },
     { path: "/login", element: <Login /> },
