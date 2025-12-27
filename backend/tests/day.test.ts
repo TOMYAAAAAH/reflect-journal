@@ -17,17 +17,18 @@ beforeAll(async () => {
     app = buildApp();
     await app.ready();
 
-    const res = await request(app.server)
-        .get('/v1/questions/today')
+    const res = await prisma.questions.findFirst({
+        where: {month, day, playlist_id: 1}
+    })
 
     await prisma.answers.deleteMany({
-        where: {question_id: res.body.question.id, year: 2025, user_id: 1}
+        where: {question_id: res.id, year: 2025, user_id: 1}
     })
 
     await request(app.server)
         .post('/v1/answers')
         .set('Authorization', `Bearer ${token}`)
-        .send({questionId: res.body.question.id, content: "Wonderful", year: 2025, userId: 1})
+        .send({questionId: res.id, content: "Wonderful", year: 2025, userId: 1})
 
 });
 afterAll(async () => {

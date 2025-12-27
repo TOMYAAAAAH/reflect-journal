@@ -166,7 +166,7 @@ describe('GET /answers/question/:id', () => {
     })
     it('✖️ 401 not connected', async () => {
         const res = await request(app.server)
-            .get('/v1/answers/question/23')
+            .get('/v1/answers/question/21')
         expect(res.statusCode).toBe(401)
     })
     it('✔️ 200 no answer found', async () => {
@@ -178,7 +178,7 @@ describe('GET /answers/question/:id', () => {
     })
     it('✔️ 200', async () => {
         const res = await request(app.server)
-            .get('/v1/answers/question/23')
+            .get('/v1/answers/question/21')
             .set('Authorization', `Bearer ${token}`)
         expect(res.statusCode).toBe(200)
         expect(res.body.answers.length).toBeGreaterThan(0)

@@ -9,14 +9,14 @@ export default function AnswerInput({answers}: { answers: Answer[] }) {
     const [values, setValues] = useState<Record<number, string>>({}) // answer id, answer text
 
     function sendNewAnswer(answer: Answer) {
-        console.log(values[answer.id])
+        console.log(values[answer.year])
 
-        if (values[answer.id]=='') {
+        if (values[answer.year]=='') {
             deleteAnswer.mutate(answer.id)
             return
         }
 
-        saveAnswer.mutate({id: answer.id, answer_text: values[answer.id]})
+        saveAnswer.mutate({id: answer.id, answer_text: values[answer.year]})
     }
 
     const qc = useQueryClient()
@@ -50,9 +50,9 @@ export default function AnswerInput({answers}: { answers: Answer[] }) {
 
                 <div key={answer.year}>
                     <p>{answer.year}</p>
-                    <textarea value={values[answer.id] ?? answer.answer_text}
+                    <textarea value={values[answer.year] ?? answer.answer_text}
                               onChange={e =>
-                                  setValues(v => ({...v, [answer.id]: e.target.value}))
+                                  setValues(v => ({...v, [answer.year]: e.target.value}))
                               } className={'border border-pink-600 rounded-lg p-2 w-96'}>
                     </textarea>
 

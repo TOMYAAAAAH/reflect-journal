@@ -1,17 +1,20 @@
-import {FastifyInstance} from 'fastify';
+import {FastifyInstance, FastifyRequest} from 'fastify';
 import {prisma} from '../prisma/prisma';
 import JwtPayload from "../types/JwtPayload";
 
 export default async function answersRoutes(fastify: FastifyInstance) {
 
+    const getUserIdFromAuthentication = async (request: FastifyRequest) => {
+        const payload = await request.jwtVerify<JwtPayload>()
+        return Number(payload.userId)
+    }
+
     fastify.post('/answers', async (request, reply) => {
 
-        let userId: string | null = null;
+        let userId: number;
         try {
-            const payload = await request.jwtVerify<JwtPayload>();
-            userId = payload.userId;
-        } catch {}
-        if (!userId) {
+            userId = await getUserIdFromAuthentication(request)
+        } catch {
             return reply.status(401).send({error: 'Not authenticated'})
         }
 
@@ -33,7 +36,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
             try {
                 const answer = await prisma.answers.create({
                     data: {
-                        user_id: Number(userId),
+                        user_id: userId,
                         question_id: Number(questionId),
                         answer_text: content,
                         year: Number(year)
@@ -56,12 +59,10 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
     fastify.put('/answers/:id', async (request, reply) => {
 
-        let userId: string | null = null;
+        let userId: number;
         try {
-            const payload = await request.jwtVerify<JwtPayload>();
-            userId = payload.userId;
-        } catch {}
-        if (!userId) {
+            userId = await getUserIdFromAuthentication(request)
+        } catch {
             return reply.status(401).send({error: 'Not authenticated'})
         }
 
@@ -77,7 +78,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
         try {
             const answer = await prisma.answers.update({
-                where: {id: Number(id), user_id: Number(userId)},
+                where: {id: Number(id), user_id: userId},
                 data: {answer_text: content},
             })
             return reply.status(200).send({answer})
@@ -93,12 +94,10 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
     fastify.delete('/answers/:id', async (request, reply) => {
 
-        let userId: string | null = null;
+        let userId: number;
         try {
-            const payload = await request.jwtVerify<JwtPayload>();
-            userId = payload.userId;
-        } catch {}
-        if (!userId) {
+            userId = await getUserIdFromAuthentication(request)
+        } catch {
             return reply.status(401).send({error: 'Not authenticated'})
         }
 
@@ -111,9 +110,10 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
             try {
                 await prisma.answers.delete({
-                    where: {id: Number(id), user_id: Number(userId)},
+                    where: {id: Number(id), user_id: userId}
                 })
 
+                console.log('user', userId)
                 return reply.status(200).send({message: 'Answer deleted'})
 
             } catch (err: any) {
@@ -130,12 +130,10 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
     fastify.get('/answers/question/:id', async (request, reply) => {
 
-        let userId: string | null = null;
+        let userId: number;
         try {
-            const payload = await request.jwtVerify<JwtPayload>();
-            userId = payload.userId;
-        } catch {}
-        if (!userId) {
+            userId = await getUserIdFromAuthentication(request)
+        } catch {
             return reply.status(401).send({error: 'Not authenticated'})
         }
 
@@ -147,7 +145,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
         try {
 
             const answers = await prisma.answers.findMany({
-                where: {question_id: Number(id)},
+                where: {question_id: Number(id), user_id: userId},
             })
 
             return reply.status(200).send({answers})
