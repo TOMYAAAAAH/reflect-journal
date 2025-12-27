@@ -24,7 +24,7 @@ export default function Login() {
             navigate("/");
 
         },
-        onError: (err: any) => {
+        onError: (err) => {
             alert(err?.message || 'Registration failed');
         },
     });

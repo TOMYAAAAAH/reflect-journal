@@ -26,7 +26,7 @@ export default function Register() {
             navigate("/");
 
         },
-        onError: (err: any) => {
+        onError: (err) => {
             alert(err?.message || 'Registration failed');
         },
     });
