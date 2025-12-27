@@ -11,15 +11,32 @@ export default function AnswerInput({answers, questionId}: { answers: Answer[], 
     function sendNewAnswer(answer: Answer) {
         console.log(values[answer.year])
 
-        if (values[answer.year]=='') {
+
+        if (values[answer.year] == '') {
             deleteAnswer.mutate(answer.year)
             return
         }
 
-        saveAnswer.mutate({year: answer.year, answer_text: values[answer.year]})
+        if (answer.isExisting) {
+            saveAnswer.mutate({year: answer.year, answer_text: values[answer.year]})
+        } else {
+            createAnswer.mutate({year: answer.year, answer_text: values[answer.year]})
+        }
+
     }
 
     const qc = useQueryClient()
+
+    const createAnswer = useMutation({
+        mutationFn: (data: { year: number, answer_text: string }) =>
+            api(`/answers/question/${questionId}/year/${data.year}`, {
+                method: 'POST',
+                body: JSON.stringify({content: data.answer_text}),
+            }),
+        onSuccess: () => {
+            qc.invalidateQueries({queryKey: ['answers']})
+        },
+    })
 
     const saveAnswer = useMutation({
         mutationFn: (data: { year: number, answer_text: string }) =>
@@ -33,7 +50,7 @@ export default function AnswerInput({answers, questionId}: { answers: Answer[], 
     })
 
     const deleteAnswer = useMutation({
-        mutationFn: ( year: number ) =>
+        mutationFn: (year: number) =>
             api(`/answers/question/${questionId}/year/${year}`, {
                 method: 'DELETE',
             }),
