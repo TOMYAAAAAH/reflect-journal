@@ -19,7 +19,8 @@ export default async function dayRoutes(fastify: FastifyInstance) {
         try {
             const payload: JwtPayload = await request.jwtVerify<JwtPayload>();
             userId = payload.userId;
-        } catch {}
+        } catch {
+        }
 
         // CALL THE DB
         try {
@@ -45,15 +46,36 @@ export default async function dayRoutes(fastify: FastifyInstance) {
                         user_id: Number(userId)
                     },
                 })
+                const user = await prisma.users.findUnique({
+                    where: {
+                        id: Number(userId)
+                    },
+                })
+
+                const startYear = user.created_at.getFullYear();
+                const endYear = new Date().getFullYear();
+
+                const answerDto: { content: string, year: number, isExisting: boolean }[] = [];
+
+                for (let year = startYear; year <= endYear; year++) {
+                    const existing = answers.find(a => a.year === year);
+                    answerDto.push({
+                        year,
+                        content: existing ? existing.answer_text : "",
+                        isExisting: !!existing
+                    });
+                }
+                console.log(answerDto);
+
                 return reply.status(200).send({question, answers});
             }
 
-            // RETURN EMPTY ANSWERS IF NO USER ID
+            // RETURN EMPTY ANSWERS IF NOT CONNECTED
             return reply.status(200).send({question, answers: []});
 
         } catch (err) {
             console.error(err);
-            return reply.status(500).send({ error: 'Failed to fetch question' });
+            return reply.status(500).send({error: 'Failed to fetch question'});
         }
     };
 

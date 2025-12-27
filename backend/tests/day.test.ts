@@ -22,13 +22,13 @@ beforeAll(async () => {
     })
 
     await prisma.answers.deleteMany({
-        where: {question_id: res.id, year: 2025, user_id: 1}
+        where: {question_id: res.id, user_id: 1}
     })
 
     await request(app.server)
-        .post('/v1/answers')
+        .post(`/v1/answers/question/${res.id}/year/2024`)
         .set('Authorization', `Bearer ${token}`)
-        .send({questionId: res.id, content: "Wonderful", year: 2025, userId: 1})
+        .send({content: "Wonderful"})
 
 });
 afterAll(async () => {

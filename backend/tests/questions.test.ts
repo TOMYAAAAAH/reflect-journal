@@ -80,7 +80,7 @@ describe.skip('questions routes', () => {
             const res2 = await request(app.server).get('/v1/questions/20?playlist_id=abc')
             const res3 = await request(app.server).get('/v1/questions/date/1/1?playlist_id=abc')
             expect(res1.statusCode).toBe(400)
-            expect(res1.statusCode).toBe(400)
+            expect(res2.statusCode).toBe(400)
             expect(res3.statusCode).toBe(400)
         })
 

@@ -40,6 +40,7 @@ export type UsersMinAggregateOutputType = {
   id: number | null
   email: string | null
   password: string | null
+  name: string | null
   default_playlist_id: number | null
   created_at: Date | null
 }
@@ -48,6 +49,7 @@ export type UsersMaxAggregateOutputType = {
   id: number | null
   email: string | null
   password: string | null
+  name: string | null
   default_playlist_id: number | null
   created_at: Date | null
 }
@@ -56,6 +58,7 @@ export type UsersCountAggregateOutputType = {
   id: number
   email: number
   password: number
+  name: number
   default_playlist_id: number
   created_at: number
   _all: number
@@ -76,6 +79,7 @@ export type UsersMinAggregateInputType = {
   id?: true
   email?: true
   password?: true
+  name?: true
   default_playlist_id?: true
   created_at?: true
 }
@@ -84,6 +88,7 @@ export type UsersMaxAggregateInputType = {
   id?: true
   email?: true
   password?: true
+  name?: true
   default_playlist_id?: true
   created_at?: true
 }
@@ -92,6 +97,7 @@ export type UsersCountAggregateInputType = {
   id?: true
   email?: true
   password?: true
+  name?: true
   default_playlist_id?: true
   created_at?: true
   _all?: true
@@ -187,8 +193,9 @@ export type UsersGroupByOutputType = {
   id: number
   email: string
   password: string
-  default_playlist_id: number | null
-  created_at: Date | null
+  name: string | null
+  default_playlist_id: number
+  created_at: Date
   _count: UsersCountAggregateOutputType | null
   _avg: UsersAvgAggregateOutputType | null
   _sum: UsersSumAggregateOutputType | null
@@ -218,8 +225,9 @@ export type usersWhereInput = {
   id?: Prisma.IntFilter<"users"> | number
   email?: Prisma.StringFilter<"users"> | string
   password?: Prisma.StringFilter<"users"> | string
-  default_playlist_id?: Prisma.IntNullableFilter<"users"> | number | null
-  created_at?: Prisma.DateTimeNullableFilter<"users"> | Date | string | null
+  name?: Prisma.StringNullableFilter<"users"> | string | null
+  default_playlist_id?: Prisma.IntFilter<"users"> | number
+  created_at?: Prisma.DateTimeFilter<"users"> | Date | string
   answers?: Prisma.AnswersListRelationFilter
 }
 
@@ -227,8 +235,9 @@ export type usersOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  default_playlist_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  created_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
+  default_playlist_id?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
   answers?: Prisma.answersOrderByRelationAggregateInput
   _relevance?: Prisma.usersOrderByRelevanceInput
 }
@@ -240,8 +249,9 @@ export type usersWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.usersWhereInput[]
   NOT?: Prisma.usersWhereInput | Prisma.usersWhereInput[]
   password?: Prisma.StringFilter<"users"> | string
-  default_playlist_id?: Prisma.IntNullableFilter<"users"> | number | null
-  created_at?: Prisma.DateTimeNullableFilter<"users"> | Date | string | null
+  name?: Prisma.StringNullableFilter<"users"> | string | null
+  default_playlist_id?: Prisma.IntFilter<"users"> | number
+  created_at?: Prisma.DateTimeFilter<"users"> | Date | string
   answers?: Prisma.AnswersListRelationFilter
 }, "id" | "email">
 
@@ -249,8 +259,9 @@ export type usersOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  default_playlist_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  created_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
+  default_playlist_id?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
   _count?: Prisma.usersCountOrderByAggregateInput
   _avg?: Prisma.usersAvgOrderByAggregateInput
   _max?: Prisma.usersMaxOrderByAggregateInput
@@ -265,15 +276,17 @@ export type usersScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"users"> | number
   email?: Prisma.StringWithAggregatesFilter<"users"> | string
   password?: Prisma.StringWithAggregatesFilter<"users"> | string
-  default_playlist_id?: Prisma.IntNullableWithAggregatesFilter<"users"> | number | null
-  created_at?: Prisma.DateTimeNullableWithAggregatesFilter<"users"> | Date | string | null
+  name?: Prisma.StringNullableWithAggregatesFilter<"users"> | string | null
+  default_playlist_id?: Prisma.IntWithAggregatesFilter<"users"> | number
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"users"> | Date | string
 }
 
 export type usersCreateInput = {
   email: string
   password: string
-  default_playlist_id?: number | null
-  created_at?: Date | string | null
+  name?: string | null
+  default_playlist_id?: number
+  created_at?: Date | string
   answers?: Prisma.answersCreateNestedManyWithoutUsersInput
 }
 
@@ -281,16 +294,18 @@ export type usersUncheckedCreateInput = {
   id?: number
   email: string
   password: string
-  default_playlist_id?: number | null
-  created_at?: Date | string | null
+  name?: string | null
+  default_playlist_id?: number
+  created_at?: Date | string
   answers?: Prisma.answersUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type usersUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  default_playlist_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_playlist_id?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   answers?: Prisma.answersUpdateManyWithoutUsersNestedInput
 }
 
@@ -298,8 +313,9 @@ export type usersUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  default_playlist_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_playlist_id?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   answers?: Prisma.answersUncheckedUpdateManyWithoutUsersNestedInput
 }
 
@@ -307,23 +323,26 @@ export type usersCreateManyInput = {
   id?: number
   email: string
   password: string
-  default_playlist_id?: number | null
-  created_at?: Date | string | null
+  name?: string | null
+  default_playlist_id?: number
+  created_at?: Date | string
 }
 
 export type usersUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  default_playlist_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_playlist_id?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type usersUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  default_playlist_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_playlist_id?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UsersScalarRelationFilter = {
@@ -341,6 +360,7 @@ export type usersCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   default_playlist_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
@@ -354,6 +374,7 @@ export type usersMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   default_playlist_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
@@ -362,6 +383,7 @@ export type usersMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   default_playlist_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
@@ -385,19 +407,25 @@ export type usersUpdateOneRequiredWithoutAnswersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutAnswersInput, Prisma.usersUpdateWithoutAnswersInput>, Prisma.usersUncheckedUpdateWithoutAnswersInput>
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type usersCreateWithoutAnswersInput = {
   email: string
   password: string
-  default_playlist_id?: number | null
-  created_at?: Date | string | null
+  name?: string | null
+  default_playlist_id?: number
+  created_at?: Date | string
 }
 
 export type usersUncheckedCreateWithoutAnswersInput = {
   id?: number
   email: string
   password: string
-  default_playlist_id?: number | null
-  created_at?: Date | string | null
+  name?: string | null
+  default_playlist_id?: number
+  created_at?: Date | string
 }
 
 export type usersCreateOrConnectWithoutAnswersInput = {
@@ -419,16 +447,18 @@ export type usersUpdateToOneWithWhereWithoutAnswersInput = {
 export type usersUpdateWithoutAnswersInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  default_playlist_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_playlist_id?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type usersUncheckedUpdateWithoutAnswersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  default_playlist_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_playlist_id?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -466,6 +496,7 @@ export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id?: boolean
   email?: boolean
   password?: boolean
+  name?: boolean
   default_playlist_id?: boolean
   created_at?: boolean
   answers?: boolean | Prisma.users$answersArgs<ExtArgs>
@@ -478,11 +509,12 @@ export type usersSelectScalar = {
   id?: boolean
   email?: boolean
   password?: boolean
+  name?: boolean
   default_playlist_id?: boolean
   created_at?: boolean
 }
 
-export type usersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "default_playlist_id" | "created_at", ExtArgs["result"]["users"]>
+export type usersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "name" | "default_playlist_id" | "created_at", ExtArgs["result"]["users"]>
 export type usersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   answers?: boolean | Prisma.users$answersArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
@@ -497,8 +529,9 @@ export type $usersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id: number
     email: string
     password: string
-    default_playlist_id: number | null
-    created_at: Date | null
+    name: string | null
+    default_playlist_id: number
+    created_at: Date
   }, ExtArgs["result"]["users"]>
   composites: {}
 }
@@ -872,6 +905,7 @@ export interface usersFieldRefs {
   readonly id: Prisma.FieldRef<"users", 'Int'>
   readonly email: Prisma.FieldRef<"users", 'String'>
   readonly password: Prisma.FieldRef<"users", 'String'>
+  readonly name: Prisma.FieldRef<"users", 'String'>
   readonly default_playlist_id: Prisma.FieldRef<"users", 'Int'>
   readonly created_at: Prisma.FieldRef<"users", 'DateTime'>
 }

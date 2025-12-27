@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import healthRoutes from './health';
-import questionsRoutes from "./questions";
+// import questionsRoutes from "./questions";
 import answersRoutes from "./answers";
 import dayRoutes from "./day";
 import loginRoutes from "./login";
