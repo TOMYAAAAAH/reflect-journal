@@ -203,7 +203,7 @@ export type AnswersGroupByOutputType = {
   question_id: number
   answer_text: string
   year: number
-  created_at: Date | null
+  created_at: Date
   _count: AnswersCountAggregateOutputType | null
   _avg: AnswersAvgAggregateOutputType | null
   _sum: AnswersSumAggregateOutputType | null
@@ -235,7 +235,7 @@ export type answersWhereInput = {
   question_id?: Prisma.IntFilter<"answers"> | number
   answer_text?: Prisma.StringFilter<"answers"> | string
   year?: Prisma.IntFilter<"answers"> | number
-  created_at?: Prisma.DateTimeNullableFilter<"answers"> | Date | string | null
+  created_at?: Prisma.DateTimeFilter<"answers"> | Date | string
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   questions?: Prisma.XOR<Prisma.QuestionsScalarRelationFilter, Prisma.questionsWhereInput>
 }
@@ -246,7 +246,7 @@ export type answersOrderByWithRelationInput = {
   question_id?: Prisma.SortOrder
   answer_text?: Prisma.SortOrder
   year?: Prisma.SortOrder
-  created_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_at?: Prisma.SortOrder
   users?: Prisma.usersOrderByWithRelationInput
   questions?: Prisma.questionsOrderByWithRelationInput
   _relevance?: Prisma.answersOrderByRelevanceInput
@@ -262,7 +262,7 @@ export type answersWhereUniqueInput = Prisma.AtLeast<{
   question_id?: Prisma.IntFilter<"answers"> | number
   answer_text?: Prisma.StringFilter<"answers"> | string
   year?: Prisma.IntFilter<"answers"> | number
-  created_at?: Prisma.DateTimeNullableFilter<"answers"> | Date | string | null
+  created_at?: Prisma.DateTimeFilter<"answers"> | Date | string
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   questions?: Prisma.XOR<Prisma.QuestionsScalarRelationFilter, Prisma.questionsWhereInput>
 }, "id" | "user_id_question_id_year">
@@ -273,7 +273,7 @@ export type answersOrderByWithAggregationInput = {
   question_id?: Prisma.SortOrder
   answer_text?: Prisma.SortOrder
   year?: Prisma.SortOrder
-  created_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_at?: Prisma.SortOrder
   _count?: Prisma.answersCountOrderByAggregateInput
   _avg?: Prisma.answersAvgOrderByAggregateInput
   _max?: Prisma.answersMaxOrderByAggregateInput
@@ -290,13 +290,13 @@ export type answersScalarWhereWithAggregatesInput = {
   question_id?: Prisma.IntWithAggregatesFilter<"answers"> | number
   answer_text?: Prisma.StringWithAggregatesFilter<"answers"> | string
   year?: Prisma.IntWithAggregatesFilter<"answers"> | number
-  created_at?: Prisma.DateTimeNullableWithAggregatesFilter<"answers"> | Date | string | null
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"answers"> | Date | string
 }
 
 export type answersCreateInput = {
   answer_text: string
   year: number
-  created_at?: Date | string | null
+  created_at?: Date | string
   users: Prisma.usersCreateNestedOneWithoutAnswersInput
   questions: Prisma.questionsCreateNestedOneWithoutAnswersInput
 }
@@ -307,13 +307,13 @@ export type answersUncheckedCreateInput = {
   question_id: number
   answer_text: string
   year: number
-  created_at?: Date | string | null
+  created_at?: Date | string
 }
 
 export type answersUpdateInput = {
   answer_text?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.usersUpdateOneRequiredWithoutAnswersNestedInput
   questions?: Prisma.questionsUpdateOneRequiredWithoutAnswersNestedInput
 }
@@ -324,7 +324,7 @@ export type answersUncheckedUpdateInput = {
   question_id?: Prisma.IntFieldUpdateOperationsInput | number
   answer_text?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type answersCreateManyInput = {
@@ -333,13 +333,13 @@ export type answersCreateManyInput = {
   question_id: number
   answer_text: string
   year: number
-  created_at?: Date | string | null
+  created_at?: Date | string
 }
 
 export type answersUpdateManyMutationInput = {
   answer_text?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type answersUncheckedUpdateManyInput = {
@@ -348,7 +348,7 @@ export type answersUncheckedUpdateManyInput = {
   question_id?: Prisma.IntFieldUpdateOperationsInput | number
   answer_text?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type answersOrderByRelevanceInput = {
@@ -426,8 +426,8 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
 export type answersCreateNestedManyWithoutQuestionsInput = {
@@ -517,7 +517,7 @@ export type answersUncheckedUpdateManyWithoutUsersNestedInput = {
 export type answersCreateWithoutQuestionsInput = {
   answer_text: string
   year: number
-  created_at?: Date | string | null
+  created_at?: Date | string
   users: Prisma.usersCreateNestedOneWithoutAnswersInput
 }
 
@@ -526,7 +526,7 @@ export type answersUncheckedCreateWithoutQuestionsInput = {
   user_id: number
   answer_text: string
   year: number
-  created_at?: Date | string | null
+  created_at?: Date | string
 }
 
 export type answersCreateOrConnectWithoutQuestionsInput = {
@@ -564,13 +564,13 @@ export type answersScalarWhereInput = {
   question_id?: Prisma.IntFilter<"answers"> | number
   answer_text?: Prisma.StringFilter<"answers"> | string
   year?: Prisma.IntFilter<"answers"> | number
-  created_at?: Prisma.DateTimeNullableFilter<"answers"> | Date | string | null
+  created_at?: Prisma.DateTimeFilter<"answers"> | Date | string
 }
 
 export type answersCreateWithoutUsersInput = {
   answer_text: string
   year: number
-  created_at?: Date | string | null
+  created_at?: Date | string
   questions: Prisma.questionsCreateNestedOneWithoutAnswersInput
 }
 
@@ -579,7 +579,7 @@ export type answersUncheckedCreateWithoutUsersInput = {
   question_id: number
   answer_text: string
   year: number
-  created_at?: Date | string | null
+  created_at?: Date | string
 }
 
 export type answersCreateOrConnectWithoutUsersInput = {
@@ -613,13 +613,13 @@ export type answersCreateManyQuestionsInput = {
   user_id: number
   answer_text: string
   year: number
-  created_at?: Date | string | null
+  created_at?: Date | string
 }
 
 export type answersUpdateWithoutQuestionsInput = {
   answer_text?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.usersUpdateOneRequiredWithoutAnswersNestedInput
 }
 
@@ -628,7 +628,7 @@ export type answersUncheckedUpdateWithoutQuestionsInput = {
   user_id?: Prisma.IntFieldUpdateOperationsInput | number
   answer_text?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type answersUncheckedUpdateManyWithoutQuestionsInput = {
@@ -636,7 +636,7 @@ export type answersUncheckedUpdateManyWithoutQuestionsInput = {
   user_id?: Prisma.IntFieldUpdateOperationsInput | number
   answer_text?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type answersCreateManyUsersInput = {
@@ -644,13 +644,13 @@ export type answersCreateManyUsersInput = {
   question_id: number
   answer_text: string
   year: number
-  created_at?: Date | string | null
+  created_at?: Date | string
 }
 
 export type answersUpdateWithoutUsersInput = {
   answer_text?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   questions?: Prisma.questionsUpdateOneRequiredWithoutAnswersNestedInput
 }
 
@@ -659,7 +659,7 @@ export type answersUncheckedUpdateWithoutUsersInput = {
   question_id?: Prisma.IntFieldUpdateOperationsInput | number
   answer_text?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type answersUncheckedUpdateManyWithoutUsersInput = {
@@ -667,7 +667,7 @@ export type answersUncheckedUpdateManyWithoutUsersInput = {
   question_id?: Prisma.IntFieldUpdateOperationsInput | number
   answer_text?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -712,7 +712,7 @@ export type $answersPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     question_id: number
     answer_text: string
     year: number
-    created_at: Date | null
+    created_at: Date
   }, ExtArgs["result"]["answers"]>
   composites: {}
 }

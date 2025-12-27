@@ -196,7 +196,7 @@ export type QuestionsGroupByOutputType = {
   day: number
   month: number
   question_text: string
-  playlist_id: number | null
+  playlist_id: number
   _count: QuestionsCountAggregateOutputType | null
   _avg: QuestionsAvgAggregateOutputType | null
   _sum: QuestionsSumAggregateOutputType | null
@@ -227,7 +227,7 @@ export type questionsWhereInput = {
   day?: Prisma.IntFilter<"questions"> | number
   month?: Prisma.IntFilter<"questions"> | number
   question_text?: Prisma.StringFilter<"questions"> | string
-  playlist_id?: Prisma.IntNullableFilter<"questions"> | number | null
+  playlist_id?: Prisma.IntFilter<"questions"> | number
   answers?: Prisma.AnswersListRelationFilter
 }
 
@@ -236,7 +236,7 @@ export type questionsOrderByWithRelationInput = {
   day?: Prisma.SortOrder
   month?: Prisma.SortOrder
   question_text?: Prisma.SortOrder
-  playlist_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  playlist_id?: Prisma.SortOrder
   answers?: Prisma.answersOrderByRelationAggregateInput
   _relevance?: Prisma.questionsOrderByRelevanceInput
 }
@@ -250,7 +250,7 @@ export type questionsWhereUniqueInput = Prisma.AtLeast<{
   day?: Prisma.IntFilter<"questions"> | number
   month?: Prisma.IntFilter<"questions"> | number
   question_text?: Prisma.StringFilter<"questions"> | string
-  playlist_id?: Prisma.IntNullableFilter<"questions"> | number | null
+  playlist_id?: Prisma.IntFilter<"questions"> | number
   answers?: Prisma.AnswersListRelationFilter
 }, "id" | "day_month_playlist_id">
 
@@ -259,7 +259,7 @@ export type questionsOrderByWithAggregationInput = {
   day?: Prisma.SortOrder
   month?: Prisma.SortOrder
   question_text?: Prisma.SortOrder
-  playlist_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  playlist_id?: Prisma.SortOrder
   _count?: Prisma.questionsCountOrderByAggregateInput
   _avg?: Prisma.questionsAvgOrderByAggregateInput
   _max?: Prisma.questionsMaxOrderByAggregateInput
@@ -275,14 +275,14 @@ export type questionsScalarWhereWithAggregatesInput = {
   day?: Prisma.IntWithAggregatesFilter<"questions"> | number
   month?: Prisma.IntWithAggregatesFilter<"questions"> | number
   question_text?: Prisma.StringWithAggregatesFilter<"questions"> | string
-  playlist_id?: Prisma.IntNullableWithAggregatesFilter<"questions"> | number | null
+  playlist_id?: Prisma.IntWithAggregatesFilter<"questions"> | number
 }
 
 export type questionsCreateInput = {
   day: number
   month: number
   question_text: string
-  playlist_id?: number | null
+  playlist_id?: number
   answers?: Prisma.answersCreateNestedManyWithoutQuestionsInput
 }
 
@@ -291,7 +291,7 @@ export type questionsUncheckedCreateInput = {
   day: number
   month: number
   question_text: string
-  playlist_id?: number | null
+  playlist_id?: number
   answers?: Prisma.answersUncheckedCreateNestedManyWithoutQuestionsInput
 }
 
@@ -299,7 +299,7 @@ export type questionsUpdateInput = {
   day?: Prisma.IntFieldUpdateOperationsInput | number
   month?: Prisma.IntFieldUpdateOperationsInput | number
   question_text?: Prisma.StringFieldUpdateOperationsInput | string
-  playlist_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  playlist_id?: Prisma.IntFieldUpdateOperationsInput | number
   answers?: Prisma.answersUpdateManyWithoutQuestionsNestedInput
 }
 
@@ -308,7 +308,7 @@ export type questionsUncheckedUpdateInput = {
   day?: Prisma.IntFieldUpdateOperationsInput | number
   month?: Prisma.IntFieldUpdateOperationsInput | number
   question_text?: Prisma.StringFieldUpdateOperationsInput | string
-  playlist_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  playlist_id?: Prisma.IntFieldUpdateOperationsInput | number
   answers?: Prisma.answersUncheckedUpdateManyWithoutQuestionsNestedInput
 }
 
@@ -317,14 +317,14 @@ export type questionsCreateManyInput = {
   day: number
   month: number
   question_text: string
-  playlist_id?: number | null
+  playlist_id?: number
 }
 
 export type questionsUpdateManyMutationInput = {
   day?: Prisma.IntFieldUpdateOperationsInput | number
   month?: Prisma.IntFieldUpdateOperationsInput | number
   question_text?: Prisma.StringFieldUpdateOperationsInput | string
-  playlist_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  playlist_id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type questionsUncheckedUpdateManyInput = {
@@ -332,7 +332,7 @@ export type questionsUncheckedUpdateManyInput = {
   day?: Prisma.IntFieldUpdateOperationsInput | number
   month?: Prisma.IntFieldUpdateOperationsInput | number
   question_text?: Prisma.StringFieldUpdateOperationsInput | string
-  playlist_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  playlist_id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type QuestionsScalarRelationFilter = {
@@ -404,19 +404,11 @@ export type questionsUpdateOneRequiredWithoutAnswersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.questionsUpdateToOneWithWhereWithoutAnswersInput, Prisma.questionsUpdateWithoutAnswersInput>, Prisma.questionsUncheckedUpdateWithoutAnswersInput>
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type questionsCreateWithoutAnswersInput = {
   day: number
   month: number
   question_text: string
-  playlist_id?: number | null
+  playlist_id?: number
 }
 
 export type questionsUncheckedCreateWithoutAnswersInput = {
@@ -424,7 +416,7 @@ export type questionsUncheckedCreateWithoutAnswersInput = {
   day: number
   month: number
   question_text: string
-  playlist_id?: number | null
+  playlist_id?: number
 }
 
 export type questionsCreateOrConnectWithoutAnswersInput = {
@@ -447,7 +439,7 @@ export type questionsUpdateWithoutAnswersInput = {
   day?: Prisma.IntFieldUpdateOperationsInput | number
   month?: Prisma.IntFieldUpdateOperationsInput | number
   question_text?: Prisma.StringFieldUpdateOperationsInput | string
-  playlist_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  playlist_id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type questionsUncheckedUpdateWithoutAnswersInput = {
@@ -455,7 +447,7 @@ export type questionsUncheckedUpdateWithoutAnswersInput = {
   day?: Prisma.IntFieldUpdateOperationsInput | number
   month?: Prisma.IntFieldUpdateOperationsInput | number
   question_text?: Prisma.StringFieldUpdateOperationsInput | string
-  playlist_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  playlist_id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -525,7 +517,7 @@ export type $questionsPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     day: number
     month: number
     question_text: string
-    playlist_id: number | null
+    playlist_id: number
   }, ExtArgs["result"]["questions"]>
   composites: {}
 }
