@@ -1,32 +1,29 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest'
+import {describe, it, expect, beforeAll, afterAll} from 'vitest'
 import request from 'supertest'
-import { FastifyInstance } from "fastify";
-import { buildApp } from '../src/app';
+import {FastifyInstance} from "fastify";
+import {buildApp} from '../src/app';
 
 let app: FastifyInstance;
 
-describe('Overall health check', () => {
+beforeAll(async () => {
+    app = buildApp();
+    await app.ready();
+});
+afterAll(async () => {
+    await app.close();
+});
 
-    beforeAll(async () => {
-        app = buildApp();
-        await app.ready();
-    });
-    afterAll(async () => {
-        await app.close();
-    });
+it('✔️ 200 index', async () => {
+    const res = await request(app.server).get('/v1')
+    expect(res.statusCode).toBe(200)
+})
 
-    it('API index should return 200', async () => {
-        const res = await request(app.server).get('/v1')
-        expect(res.statusCode).toBe(200)
-    })
+it('✔️ 200 health check ok', async () => {
+    const res = await request(app.server).get('/v1/health')
+    expect(res.statusCode).toBe(200)
+})
 
-    it('API should be healthy', async () => {
-        const res = await request(app.server).get('/v1/health')
-        expect(res.statusCode).toBe(200)
-    })
-
-    it('invalid url should return 404', async () => {
-        const res = await request(app.server).get('/v1/invalid-url')
-        expect(res.statusCode).toBe(404)
-    })
+it('✖️ 404 invalid url', async () => {
+    const res = await request(app.server).get('/v1/invalid-url')
+    expect(res.statusCode).toBe(404)
 })

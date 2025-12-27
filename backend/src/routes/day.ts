@@ -1,6 +1,7 @@
 import {FastifyInstance} from 'fastify';
 import {prisma} from '../prisma/prisma';
 import getValidatedPlaylistId from '../helper/validatePlaylistId';
+import JwtPayload from "../types/JwtPayload";
 
 export default async function dayRoutes(fastify: FastifyInstance) {
 
@@ -16,6 +17,12 @@ export default async function dayRoutes(fastify: FastifyInstance) {
             return reply.status(400).send({error: 'Invalid playlist ID'});
         }
 
+        let userId: string | null = null;
+        try {
+            const payload = await request.jwtVerify<JwtPayload>();
+            userId = payload.userId;
+        } catch {}
+
         try {
             const question = await prisma.questions.findFirst({
                 where: {
@@ -29,11 +36,17 @@ export default async function dayRoutes(fastify: FastifyInstance) {
                 return reply.status(404).send({error: 'Question not found'});
             }
 
-            const answers = await prisma.answers.findMany({
-                where: {question_id: Number(question.id)},
-            })
+            if (userId) {
+                const answers = await prisma.answers.findMany({
+                    where: {
+                        question_id: Number(question.id),
+                        user_id: Number(userId)
+                    },
+                })
+                return reply.status(200).send({question, answers});
+            }
+            return reply.status(200).send({question, answers: []});
 
-            return reply.status(200).send({question, answers});
 
         } catch (err) {
             console.error(err);
@@ -56,6 +69,12 @@ export default async function dayRoutes(fastify: FastifyInstance) {
             return reply.status(400).send({error: 'Invalid playlist ID'});
         }
 
+        let userId: string | null = null;
+        try {
+            const payload = await request.jwtVerify<JwtPayload>();
+            userId = payload.userId;
+        } catch {}
+
         try {
             const question = await prisma.questions.findFirst({
                 where: {
@@ -69,11 +88,17 @@ export default async function dayRoutes(fastify: FastifyInstance) {
                 return reply.status(404).send({error: 'Question not found'});
             }
 
-            const answers = await prisma.answers.findMany({
-                where: {question_id: Number(question.id)},
-            })
+            if (userId) {
+                const answers = await prisma.answers.findMany({
+                    where: {
+                        question_id: Number(question.id),
+                        user_id: Number(userId)
+                    },
+                })
+                return reply.status(200).send({question, answers});
+            }
+            return reply.status(200).send({question, answers: []});
 
-            return reply.status(200).send({question, answers});
 
         } catch (err) {
             console.error(err);

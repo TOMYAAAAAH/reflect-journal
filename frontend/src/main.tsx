@@ -9,16 +9,20 @@ import Profile from './routes/Profile.tsx'
 import Year from './routes/Year.tsx'
 import Month from './routes/Month.jsx'
 import Login from './routes/Login.tsx'
+import Register from './routes/Register.tsx'
+import NotFound from "./routes/NotFound.tsx";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
-    { path: "/", element: <Day today={true} /> },
+    { path: "/", element: <Day today={true}/> },
     { path: "/day/:month/:day", element: <Day today={false}/> },
     { path: "/year", element: <Year /> },
     { path: "/month/:targetMonth?", element: <Month /> },
     { path: "/login", element: <Login /> },
+    { path: "/register", element: <Register /> },
     { path: "/profile", element: <Profile /> },
+    { path: "*", element: <NotFound /> },
 ]);
 
 createRoot(document.getElementById('root')!).render(
