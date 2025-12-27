@@ -149,7 +149,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
         try {
             input = getParams(request)
         } catch {
-            return reply.status(400).send({error: 'Invalid body or params'})
+            return reply.status(400).send({error: 'Invalid params'})
         }
         const {questionId, year} = input
 
