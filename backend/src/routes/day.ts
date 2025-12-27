@@ -50,24 +50,27 @@ export default async function dayRoutes(fastify: FastifyInstance) {
                     where: {
                         id: Number(userId)
                     },
-                })
+                });
+                if (!user) {
+                    return reply.status(404).send({error: 'User not found'});
+                }
 
                 const startYear = user.created_at.getFullYear();
                 const endYear = new Date().getFullYear();
 
-                const answerDto: { content: string, year: number, isExisting: boolean }[] = [];
+                const answerDto: { answer_text: string, year: number, isExisting: boolean }[] = [];
 
                 for (let year = startYear; year <= endYear; year++) {
                     const existing = answers.find(a => a.year === year);
                     answerDto.push({
                         year,
-                        content: existing ? existing.answer_text : "",
+                        answer_text: existing ? existing.answer_text : "",
                         isExisting: !!existing
                     });
                 }
                 console.log(answerDto);
 
-                return reply.status(200).send({question, answers});
+                return reply.status(200).send({question, answerDto});
             }
 
             // RETURN EMPTY ANSWERS IF NOT CONNECTED

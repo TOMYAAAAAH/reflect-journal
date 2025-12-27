@@ -3,27 +3,27 @@ import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
 import {useState} from "react";
 
-export default function AnswerInput({answers}: { answers: Answer[] }) {
+export default function AnswerInput({answers, questionId}: { answers: Answer[], questionId: number }) {
 
 
-    const [values, setValues] = useState<Record<number, string>>({}) // answer id, answer text
+    const [values, setValues] = useState<Record<number, string>>({}) // answer year, answer text
 
     function sendNewAnswer(answer: Answer) {
         console.log(values[answer.year])
 
         if (values[answer.year]=='') {
-            deleteAnswer.mutate(answer.id)
+            deleteAnswer.mutate(answer.year)
             return
         }
 
-        saveAnswer.mutate({id: answer.id, answer_text: values[answer.year]})
+        saveAnswer.mutate({year: answer.year, answer_text: values[answer.year]})
     }
 
     const qc = useQueryClient()
 
     const saveAnswer = useMutation({
-        mutationFn: (data: { id: number, answer_text: string }) =>
-            api('/answers/' + data.id, {
+        mutationFn: (data: { year: number, answer_text: string }) =>
+            api(`/answers/question/${questionId}/year/${data.year}`, {
                 method: 'PUT',
                 body: JSON.stringify({content: data.answer_text}),
             }),
@@ -33,8 +33,8 @@ export default function AnswerInput({answers}: { answers: Answer[] }) {
     })
 
     const deleteAnswer = useMutation({
-        mutationFn: ( id: number ) =>
-            api('/answers/' + id, {
+        mutationFn: ( year: number ) =>
+            api(`/answers/question/${questionId}/year/${year}`, {
                 method: 'DELETE',
             }),
         onSuccess: () => {
