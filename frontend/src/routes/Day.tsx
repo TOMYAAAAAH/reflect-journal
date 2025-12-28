@@ -58,7 +58,7 @@ export default function Day({today}: { today: boolean }) {
             {todayData && (
                 <>
                     <Question question={todayData.question}/>
-                    <AnswerInput answers={todayData.answerDto} questionId={todayData.question.id}/>
+                    <AnswerInput answers={todayData.answers} questionId={todayData.question.id}/>
                 </>
             )}
             {/*
