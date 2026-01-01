@@ -9,29 +9,28 @@ export default function Day({today}: { today: boolean }) {
 
     let {month, day} = useParams()
     let dayUrl: string;
-
-    if (today) {
-        dayUrl = '/today'
-        const todayDate = new Date();
-        month = (todayDate.getMonth()+1).toString();
-        day = todayDate.getDate().toString();
-    } else {
-        dayUrl = `/day/${month}/${day}`
-    }
-
     const navigate = useNavigate();
 
-    const {data: todayData, isLoading: todayLoading, error: todayError} = useQuery({
-        queryKey: ['day', month, day],
-        queryFn: () => api(dayUrl)
+    if (today) {
+        dayUrl = 'today'
+        const todayDate = new Date();
+        month = (todayDate.getMonth() + 1).toString();
+        day = todayDate.getDate().toString();
+    } else {
+        dayUrl = `day/${month}/${day}`
+    }
+
+    const {data: questionData, isLoading: questionLoading, error: questionError} = useQuery({
+        queryKey: ['question', month, day],
+        queryFn: () => api(`/questions/${dayUrl}`)
     });
 
-/*
-    const {data: indexData, isLoading: indexLoading, error: indexError} = useQuery({
-        queryKey: ['health'],
-        queryFn: () => api('/health')
+    const {data: answersData, isLoading: answersLoading, error: answersError} = useQuery({
+        queryKey: ['answers', month, day],
+        queryFn: () => api(`/answers/${dayUrl}`)
     });
-*/
+
+
     const navigateDay = (shift: number) => {
         const {targetMonth, targetDay} = navigateDayUtil(Number(month), Number(day), shift);
         navigate(`/day/${targetMonth}/${targetDay}`);
@@ -53,14 +52,29 @@ export default function Day({today}: { today: boolean }) {
             <i className={'pi pi-chevron-left'} onClick={() => navigateDay(-1)}></i>
             <i className={'pi pi-chevron-right'} onClick={() => navigateDay(1)}></i>
 
-            {todayLoading && <p>Loading...</p>}
-            {todayError && <p>Error loading question</p>}
-            {todayData && (
-                <>
-                    <Question question={todayData.question}/>
-                    <AnswerInput answers={todayData.answers} questionId={todayData.question.id}/>
-                </>
-            )}
+
+            {month && day && <>
+
+                {questionLoading && <p>Loading...</p>}
+                {questionError && <p>Error loading question</p>}
+                {questionData && (
+                    <>
+                        <Question question={questionData.question}/>
+                    </>
+                )}
+
+                {answersLoading && <p>Loading...</p>}
+                {answersError && <p>Error loading question</p>}
+                {answersData && (
+                    <>
+                        <AnswerInput answers={answersData.answers} questionId={questionData.question.id} month={month} day={day}/>
+                    </>
+                )}
+
+            </>
+
+            }
+
             {/*
             <hr/>
             <p>Health :
