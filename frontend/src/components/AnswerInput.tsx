@@ -15,17 +15,19 @@ export default function AnswerInput({answers, questionId, month, day}: {
 
     function sendNewAnswer(answer: Answer) {
 
-        console.log(values[answer.year], answer.answer_text)
-
-
-        if (values[answer.year] === answer.answer_text || !values[answer.year]) {
+        if (values[answer.year] === answer.answer_text) { // same as before
             console.log('no change')
             return
         }
 
-        if (values[answer.year] === '') {
+        if (values[answer.year] === '') { // deletion
             console.log('delete')
             deleteAnswer.mutate({year: answer.year})
+            return
+        }
+
+        if (!values[answer.year]) { // value not inited
+            console.log('no change')
             return
         }
 
@@ -36,7 +38,6 @@ export default function AnswerInput({answers, questionId, month, day}: {
             console.log('post')
             createAnswer.mutate({year: answer.year, answer_text: values[answer.year]})
         }
-
     }
 
     const qc = useQueryClient()
