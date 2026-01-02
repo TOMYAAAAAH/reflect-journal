@@ -10,22 +10,21 @@ export default function AnswerInput({answers, questionId, month, day}: {
     day: string
 }) {
 
-    const DEBOUNCE_MS = 2000;
+    const DEBOUNCE_MS = 5000;
 
     const [answerTextByYear, setAnswerTextByYear] = useState<Record<number, string>>({})
     const [isSavingByYear, setIsSavingByYear] = useState<Record<number, boolean>>({})
+    const [isErrorByYear, setIsErrorByYear] = useState<Record<number, boolean>>({})
 
 
     function handleChange(answer: Answer, newText: string) {
         setAnswerTextByYear(v => ({...v, [answer.year]: newText}))
         debounceSave(answer, newText)
-        console.log('change in 2sec')
     }
 
     function handleBlur(answer: Answer) {
         const newText = answerTextByYear[answer.year];
         debounceSave(answer, newText, 1)
-        console.log('blur')
     }
 
     const timers = useRef<Record<number, number>>({})
@@ -38,7 +37,6 @@ export default function AnswerInput({answers, questionId, month, day}: {
         timers.current[answer.year] = setTimeout(() => {
 
             saveNewAnswer(answer, newText)
-            setIsSavingByYear(v => ({...v, [answer.year]: false}))
             delete timers.current[answer.year]
 
         }, delay)
@@ -46,33 +44,30 @@ export default function AnswerInput({answers, questionId, month, day}: {
 
 
     function saveNewAnswer(answer: Answer, newText: string) {
+        console.log(answer)
 
         if (newText === answer.answer_text) { // same as before
-            console.log('no change')
+            setIsSavingByYear(v => ({...v, [answer.year]: false}))
             return
         }
 
         if (newText === '') { // deletion
-            console.log('delete')
             deleteAnswer.mutate({year: answer.year})
             return
         }
 
         if (!newText) { // value not inited
-            console.log('no change')
+            setIsSavingByYear(v => ({...v, [answer.year]: false}))
             return
         }
 
         if (answer.isExisting) {
-            console.log('put')
             saveAnswer.mutate({year: answer.year, answer_text: newText})
         } else {
-            console.log('post')
             createAnswer.mutate({year: answer.year, answer_text: newText})
         }
     }
 
-    const qc = useQueryClient()
 
     const createAnswer = useMutation({
         mutationFn: (data: { year: number, answer_text: string }) =>
@@ -80,9 +75,12 @@ export default function AnswerInput({answers, questionId, month, day}: {
                 method: 'POST',
                 body: JSON.stringify({content: data.answer_text}),
             }),
-        onSuccess: () => {
-            qc.invalidateQueries({queryKey: ['answers', month, day]})
+        onSuccess: (_data, data) => {
+            apiSuccess(data.year)
         },
+        onError: (_data, data) => {
+            apiError(data.year, _data)
+        }
     })
 
     const saveAnswer = useMutation({
@@ -91,9 +89,12 @@ export default function AnswerInput({answers, questionId, month, day}: {
                 method: 'PUT',
                 body: JSON.stringify({content: data.answer_text}),
             }),
-        onSuccess: () => {
-            qc.invalidateQueries({queryKey: ['answers', month, day]})
+        onSuccess: (_data, data) => {
+            apiSuccess(data.year)
         },
+        onError: (_data, data) => {
+            apiError(data.year, _data)
+        }
     })
 
     const deleteAnswer = useMutation({
@@ -101,10 +102,27 @@ export default function AnswerInput({answers, questionId, month, day}: {
             api(`/answers/question/${questionId}/year/${data.year}`, {
                 method: 'DELETE',
             }),
-        onSuccess: () => {
-            qc.invalidateQueries({queryKey: ['answers', month, day]})
+        onSuccess: (_data, data) => {
+            apiSuccess(data.year)
         },
+        onError: (_data, data) => {
+            apiError(data.year, _data)
+        }
     })
+
+    const qc = useQueryClient()
+
+    function apiSuccess(year: number) {
+        console.log(year)
+        qc.invalidateQueries({queryKey: ['answers', month, day]})
+        setIsSavingByYear(v => ({...v, [year]: false}))
+        setIsErrorByYear(v => ({...v, [year]: false}))
+    }
+
+    function apiError(year: number, error: Error) {
+        setIsErrorByYear(v => ({...v, [year]: true}))
+        console.error(error)
+    }
 
     return (
         <div className={'flex flex-col gap-4'}>
@@ -114,9 +132,13 @@ export default function AnswerInput({answers, questionId, month, day}: {
                 <div key={answer.year} className={'flex flex-col gap-2 items-start'}>
                     <p>{answer.year}
 
-                        {isSavingByYear[answer.year] ?
-                            <i className={'pi pi-refresh'}></i> :
-                            <i className={'pi pi-check'}></i>
+                        {isErrorByYear[answer.year] ?
+                            <i className={'pi pi-exclamation-triangle'}></i> :
+
+                            isSavingByYear[answer.year] ?
+                                <i className={'pi pi-refresh'}></i> :
+                                <i className={'pi pi-check'}></i>
+
                         }
 
                     </p>
@@ -130,5 +152,6 @@ export default function AnswerInput({answers, questionId, month, day}: {
 
             ))}
         </div>
-    );
+    )
+        ;
 }
