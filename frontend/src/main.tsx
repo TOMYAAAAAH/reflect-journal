@@ -3,7 +3,7 @@ import {createRoot} from 'react-dom/client'
 import './index.css'
 import {QueryClientProvider, QueryClient} from "@tanstack/react-query";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import { PostHogProvider } from 'posthog-js/react'
+// import { PostHogProvider } from 'posthog-js/react'
 
 import Day from './routes/Day.tsx'
 import Profile from './routes/Profile.tsx'
@@ -12,25 +12,25 @@ import Month from './routes/Month.jsx'
 import Login from './routes/Login.tsx'
 import Register from './routes/Register.tsx'
 import NotFound from "./routes/NotFound.tsx";
-import posthog from "posthog-js";
+// import posthog from "posthog-js";
 
 const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            onError: (error: any) => {
-                posthog.captureException('query_error', {
-                    message: error.message,
-                })
-            },
-        },
-        mutations: {
-            onError: (error: any) => {
-                posthog.captureException('mutation_error', {
-                    message: error.message,
-                })
-            },
-        },
-    },
+    // defaultOptions: {
+    //     queries: {
+    //         onError: (error: any) => {
+    //             posthog.captureException('query_error', {
+    //                 message: error.message,
+    //             })
+    //         },
+    //     },
+    //     mutations: {
+    //         onError: (error: any) => {
+    //             posthog.captureException('mutation_error', {
+    //                 message: error.message,
+    //             })
+    //         },
+    //     },
+    // },
 })
 
 declare global {
@@ -53,10 +53,10 @@ const router = createBrowserRouter([
     {path: "*", element: <NotFound/>},
 ]);
 
-const options = {
-    api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
-    defaults: '2025-11-30',
-} as const
+// const options = {
+//     api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
+//     defaults: '2025-11-30',
+// }
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
