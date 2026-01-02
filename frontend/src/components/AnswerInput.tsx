@@ -1,7 +1,7 @@
 import type {Answer} from "../types/Answer.ts";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
-import {useState} from "react";
+import {useRef, useState} from "react";
 
 export default function AnswerInput({answers, questionId, month, day}: {
     answers: Answer[],
@@ -10,33 +10,65 @@ export default function AnswerInput({answers, questionId, month, day}: {
     day: string
 }) {
 
+    const DEBOUNCE_MS = 2000;
 
-    const [values, setValues] = useState<Record<number, string>>({}) // answer year, answer text
+    const [answerTextByYear, setAnswerTextByYear] = useState<Record<number, string>>({})
+    const [isSavingByYear, setIsSavingByYear] = useState<Record<number, boolean>>({})
 
-    function sendNewAnswer(answer: Answer) {
 
-        if (values[answer.year] === answer.answer_text) { // same as before
+    function handleChange(answer: Answer, newText: string) {
+        setAnswerTextByYear(v => ({...v, [answer.year]: newText}))
+        debounceSave(answer, newText)
+        console.log('change in 2sec')
+    }
+
+    function handleBlur(answer: Answer) {
+        const newText = answerTextByYear[answer.year];
+        debounceSave(answer, newText, 1)
+        console.log('blur')
+    }
+
+    const timers = useRef<Record<number, number>>({})
+
+    function debounceSave(answer: Answer, newText: string, delay: number = DEBOUNCE_MS) {
+
+        setIsSavingByYear(v => ({...v, [answer.year]: true}))
+        clearTimeout(timers.current[answer.year])
+
+        timers.current[answer.year] = setTimeout(() => {
+
+            saveNewAnswer(answer, newText)
+            setIsSavingByYear(v => ({...v, [answer.year]: false}))
+            delete timers.current[answer.year]
+
+        }, delay)
+    }
+
+
+    function saveNewAnswer(answer: Answer, newText: string) {
+
+        if (newText === answer.answer_text) { // same as before
             console.log('no change')
             return
         }
 
-        if (values[answer.year] === '') { // deletion
+        if (newText === '') { // deletion
             console.log('delete')
             deleteAnswer.mutate({year: answer.year})
             return
         }
 
-        if (!values[answer.year]) { // value not inited
+        if (!newText) { // value not inited
             console.log('no change')
             return
         }
 
         if (answer.isExisting) {
             console.log('put')
-            saveAnswer.mutate({year: answer.year, answer_text: values[answer.year]})
+            saveAnswer.mutate({year: answer.year, answer_text: newText})
         } else {
             console.log('post')
-            createAnswer.mutate({year: answer.year, answer_text: values[answer.year]})
+            createAnswer.mutate({year: answer.year, answer_text: newText})
         }
     }
 
@@ -79,15 +111,20 @@ export default function AnswerInput({answers, questionId, month, day}: {
 
             {answers.map((answer: Answer) => (
 
-                <div key={answer.year}>
-                    <p>{answer.year}</p>
-                    <textarea value={values[answer.year] ?? answer.answer_text}
-                              onChange={e =>
-                                  setValues(v => ({...v, [answer.year]: e.target.value}))
-                              } className={'border border-pink-600 rounded-lg p-2 w-96'}>
-                    </textarea>
+                <div key={answer.year} className={'flex flex-col gap-2 items-start'}>
+                    <p>{answer.year}
 
-                    <button onClick={() => sendNewAnswer(answer)}>Modifier</button>
+                        {isSavingByYear[answer.year] ?
+                            <i className={'pi pi-refresh'}></i> :
+                            <i className={'pi pi-check'}></i>
+                        }
+
+                    </p>
+                    <textarea value={answerTextByYear[answer.year] ?? answer.answer_text}
+                              onChange={e => handleChange(answer, e.target.value)}
+                              onBlur={() => handleBlur(answer)}
+                              className={'border border-pink-600 rounded-lg p-2 w-96'}>
+                    </textarea>
 
                 </div>
 
