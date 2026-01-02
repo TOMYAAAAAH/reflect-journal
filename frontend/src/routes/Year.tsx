@@ -6,6 +6,12 @@ export default function Year() {
     const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
 
+    const filledDays: Record<number, number[]> = {1: [1, 10, 31], 3: [10, 11, 12, 13, 14]};
+
+    function isDayFilled(month: number, day: number): boolean {
+        return filledDays[month]?.includes(day) || false;
+    }
+
     return (
 
         <div className={'grid grid-cols-3 gap-6'}>
@@ -21,11 +27,18 @@ export default function Year() {
                                 {days.map((day) => {
 
                                         return (
+<>
+                                            { isDayFilled(month, day) ?
+                                                <div className={'p-1 text-pink-500'} key={day}>
+                                                    {day}
+                                                </div> :
+                                                <div className={'p-1'} key={day}>
+                                                    {day}
+                                                </div>
 
-                                            <div className={'p-1'} key={day}>
-                                                {day}
-                                            </div>
 
+                                            }
+</>
                                         )
                                     }
                                 )}

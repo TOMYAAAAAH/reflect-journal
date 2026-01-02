@@ -5,7 +5,15 @@ import {getUserIdFromToken} from "../helper/getUserIdFromToken";
 
 export default async function calendarRoutes(fastify: FastifyInstance) {
 
-    fastify.get('/calendar', async (request, reply) => {
+    fastify.get('/calendar/:year', async (request, reply) => {
+
+
+        const {year} = request.params as { year: string }
+
+        if (!Number.isInteger(Number(year))) {
+            return reply.status(400).send({error: 'Invalid year'});
+        }
+
 
         let userId: number;
         try {
@@ -17,11 +25,28 @@ export default async function calendarRoutes(fastify: FastifyInstance) {
 
         try {
 
-            const user = await prisma.users.findUnique({
-                where: {id: userId},
+            const answers = await prisma.answers.findMany({
+                where: {year: Number(year), user_id: userId},
             })
 
-            return reply.status(200).send({user})
+            const questionIds = answers.map(answer => answer.question_id);
+
+            const questions = await prisma.questions.findMany({
+                where: {id: {in: questionIds}},
+            })
+
+            const dates: Record<number, number[]> = {}
+
+            questions.forEach(question => {
+                if (!dates[question.month]) {
+                    dates[question.month] = [question.day]
+                }
+                else {
+                    dates[question.month].push(question.day)
+                }
+            })
+
+            return reply.status(200).send({dates})
 
         } catch (err) {
             console.error(err);
