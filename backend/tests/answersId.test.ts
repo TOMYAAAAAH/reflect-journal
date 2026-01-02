@@ -10,8 +10,8 @@ let createdAnswerId1: string;
 let createdAnswerId2: string;
 
 // for user_id == 1 and == 3
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwiaWF0IjoxNzY2Nzg0NzExLCJleHAiOjE3NjczODk1MTF9.6z5_NYvlaleCTd3EbnQJIpzL71vG6oRYEAWF8Gdpbqc";
-const otherToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzIiwiaWF0IjoxNzY2NzcxNDg4LCJleHAiOjE3NjczNzYyODh9.bYCiXlRWZNuUUxSLUrFVH5NFa91po8DZHGBuMDm30bQ";
+const token = process.env.JWT1;
+const otherToken = process.env.JWT3;
 
 beforeAll(async () => {
     app = buildApp();

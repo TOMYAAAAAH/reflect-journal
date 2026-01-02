@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@posthog/react": "^1.5.2",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-query": "^5.90.12",
+    "posthog-js": "^1.313.0",
     "primeicons": "^7.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

@@ -11,16 +11,30 @@ export async function api(path: string, options: RequestInit = {}) {
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
     };
 
-    const res = await fetch(BASE_URL + API_VERSION + path, {
+    const url = BASE_URL + API_VERSION + path;
+
+    const res = await fetch(url, {
         ...options,
         headers,
-        body: options.body ? options.body : undefined,
+        body: options.body ?? undefined,
     });
 
-    if (!res.ok) throw new Error(`API error\n
-    Status: ${res.status} ${res.statusText}\n
-    Route: ${options.method} ${BASE_URL + API_VERSION + path}\n
-    Body: ${options.body}
-    `);
-    return res.json();
+    let data: any;
+    try {
+        data = await res.json();
+    } catch {
+        data = null;
+    }
+
+    if (!res.ok) {
+        const err = new Error(data?.message || res.statusText || 'Unknown error') as any;
+        err.status = res.status;
+        err.statusText = res.statusText;
+        err.route = url;
+        err.method = options.method;
+        err.body = options.body;
+        throw err;
+    }
+
+    return data;
 }

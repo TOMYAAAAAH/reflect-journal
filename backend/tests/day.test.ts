@@ -7,7 +7,7 @@ import {prisma} from "../src/prisma/prisma";
 let app: FastifyInstance;
 
 // for user_id == 1
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwiaWF0IjoxNzY2Nzg0NzExLCJleHAiOjE3NjczODk1MTF9.6z5_NYvlaleCTd3EbnQJIpzL71vG6oRYEAWF8Gdpbqc";
+const token = process.env.JWT1;
 
 const today = new Date();
 const day = today.getDate();
