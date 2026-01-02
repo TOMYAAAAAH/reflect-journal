@@ -17,6 +17,10 @@ export async function api(path: string, options: RequestInit = {}) {
         body: options.body ? options.body : undefined,
     });
 
-    if (!res.ok) throw new Error("API error");
+    if (!res.ok) throw new Error(`API error\n
+    Status: ${res.status} ${res.statusText}\n
+    Route: ${options.method} ${BASE_URL + API_VERSION + path}\n
+    Body: ${options.body}
+    `);
     return res.json();
 }

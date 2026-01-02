@@ -1,7 +1,7 @@
 import type {Answer} from "../types/Answer.ts";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
-import {useState} from "react";
+import {useRef, useState} from "react";
 
 export default function AnswerInput({answers, questionId, month, day}: {
     answers: Answer[],
@@ -10,37 +10,64 @@ export default function AnswerInput({answers, questionId, month, day}: {
     day: string
 }) {
 
+    const DEBOUNCE_MS = 5000;
 
-    const [values, setValues] = useState<Record<number, string>>({}) // answer year, answer text
+    const [answerTextByYear, setAnswerTextByYear] = useState<Record<number, string>>({})
+    const [isSavingByYear, setIsSavingByYear] = useState<Record<number, boolean>>({})
+    const [isErrorByYear, setIsErrorByYear] = useState<Record<number, boolean>>({})
 
-    function sendNewAnswer(answer: Answer) {
 
-        if (values[answer.year] === answer.answer_text) { // same as before
-            console.log('no change')
+    function handleChange(answer: Answer, newText: string) {
+        setAnswerTextByYear(v => ({...v, [answer.year]: newText}))
+        debounceSave(answer, newText)
+    }
+
+    function handleBlur(answer: Answer) {
+        const newText = answerTextByYear[answer.year];
+        debounceSave(answer, newText, 1)
+    }
+
+    const timers = useRef<Record<number, number>>({})
+
+    function debounceSave(answer: Answer, newText: string, delay: number = DEBOUNCE_MS) {
+
+        setIsSavingByYear(v => ({...v, [answer.year]: true}))
+        clearTimeout(timers.current[answer.year])
+
+        timers.current[answer.year] = setTimeout(() => {
+
+            saveNewAnswer(answer, newText)
+            delete timers.current[answer.year]
+
+        }, delay)
+    }
+
+
+    function saveNewAnswer(answer: Answer, newText: string) {
+        console.log(answer)
+
+        if (newText === answer.answer_text) { // same as before
+            setIsSavingByYear(v => ({...v, [answer.year]: false}))
             return
         }
 
-        if (values[answer.year] === '') { // deletion
-            console.log('delete')
+        if (newText === '') { // deletion
             deleteAnswer.mutate({year: answer.year})
             return
         }
 
-        if (!values[answer.year]) { // value not inited
-            console.log('no change')
+        if (!newText) { // value not inited
+            setIsSavingByYear(v => ({...v, [answer.year]: false}))
             return
         }
 
         if (answer.isExisting) {
-            console.log('put')
-            saveAnswer.mutate({year: answer.year, answer_text: values[answer.year]})
+            saveAnswer.mutate({year: answer.year, answer_text: newText})
         } else {
-            console.log('post')
-            createAnswer.mutate({year: answer.year, answer_text: values[answer.year]})
+            createAnswer.mutate({year: answer.year, answer_text: newText})
         }
     }
 
-    const qc = useQueryClient()
 
     const createAnswer = useMutation({
         mutationFn: (data: { year: number, answer_text: string }) =>
@@ -48,9 +75,12 @@ export default function AnswerInput({answers, questionId, month, day}: {
                 method: 'POST',
                 body: JSON.stringify({content: data.answer_text}),
             }),
-        onSuccess: () => {
-            qc.invalidateQueries({queryKey: ['answers', month, day]})
+        onSuccess: (_data, data) => {
+            apiSuccess(data.year)
         },
+        onError: (_data, data) => {
+            apiError(data.year, _data)
+        }
     })
 
     const saveAnswer = useMutation({
@@ -59,9 +89,12 @@ export default function AnswerInput({answers, questionId, month, day}: {
                 method: 'PUT',
                 body: JSON.stringify({content: data.answer_text}),
             }),
-        onSuccess: () => {
-            qc.invalidateQueries({queryKey: ['answers', month, day]})
+        onSuccess: (_data, data) => {
+            apiSuccess(data.year)
         },
+        onError: (_data, data) => {
+            apiError(data.year, _data)
+        }
     })
 
     const deleteAnswer = useMutation({
@@ -69,29 +102,56 @@ export default function AnswerInput({answers, questionId, month, day}: {
             api(`/answers/question/${questionId}/year/${data.year}`, {
                 method: 'DELETE',
             }),
-        onSuccess: () => {
-            qc.invalidateQueries({queryKey: ['answers', month, day]})
+        onSuccess: (_data, data) => {
+            apiSuccess(data.year)
         },
+        onError: (_data, data) => {
+            apiError(data.year, _data)
+        }
     })
+
+    const qc = useQueryClient()
+
+    function apiSuccess(year: number) {
+        console.log(year)
+        qc.invalidateQueries({queryKey: ['answers', month, day]})
+        setIsSavingByYear(v => ({...v, [year]: false}))
+        setIsErrorByYear(v => ({...v, [year]: false}))
+    }
+
+    function apiError(year: number, error: Error) {
+        setIsErrorByYear(v => ({...v, [year]: true}))
+        console.error(error)
+    }
 
     return (
         <div className={'flex flex-col gap-4'}>
 
             {answers.map((answer: Answer) => (
 
-                <div key={answer.year}>
-                    <p>{answer.year}</p>
-                    <textarea value={values[answer.year] ?? answer.answer_text}
-                              onChange={e =>
-                                  setValues(v => ({...v, [answer.year]: e.target.value}))
-                              } className={'border border-pink-600 rounded-lg p-2 w-96'}>
-                    </textarea>
+                <div key={answer.year} className={'flex flex-col gap-2 items-start'}>
+                    <p>{answer.year}
 
-                    <button onClick={() => sendNewAnswer(answer)}>Modifier</button>
+                        {isErrorByYear[answer.year] ?
+                            <i className={'pi pi-exclamation-triangle'}></i> :
+
+                            isSavingByYear[answer.year] ?
+                                <i className={'pi pi-refresh'}></i> :
+                                <i className={'pi pi-check'}></i>
+
+                        }
+
+                    </p>
+                    <textarea value={answerTextByYear[answer.year] ?? answer.answer_text}
+                              onChange={e => handleChange(answer, e.target.value)}
+                              onBlur={() => handleBlur(answer)}
+                              className={'border border-pink-600 rounded-lg p-2 w-96'}>
+                    </textarea>
 
                 </div>
 
             ))}
         </div>
-    );
+    )
+        ;
 }
