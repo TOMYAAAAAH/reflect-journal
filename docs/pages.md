@@ -32,6 +32,8 @@
 - [x] Shows the question
 - [x] Shows past and current answers
 - [ ] Allow to edit any answer
+- [ ] Show max characters when near max
+- [ ] prompt to write
 
 ## Profile
 - [ ] Shows user information :
@@ -54,5 +56,6 @@
 - [ ] Shows if email is already registered
 - [x] Shows two passwords fields to confirm
 - [ ] Shows if passwords do not match
--
+- [ ] Shows if email is invalid
+- [ ] Shows if password sucks
 - [x] Offer to log in

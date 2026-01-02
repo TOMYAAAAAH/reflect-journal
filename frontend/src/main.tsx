@@ -14,6 +14,15 @@ import NotFound from "./routes/NotFound.tsx";
 
 const queryClient = new QueryClient();
 
+declare global {
+    interface Window {
+        __TANSTACK_QUERY_CLIENT__:
+            import("@tanstack/query-core").QueryClient;
+    }
+}
+
+window.__TANSTACK_QUERY_CLIENT__ = queryClient;
+
 const router = createBrowserRouter([
     { path: "/", element: <Day today={true}/> },
     { path: "/day/:month/:day", element: <Day today={false}/> },

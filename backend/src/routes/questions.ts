@@ -39,7 +39,7 @@ export default async function questionsRoutes(fastify: FastifyInstance) {
     });
 
 
-    fastify.get('/questions/date/:month/:day', async (request, reply) => {
+    fastify.get('/questions/day/:month/:day', async (request, reply) => {
 
         const {month, day} = request.params as { month: string, day: string }
 

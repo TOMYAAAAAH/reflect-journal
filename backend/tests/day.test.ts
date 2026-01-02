@@ -12,21 +12,30 @@ const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwiaWF0Ijox
 const today = new Date();
 const day = today.getDate();
 const month = today.getMonth() + 1;
+const year = today.getFullYear();
+let userCreationYear: number;
+let numberOfAnswers: number;
 
 beforeAll(async () => {
     app = buildApp();
     await app.ready();
 
-    const res = await prisma.questions.findFirst({
+    const question = await prisma.questions.findFirst({
         where: {month, day, playlist_id: 1}
     })
 
+    const user = await prisma.users.findUnique({
+        where: {id: 1}
+    })
+    userCreationYear = user.created_at.getFullYear();
+    numberOfAnswers = year - userCreationYear + 1;
+
     await prisma.answers.deleteMany({
-        where: {question_id: res.id, user_id: 1}
+        where: {question_id: question.id, user_id: 1}
     })
 
     await request(app.server)
-        .post(`/v1/answers/question/${res.id}/year/2024`)
+        .post(`/v1/answers/question/${question.id}/year/${userCreationYear}`)
         .set('Authorization', `Bearer ${token}`)
         .send({content: "Wonderful"})
 
@@ -53,7 +62,7 @@ describe('GET /today', () => {
         expect(res.statusCode).toBe(200)
         expect(res.body.question.month).toBe(month)
         expect(res.body.question.day).toBe(day)
-        expect(res.body.answers.length).toBe(2)
+        expect(res.body.answers.length).toBe(numberOfAnswers)
         expect(res.body.answers[0].isExisting).toBe(true)
         expect(res.body.answers[1].isExisting).toBe(false)
     })
@@ -85,7 +94,50 @@ describe('GET /day/:month/:day', () => {
         expect(res.statusCode).toBe(200)
         expect(res.body.question.month).toBe(month)
         expect(res.body.question.day).toBe(day)
-        expect(res.body.answers.length).toBe(2)
+        expect(res.body.answers.length).toBe(numberOfAnswers)
+        expect(res.body.answers[0].isExisting).toBe(true)
+        expect(res.body.answers[1].isExisting).toBe(false)
+    })
+})
+
+// ANSWERS
+describe('GET /answers/today', () => {
+
+    it('✖️ 401 not connected', async () => {
+        const res = await request(app.server)
+            .get('/v1/answers/today')
+        expect(res.statusCode).toBe(401)
+    })
+    it('✔️ 200 connected', async () => {
+        const res = await request(app.server)
+            .get('/v1/answers/today')
+            .set('Authorization', `Bearer ${token}`)
+        expect(res.statusCode).toBe(200)
+        expect(res.body.answers.length).toBe(numberOfAnswers)
+        expect(res.body.answers[0].isExisting).toBe(true)
+        expect(res.body.answers[1].isExisting).toBe(false)
+    })
+})
+
+describe('GET /answers/day/:month/:day', () => {
+
+    it('✖️ 400 invalid date', async () => {
+        const res = await request(app.server)
+            .get(`/v1/answers/day/ab/bc`)
+            .set('Authorization', `Bearer ${token}`)
+        expect(res.statusCode).toBe(400)
+    })
+    it('✖️ 401 not connected', async () => {
+        const res = await request(app.server)
+            .get(`/v1/answers/day/${month}/${day}`)
+        expect(res.statusCode).toBe(401)
+    })
+    it('✔️ 200 connected', async () => {
+        const res = await request(app.server)
+            .get(`/v1/answers/day/${month}/${day}`)
+            .set('Authorization', `Bearer ${token}`)
+        expect(res.statusCode).toBe(200)
+        expect(res.body.answers.length).toBe(numberOfAnswers)
         expect(res.body.answers[0].isExisting).toBe(true)
         expect(res.body.answers[1].isExisting).toBe(false)
     })

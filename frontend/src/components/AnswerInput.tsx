@@ -1,28 +1,43 @@
-import type {Answer} from "../types/answer.type.ts";
+import type {Answer} from "../types/Answer.ts";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
 import {useState} from "react";
 
-export default function AnswerInput({answers, questionId}: { answers: Answer[], questionId: number }) {
+export default function AnswerInput({answers, questionId, month, day}: {
+    answers: Answer[],
+    questionId: number,
+    month: string,
+    day: string
+}) {
 
 
     const [values, setValues] = useState<Record<number, string>>({}) // answer year, answer text
 
     function sendNewAnswer(answer: Answer) {
-        console.log(values[answer.year])
 
+        if (values[answer.year] === answer.answer_text) { // same as before
+            console.log('no change')
+            return
+        }
 
-        if (values[answer.year] == '') {
-            deleteAnswer.mutate(answer.year)
+        if (values[answer.year] === '') { // deletion
+            console.log('delete')
+            deleteAnswer.mutate({year: answer.year})
+            return
+        }
+
+        if (!values[answer.year]) { // value not inited
+            console.log('no change')
             return
         }
 
         if (answer.isExisting) {
+            console.log('put')
             saveAnswer.mutate({year: answer.year, answer_text: values[answer.year]})
         } else {
+            console.log('post')
             createAnswer.mutate({year: answer.year, answer_text: values[answer.year]})
         }
-
     }
 
     const qc = useQueryClient()
@@ -34,7 +49,7 @@ export default function AnswerInput({answers, questionId}: { answers: Answer[], 
                 body: JSON.stringify({content: data.answer_text}),
             }),
         onSuccess: () => {
-            qc.invalidateQueries({queryKey: ['answers']})
+            qc.invalidateQueries({queryKey: ['answers', month, day]})
         },
     })
 
@@ -45,25 +60,24 @@ export default function AnswerInput({answers, questionId}: { answers: Answer[], 
                 body: JSON.stringify({content: data.answer_text}),
             }),
         onSuccess: () => {
-            qc.invalidateQueries({queryKey: ['answers']})
+            qc.invalidateQueries({queryKey: ['answers', month, day]})
         },
     })
 
     const deleteAnswer = useMutation({
-        mutationFn: (year: number) =>
-            api(`/answers/question/${questionId}/year/${year}`, {
+        mutationFn: (data: { year: number }) =>
+            api(`/answers/question/${questionId}/year/${data.year}`, {
                 method: 'DELETE',
             }),
         onSuccess: () => {
-            qc.invalidateQueries({queryKey: ['answers']})
+            qc.invalidateQueries({queryKey: ['answers', month, day]})
         },
     })
-
 
     return (
         <div className={'flex flex-col gap-4'}>
 
-            {answers.map((answer) => (
+            {answers.map((answer: Answer) => (
 
                 <div key={answer.year}>
                     <p>{answer.year}</p>
