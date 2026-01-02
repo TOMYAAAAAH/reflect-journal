@@ -45,7 +45,7 @@ export default function Register() {
             <Link to="/">today</Link>
 
             <form className={'flex flex-col gap-4 p-8'} onSubmit={handleSubmit}>
-                <input name={'email'} type={'email'} value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" autoComplete={'on'} required={true}/>
+                <input name={'email'} value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" autoComplete={'on'} required={true}/>
 
                 <input name={'password'} type={passwordsDisplay1 ? 'text' : 'password'} value={password1}
                        onChange={e => setPassword1(e.target.value)} placeholder="Password" required={true}/>

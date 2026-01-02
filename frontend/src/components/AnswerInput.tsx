@@ -2,6 +2,7 @@ import type {Answer} from "../types/Answer.ts";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
 import {useRef, useState} from "react";
+import posthog from "posthog-js";
 
 export default function AnswerInput({answers, questionId, month, day}: {
     answers: Answer[],
@@ -44,7 +45,6 @@ export default function AnswerInput({answers, questionId, month, day}: {
 
 
     function saveNewAnswer(answer: Answer, newText: string) {
-        console.log(answer)
 
         if (newText === answer.answer_text) { // same as before
             setIsSavingByYear(v => ({...v, [answer.year]: false}))
@@ -76,7 +76,7 @@ export default function AnswerInput({answers, questionId, month, day}: {
                 body: JSON.stringify({content: data.answer_text}),
             }),
         onSuccess: (_data, data) => {
-            apiSuccess(data.year)
+            apiSuccess(data.year, "POST")
         },
         onError: (_data, data) => {
             apiError(data.year, _data)
@@ -90,7 +90,7 @@ export default function AnswerInput({answers, questionId, month, day}: {
                 body: JSON.stringify({content: data.answer_text}),
             }),
         onSuccess: (_data, data) => {
-            apiSuccess(data.year)
+            apiSuccess(data.year, "PUT")
         },
         onError: (_data, data) => {
             apiError(data.year, _data)
@@ -103,7 +103,7 @@ export default function AnswerInput({answers, questionId, month, day}: {
                 method: 'DELETE',
             }),
         onSuccess: (_data, data) => {
-            apiSuccess(data.year)
+            apiSuccess(data.year, "DELETE")
         },
         onError: (_data, data) => {
             apiError(data.year, _data)
@@ -112,11 +112,11 @@ export default function AnswerInput({answers, questionId, month, day}: {
 
     const qc = useQueryClient()
 
-    function apiSuccess(year: number) {
-        console.log(year)
+    function apiSuccess(year: number, method: string) {
         qc.invalidateQueries({queryKey: ['answers', month, day]})
         setIsSavingByYear(v => ({...v, [year]: false}))
         setIsErrorByYear(v => ({...v, [year]: false}))
+        posthog.capture('my event', { year: year, month: month, day: day, method: method })
     }
 
     function apiError(year: number, error: Error) {
@@ -152,6 +152,5 @@ export default function AnswerInput({answers, questionId, month, day}: {
 
             ))}
         </div>
-    )
-        ;
+    );
 }

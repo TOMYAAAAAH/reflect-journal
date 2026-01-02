@@ -32,6 +32,8 @@ jobs:
         env:
           VITE_API_URL: https://api.cinqans.tomalmarcha.fr
           VITE_API_VERSION: /v1
+          VITE_PUBLIC_POSTHOG_KEY: phc_tEw2pUWDwRxg6l1Ot9pl2yECWE5PgRIisawbOCV2HBF
+          VITE_PUBLIC_POSTHOG_HOST: https://eu.i.posthog.com
 
       - name: Deploy frontend via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

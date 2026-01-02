@@ -43,7 +43,7 @@ export default function Login() {
             <Link to="/">today</Link>
 
             <form className={'flex flex-col gap-4 p-8'} onSubmit={handleSubmit}>
-                <input name={'email'} value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" type={'email'} autoComplete={'on'} required={true}/>
+                <input name={'email'} value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" autoComplete={'on'} required={true}/>
                 <input name={'password'} type={passwordsDisplay ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)}
                        placeholder="Password" required={true}/>
                 <i className={`pi ${passwordsDisplay ? 'pi-eye-slash' : 'pi-eye'}`} onClick={() => setPasswordsDisplay(v => !v)}></i>
