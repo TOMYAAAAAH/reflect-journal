@@ -12,8 +12,26 @@ import Month from './routes/Month.jsx'
 import Login from './routes/Login.tsx'
 import Register from './routes/Register.tsx'
 import NotFound from "./routes/NotFound.tsx";
+import posthog from "posthog-js";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            onError: (error: any) => {
+                posthog.captureException('query_error', {
+                    message: error.message,
+                })
+            },
+        },
+        mutations: {
+            onError: (error: any) => {
+                posthog.captureException('mutation_error', {
+                    message: error.message,
+                })
+            },
+        },
+    },
+})
 
 declare global {
     interface Window {
@@ -42,10 +60,10 @@ const options = {
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <PostHogProvider apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY} options={options}>
+        {/*<PostHogProvider apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY} options={options}>*/}
             <QueryClientProvider client={queryClient}>
                 <RouterProvider router={router}/>
             </QueryClientProvider>
-        </PostHogProvider>
+        {/*</PostHogProvider>*/}
     </StrictMode>,
 )
