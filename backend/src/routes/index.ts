@@ -4,6 +4,7 @@ import questionsRoutes from "./questions";
 import answersRoutes from "./answers";
 import dayRoutes from "./day";
 import loginRoutes from "./login";
+import calendarRoutes from "./calendar";
 
 export default async function routes(fastify: FastifyInstance) {
     await fastify.register(healthRoutes);
@@ -11,4 +12,5 @@ export default async function routes(fastify: FastifyInstance) {
     await fastify.register(answersRoutes);
     await fastify.register(dayRoutes);
     await fastify.register(loginRoutes);
+    await fastify.register(calendarRoutes);
 }

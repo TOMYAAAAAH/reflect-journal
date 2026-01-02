@@ -1,14 +1,10 @@
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import {prisma} from '../prisma/prisma';
 import JwtPayload from "../types/JwtPayload";
+import {getUserIdFromToken} from "../helper/getUserIdFromToken";
 
 export default async function answersRoutes(fastify: FastifyInstance) {
-
-    const getUserIdFromAuthentication = async (request: FastifyRequest) => {
-        const payload = await request.jwtVerify<JwtPayload>()
-        return Number(payload.userId)
-    }
-
+    
     type ParsedBodyAndParams = {
         content: string
         questionId: number
@@ -51,7 +47,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
         let userId: number;
         try {
-            userId = await getUserIdFromAuthentication(request)
+            userId = await getUserIdFromToken(request)
         } catch {
             return reply.status(401).send({error: 'Not authenticated'})
         }
@@ -101,7 +97,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
         let userId: number;
         try {
-            userId = await getUserIdFromAuthentication(request)
+            userId = await getUserIdFromToken(request)
         } catch {
             return reply.status(401).send({error: 'Not authenticated'})
         }
@@ -140,7 +136,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
         let userId: number;
         try {
-            userId = await getUserIdFromAuthentication(request)
+            userId = await getUserIdFromToken(request)
         } catch {
             return reply.status(401).send({error: 'Not authenticated'})
         }
@@ -184,7 +180,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
         let userId: number;
         try {
-            userId = await getUserIdFromAuthentication(request)
+            userId = await getUserIdFromToken(request)
         } catch {
             return reply.status(401).send({error: 'Not authenticated'})
         }
@@ -232,7 +228,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
         let userId: number;
         try {
-            userId = await getUserIdFromAuthentication(request)
+            userId = await getUserIdFromToken(request)
         } catch {
             return reply.status(401).send({error: 'Not authenticated'})
         }
@@ -267,7 +263,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
         let userId: number;
         try {
-            userId = await getUserIdFromAuthentication(request)
+            userId = await getUserIdFromToken(request)
         } catch {
             return reply.status(401).send({error: 'Not authenticated'})
         }
@@ -302,7 +298,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
 
         let userId: number;
         try {
-            userId = await getUserIdFromAuthentication(request)
+            userId = await getUserIdFromToken(request)
         } catch {
             return reply.status(401).send({error: 'Not authenticated'})
         }
