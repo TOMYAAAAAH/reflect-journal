@@ -18,8 +18,7 @@ export default function TodayButton() {
     }
 
     return (
-        <div>
-            <Link to={url}><i className={'pi pi-sun text-3xl'}></i>Today</Link>
-        </div>
-    );
+        <Link to={url} className={'flex items-center gap-2 rounded-full bg-slate-200 dark:bg-slate-800 px-6 py-2 center'}>
+            <i className={'pi pi-sun text-3xl'}></i>Today</Link>
+    )
 }

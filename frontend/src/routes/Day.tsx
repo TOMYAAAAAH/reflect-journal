@@ -41,12 +41,7 @@ export default function Day({today}: { today: boolean }) {
     return (
         <>
 
-            <div className={'flex flex-col gap-4 justify-center text-2xl p-8'}>
-                <Link to="/profile"><i className={'pi pi-user'}></i> Profile</Link>
-                <Link to="/year"><i className={'pi pi-calendar'}></i> Year</Link>
-                <Link to="/"><i className={'pi pi-sun'}></i> Today</Link>
-                <Link to="/login"><i className={'pi pi-sign-in'}></i> Login</Link>
-            </div>
+            <Link to="/login"><i className={'pi pi-sign-in'}></i> Login</Link>
 
 
             <p>{today ? 'today' : 'other day'}</p>
@@ -69,7 +64,8 @@ export default function Day({today}: { today: boolean }) {
                 {answersError && <p>Error loading question</p>}
                 {answersData && (
                     <>
-                        <AnswerInput answers={answersData.answers} questionId={questionData.question.id} month={month} day={day}/>
+                        <AnswerInput answers={answersData.answers} questionId={questionData.question.id} month={month}
+                                     day={day}/>
                     </>
                 )}
 

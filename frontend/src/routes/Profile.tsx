@@ -1,7 +1,6 @@
 import {Link} from "react-router-dom";
 import {useUser} from "../hooks/useUser.ts";
 import getMonthFromNumber from "../utils/getMonthFromNumber.ts";
-import {useState} from "react";
 
 export default function Profile() {
 
