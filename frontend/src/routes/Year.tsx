@@ -3,14 +3,12 @@ import getMonthFromNumber from "../utils/getMonthFromNumber.ts";
 import {useQuery} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
 import type {Calendar} from "../types/Calendar.ts";
+import listAllDays from "../utils/listAllDays.ts";
 
 export default function Year() {
 
-    const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    const days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
+    const allDays = listAllDays();
 
-
-    let filledDays: Calendar;
     const year = 2026;
 
     const fetchCalendar = (): Promise<Calendar> => {
@@ -33,32 +31,34 @@ export default function Year() {
         <div className={'grid grid-cols-3 gap-6'}>
 
 
-            {months.map((month) => {
-                    const monthName: string = getMonthFromNumber(month);
+            {allDays.map((month) => {
+                    const monthNb = allDays.indexOf(month) + 1;
+                    const monthName: string = getMonthFromNumber(monthNb);
 
                     return (
-                        <p key={month}>
+                        <p key={monthNb}>
                             <span className={'text-sm'}>{monthName}</span>
-                            <span className={'text-pink-500 font-bold pl-2'}>{data?.stats[month]}</span>
+                            <span className={'text-pink-500 font-bold pl-2'}>{data?.stats[monthNb]}</span>
                             <span className={'text-sm pl-2'}>/ 31</span>
                         </p>
                     )
                 }
             )}
 
-            {months.map((month) => {
-                    const monthName: string = getMonthFromNumber(month);
+            {allDays.map((month) => {
+                const monthNb = allDays.indexOf(month) + 1;
+                const monthName: string = getMonthFromNumber(monthNb);
 
                     return (
 
-                        <Link to={`/month/${month}`} key={month}>
+                        <Link to={`/month/${monthNb}`} key={monthNb}>
                             <h2>{monthName}</h2>
                             <div className={'grid grid-cols-7'}>
-                                {days.map((day) => {
+                                {month.map((day) => {
 
                                         return (
                                             <div key={day}>
-                                                {isDayFilled(month, day) ?
+                                                {isDayFilled(monthNb, day) ?
                                                     <div className={'p-1 text-pink-500'} key={day}>
                                                         {day}
                                                     </div> :
