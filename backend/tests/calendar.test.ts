@@ -56,8 +56,11 @@ describe('GET /calendar/:year', () => {
         expect(res.statusCode).toBe(200)
 
         const dates = res.body.dates as Record<string, number[]>
-
         expect(dates).toHaveProperty(month.toString())
         expect(dates[month.toString()]).toContain(day)
+
+        const stats = res.body.stats as Record<string, number>
+        expect(stats).toHaveProperty(month.toString())
+        expect(stats[month.toString()]).toBeGreaterThan(0)
     })
 })

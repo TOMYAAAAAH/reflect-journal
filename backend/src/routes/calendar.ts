@@ -36,17 +36,20 @@ export default async function calendarRoutes(fastify: FastifyInstance) {
             })
 
             const dates: Record<number, number[]> = {}
+            const stats: Record<number, number> = {}
 
             questions.forEach(question => {
                 if (!dates[question.month]) {
                     dates[question.month] = [question.day]
+                    stats[question.month] = 1
                 }
                 else {
                     dates[question.month].push(question.day)
+                    stats[question.month]++
                 }
             })
 
-            return reply.status(200).send({dates})
+            return reply.status(200).send({dates, stats})
 
         } catch (err) {
             console.error(err);

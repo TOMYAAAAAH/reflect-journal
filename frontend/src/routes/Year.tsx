@@ -32,6 +32,20 @@ export default function Year() {
 
         <div className={'grid grid-cols-3 gap-6'}>
 
+
+            {months.map((month) => {
+                    const monthName: string = getMonthFromNumber(month);
+
+                    return (
+                        <p key={month}>
+                            <span className={'text-sm'}>{monthName}</span>
+                            <span className={'text-pink-500 font-bold pl-2'}>{data?.stats[month]}</span>
+                            <span className={'text-sm pl-2'}>/ 31</span>
+                        </p>
+                    )
+                }
+            )}
+
             {months.map((month) => {
                     const monthName: string = getMonthFromNumber(month);
 
