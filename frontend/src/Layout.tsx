@@ -6,18 +6,20 @@ export default function Layout() {
     const location = useLocation();
 
 
+
+
     return (
-        <div>
-            <header className={'fixed top-0 right-0'}>
-                {location.pathname !== "/profile" &&
-                    <Link to="/profile"><i className={'pi pi-user text-3xl'}></i></Link>}
-            </header>
-            <main>
-                <Outlet />
-            </main>
-            <footer className={'fixed bottom-0 left-0'}>
-                <TodayButton />
-            </footer>
-        </div>
+        <body className={'bg-amber-50 dark:bg-gray-900'}>
+        <header className={'fixed top-0 right-0'}>
+            {location.pathname !== "/profile" &&
+                <Link to="/profile"><i className={'pi pi-user text-3xl'}></i></Link>}
+        </header>
+        <main>
+            <Outlet/>
+        </main>
+        <footer className={'fixed bottom-0 left-0'}>
+            <TodayButton/>
+        </footer>
+        </body>
     );
 }
