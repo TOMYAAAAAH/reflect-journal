@@ -294,7 +294,7 @@ export default async function answersRoutes(fastify: FastifyInstance) {
         }
     });
 
-    fastify.get('/answers/question/:id', async (request, reply) => {
+    fastify.get('/answers/question/:questionId', async (request, reply) => {
 
         let userId: number;
         try {
@@ -303,15 +303,15 @@ export default async function answersRoutes(fastify: FastifyInstance) {
             return reply.status(401).send({error: 'Not authenticated'})
         }
 
-        const {id} = request.params as { id: string }
-        if (!Number.isInteger(Number(id))) {
+        const {questionId} = request.params as { questionId: string }
+        if (!Number.isInteger(Number(questionId))) {
             return reply.status(400).send({error: 'Invalid question ID'});
         }
 
         try {
 
             const answers = await prisma.answers.findMany({
-                where: {question_id: Number(id), user_id: userId},
+                where: {question_id: Number(questionId), user_id: userId},
             })
 
             return reply.status(200).send({answers})

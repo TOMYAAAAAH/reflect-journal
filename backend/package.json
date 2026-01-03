@@ -8,8 +8,6 @@
     "build": "tsc",
     "dev": "npx ts-node src/server.ts",
     "start": "npx ts-node src/server.ts",
-    "prisma-db-push": "prisma db push",
-    "prisma-generate": "prisma generate"
   },
   "keywords": [],
   "author": "",
