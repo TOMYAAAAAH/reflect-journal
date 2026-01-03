@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import {prisma} from '../prisma/prisma';
 import bcrypt from 'bcrypt';
+import {getUserIdFromToken} from "../helper/getUserIdFromToken";
 
 export default async function loginRoutes(fastify: FastifyInstance) {
 
@@ -34,6 +35,32 @@ export default async function loginRoutes(fastify: FastifyInstance) {
         const token = fastify.jwt.sign({ userId: user.id.toString() });
 
         return reply.status(200).send({ token, user: { id: user.id, email: user.email } });
+    });
+
+
+    fastify.get('/me', async (request, reply) => {
+
+        let userId: number;
+        try {
+            userId = await getUserIdFromToken(request)
+        } catch {
+            return reply.status(401).send({error: 'Not authenticated'})
+        }
+
+        const user = await prisma.users.findUnique({
+            where: { id: userId },
+        });
+
+        if (!user) return reply.status(404).send({error: 'User not found'});
+
+        const userDto = {
+            email: user.email,
+            name: user.name,
+            playlist_id: user.default_playlist_id,
+            created_at: user.created_at
+        }
+
+        return reply.status(200).send({user: userDto});
     });
 
 

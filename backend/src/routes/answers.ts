@@ -1,6 +1,5 @@
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import {prisma} from '../prisma/prisma';
-import JwtPayload from "../types/JwtPayload";
 import {getUserIdFromToken} from "../helper/getUserIdFromToken";
 
 export default async function answersRoutes(fastify: FastifyInstance) {
