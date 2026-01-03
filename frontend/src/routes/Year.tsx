@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import getMonthFromNumber from "../utils/getMonthFromNumber.ts";
 import {useQuery} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
+import type {Calendar} from "../types/Calendar.ts";
 
 export default function Year() {
 
@@ -9,22 +10,23 @@ export default function Year() {
     const days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
 
 
+    let filledDays: Calendar;
     const year = 2026;
 
-    const {data: calendarData, isLoading: calendarLoading, error: calendarError} = useQuery({
+    const fetchCalendar = (): Promise<Calendar> => {
+        return api(`/calendar/${year}`)
+    }
+
+    const {data, isLoading, error, isSuccess} = useQuery({
         queryKey: ['calendar', year],
-        queryFn: () => api(`/calendar/${year}`)
+        queryFn: fetchCalendar
     });
 
-    if (calendarLoading) {<p>Loading...</p>}
-    if (calendarError) {<p>Error loading calendar</p>}
-
-
-    const filledDays: Record<number, number[]> = {1: [1, 10, 31], 3: [10, 11, 12, 13, 14]};
-
     function isDayFilled(month: number, day: number): boolean {
-        return filledDays[month]?.includes(day) || false;
+        return data?.dates[month]?.includes(day) || false;
     }
+
+    if (error) return <div>error</div>;
 
     return (
 
@@ -41,19 +43,18 @@ export default function Year() {
                                 {days.map((day) => {
 
                                         return (
-<>
-                                            { isDayFilled(month, day) ?
-                                                <div className={'p-1 text-pink-500'} key={day}>
-                                                    {day}
-                                                </div> :
-                                                <div className={'p-1'} key={day}>
-                                                    {day}
-                                                </div>
+                                            <div key={day}>
+                                                {isDayFilled(month, day) ?
+                                                    <div className={'p-1 text-pink-500'} key={day}>
+                                                        {day}
+                                                    </div> :
+                                                    <div className={'p-1'} key={day}>
+                                                        {day}
+                                                    </div>
 
 
-
-                                            }
-</>
+                                                }
+                                            </div>
                                         )
                                     }
                                 )}

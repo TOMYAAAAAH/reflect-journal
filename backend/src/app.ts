@@ -30,7 +30,7 @@ export function buildApp(): FastifyInstance {
     // JWT authentication
     app.register(fastifyJwt, {
         secret: process.env.JWT_SECRET || 'supersecret',
-        sign: {expiresIn: '6m'}
+        sign: {expiresIn: '365d'}
     });
 
     app.register(swagger, {
