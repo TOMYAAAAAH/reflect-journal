@@ -1,4 +1,4 @@
-import type {Question} from "../types/question.type.ts";
+import type {Question} from "../types/Question.ts";
 import getMonthFromNumber from "../utils/getMonthFromNumber.ts";
 
 export default function Question({question}: { question: Question }) {
