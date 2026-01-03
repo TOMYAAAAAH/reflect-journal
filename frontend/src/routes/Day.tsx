@@ -22,12 +22,14 @@ export default function Day({today}: { today: boolean }) {
 
     const {data: questionData, isLoading: questionLoading, error: questionError} = useQuery({
         queryKey: ['question', month, day],
-        queryFn: () => api(`/questions/${dayUrl}`)
+        queryFn: () => api(`/questions/${dayUrl}`),
+        staleTime: 1000 * 60 * 60, // cache for 1h
     });
 
     const {data: answersData, isLoading: answersLoading, error: answersError} = useQuery({
         queryKey: ['answers', month, day],
-        queryFn: () => api(`/answers/${dayUrl}`)
+        queryFn: () => api(`/answers/${dayUrl}`),
+        staleTime: 1000 * 60 * 60, // cache for 1h
     });
 
 

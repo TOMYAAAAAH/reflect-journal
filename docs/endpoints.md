@@ -12,7 +12,7 @@
 |----|--------|--------------|-----------------------|-------|-----------------------------------------------|
 | ✔️ | POST   | /v1/register | Create account        | -     | `{ "email": "string", "password": "string" }` |
 | ✔️ | POST   | /v1/login    | Login, returns JWT    | -     | `{ "email": "string", "password": "string" }` |
-| ➖  | GET    | /v1/me       | Get current user info | 🔒    |                                               |
+| ✔️ | GET    | /v1/me       | Get current user info | 🔒    |                                               |
 
 ## 2. Questions Routes `routes/questions.ts`
 
@@ -27,9 +27,9 @@
 |    | Method | Endpoint                                    | Description                           | Auth? | Body                                                                |
 |----|--------|---------------------------------------------|---------------------------------------|-------|---------------------------------------------------------------------|
 | ❗  | POST   | /v1/answers                                 | Save answer for a year                | 🔒    | `{ "questionId": "string", "content": "string", "year": "string" }` |
-| ❗️ | PUT    | /v1/answers/:id                             | Update answer by ID                   | 🔒    | `{ "content": "string" }`                                           |
+| ❗  | PUT    | /v1/answers/:id                             | Update answer by ID                   | 🔒    | `{ "content": "string" }`                                           |
 | ❗️ | DELETE | /v1/answers/:id                             | Delete answer by ID                   | 🔒    |                                                                     |
-| ✔️ | GET    | /v1/answers/question/:questionId            | Get all my answers by question ID     | 🔒    |                                                                     |
+| ❗️ | GET    | /v1/answers/question/:questionId            | Get all my answers by question ID     | 🔒    |                                                                     |
 | ✔️ | POST   | /v1/answers/question/:questionId/year/:year | Save answer by question ID and year   | 🔒    | `{ "content": "string" }`                                           |
 | ✔️ | PUT    | /v1/answers/question/:questionId/year/:year | Update answer by question ID and year | 🔒    | `{ "content": "string" }`                                           |
 | ✔️ | DELETE | /v1/answers/question/:questionId/year/:year | Delete answer by question ID and year | 🔒    |                                                                     |

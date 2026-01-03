@@ -56,8 +56,8 @@ export default async function loginRoutes(fastify: FastifyInstance) {
         const userDto = {
             email: user.email,
             name: user.name,
-            playlist_id: user.default_playlist_id,
-            created_at: user.created_at
+            playlistId: user.default_playlist_id,
+            createdAt: user.created_at
         }
 
         return reply.status(200).send({user: userDto});
