@@ -15,7 +15,7 @@ export default function Year() {
         return api(`/calendar/${year}`)
     }
 
-    const {data, isLoading, error, isSuccess} = useQuery({
+    const {data, error} = useQuery({
         queryKey: ['calendar', year],
         queryFn: fetchCalendar
     });
