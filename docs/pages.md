@@ -14,10 +14,10 @@
 ## Year
 - [x] Shows a grid of 3*4 months
 - [x] Clicking on a month navigates to the month page
-- [ ] A day with an answer on the current year is highlighted
+- [x] A day with an answer on the current year is highlighted
 - [ ] The current day is highlighted
 - [ ] Clicking on the "today" button navigates to the current month page
-- [ ] Shows answer statistics
+- [x] Shows answer statistics
 
 ## Month
 - [x] Shows rows of 7 days
@@ -31,7 +31,7 @@
 - [x] Shows the date
 - [x] Shows the question
 - [x] Shows past and current answers
-- [ ] Allow to edit any answer
+- [x] Allow to edit any answer
 - [ ] Show max characters when near max
 - [ ] prompt to write
 

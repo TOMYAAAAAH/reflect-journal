@@ -15,7 +15,7 @@ export default function Year() {
         return api(`/calendar/${year}`)
     }
 
-    const {data, error} = useQuery({
+    const {data} = useQuery({
         queryKey: ['calendar', year],
         queryFn: fetchCalendar
     });
@@ -24,11 +24,10 @@ export default function Year() {
         return data?.dates[month]?.includes(day) || false;
     }
 
-    if (error) return <div>error</div>;
 
     return (
 
-        <div className={'grid grid-cols-3 gap-6'}>
+        <div className={'grid grid-cols-3 gap-x-3 gap-y-6'}>
 
 
             {allDays.map((month) => {
@@ -46,28 +45,23 @@ export default function Year() {
             )}
 
             {allDays.map((month) => {
-                const monthNb = allDays.indexOf(month) + 1;
-                const monthName: string = getMonthFromNumber(monthNb);
+                    const monthNb = allDays.indexOf(month) + 1;
+                    const monthName: string = getMonthFromNumber(monthNb);
 
                     return (
 
                         <Link to={`/month/${monthNb}`} key={monthNb}>
-                            <h2>{monthName}</h2>
-                            <div className={'grid grid-cols-7'}>
+                            <h2 className={'text-left'}>{monthName.slice(0,3)}</h2>
+                            <div className={'grid grid-cols-7 justify-items-center gap-y-1'}>
                                 {month.map((day) => {
 
                                         return (
                                             <div key={day}>
-                                                {isDayFilled(monthNb, day) ?
-                                                    <div className={'p-1 text-pink-500'} key={day}>
-                                                        {day}
-                                                    </div> :
-                                                    <div className={'p-1'} key={day}>
-                                                        {day}
-                                                    </div>
+                                                <div className={`text-[0.5rem] font-bold ${isDayFilled(monthNb, day) && 'text-pink-500'} `}
+                                                     key={day}>
+                                                    {day}
+                                                </div>
 
-
-                                                }
                                             </div>
                                         )
                                     }

@@ -39,8 +39,8 @@ export default function Login() {
 
         <div>
 
-            Log in gurl !
-            <Link to="/">today</Link>
+            <Link to="/register">Register</Link>
+            <Link to="/login">Login</Link>
 
             <form className={'flex flex-col gap-4 p-8'} onSubmit={handleSubmit}>
                 <input name={'email'} value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" autoComplete={'on'} required={true}/>

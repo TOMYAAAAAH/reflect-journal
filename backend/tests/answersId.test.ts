@@ -156,7 +156,7 @@ describe('DELETE /answers/:id', () => {
     })
 })
 
-describe('GET /answers/question/:id', () => {
+describe('GET /answers/question/:questionId', () => {
 
     it('✖️ 400 invalid question id', async () => {
         const res = await request(app.server)

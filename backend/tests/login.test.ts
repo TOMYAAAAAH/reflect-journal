@@ -6,10 +6,12 @@ import {prisma} from "../src/prisma/prisma";
 
 let app: FastifyInstance;
 
+// for user_id == 1
+const token = process.env.JWT1;
+
 beforeAll(async () => {
     app = buildApp();
     await app.ready();
-
 
     await prisma.users.deleteMany({
         where: {email: "test"}
@@ -67,5 +69,21 @@ describe('POST /login', () => {
             .send({email: "test2", password: "StrongPassword123!"})
         expect(res.statusCode).toBe(200)
         expect(res.body.user.email).toBe("test2")
+    })
+})
+
+describe('GET /me', () => {
+
+    it('✖️ 401 not authenticated', async () => {
+        const res = await request(app.server)
+            .get('/v1/me')
+        expect(res.statusCode).toBe(401)
+    })
+    it('✔️ 200', async () => {
+        const res = await request(app.server)
+            .get('/v1/me')
+            .set('Authorization', `Bearer ${token}`)
+        expect(res.statusCode).toBe(200)
+        expect(res.body.user.name).toBe("test")
     })
 })

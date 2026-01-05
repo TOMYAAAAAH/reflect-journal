@@ -2,14 +2,14 @@ import Question from "../components/Question.tsx";
 import {useQuery} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
 import AnswerInput from "../components/AnswerInput.tsx";
-import {Link, useNavigate, useParams} from "react-router-dom";
-import {navigateDayUtil} from "../utils/navigateDay.ts";
+import {Link, useParams} from "react-router-dom";
+import {useDayContext} from "../hooks/useDayContext.ts";
+import {useEffect} from "react";
 
 export default function Day({today}: { today: boolean }) {
 
     let {month, day} = useParams()
     let dayUrl: string;
-    const navigate = useNavigate();
 
     if (today) {
         dayUrl = 'today'
@@ -20,37 +20,34 @@ export default function Day({today}: { today: boolean }) {
         dayUrl = `day/${month}/${day}`
     }
 
+    const { setCurrentDay, currentDay } = useDayContext();
+
+    useEffect(() => {
+        if (
+            currentDay.month === Number(month) &&
+            currentDay.day === Number(day)
+        ) return;
+
+        setCurrentDay({ month: Number(month), day: Number(day) });
+    }, [month, day, currentDay, setCurrentDay]);
+
     const {data: questionData, isLoading: questionLoading, error: questionError} = useQuery({
         queryKey: ['question', month, day],
-        queryFn: () => api(`/questions/${dayUrl}`)
+        queryFn: () => api(`/questions/${dayUrl}`),
+        staleTime: 1000 * 60 * 60, // cache for 1h
     });
 
     const {data: answersData, isLoading: answersLoading, error: answersError} = useQuery({
         queryKey: ['answers', month, day],
-        queryFn: () => api(`/answers/${dayUrl}`)
+        queryFn: () => api(`/answers/${dayUrl}`),
+        staleTime: 1000 * 60 * 60, // cache for 1h
     });
 
-
-    const navigateDay = (shift: number) => {
-        const {targetMonth, targetDay} = navigateDayUtil(Number(month), Number(day), shift);
-        navigate(`/day/${targetMonth}/${targetDay}`);
-    }
 
     return (
         <>
 
-            <div className={'flex flex-col gap-4 justify-center text-2xl p-8'}>
-                <Link to="/profile"><i className={'pi pi-user'}></i> Profile</Link>
-                <Link to="/year"><i className={'pi pi-calendar'}></i> Year</Link>
-                <Link to="/"><i className={'pi pi-sun'}></i> Today</Link>
-                <Link to="/login"><i className={'pi pi-sign-in'}></i> Login</Link>
-            </div>
-
-
-            <p>{today ? 'today' : 'other day'}</p>
-
-            <i className={'pi pi-chevron-left'} onClick={() => navigateDay(-1)}></i>
-            <i className={'pi pi-chevron-right'} onClick={() => navigateDay(1)}></i>
+            <Link to="/login"><i className={'pi pi-sign-in'}></i> Login</Link>
 
 
             {month && day && <>
@@ -67,7 +64,8 @@ export default function Day({today}: { today: boolean }) {
                 {answersError && <p>Error loading question</p>}
                 {answersData && (
                     <>
-                        <AnswerInput answers={answersData.answers} questionId={questionData.question.id} month={month} day={day}/>
+                        <AnswerInput answers={answersData.answers} questionId={questionData.question.id} month={month}
+                                     day={day}/>
                     </>
                 )}
 
@@ -75,15 +73,6 @@ export default function Day({today}: { today: boolean }) {
 
             }
 
-            {/*
-            <hr/>
-            <p>Health :
-                {indexLoading && <>Loading...</>}
-                {indexError && <>Error loading index</>}
-                {indexData && (
-                    indexData.message
-                )}
-            </p>*/}
         </>
     )
 }
