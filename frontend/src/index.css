@@ -37,3 +37,20 @@ button {
     cursor: pointer;
     transition: border-color 0.25s;
 }
+
+@theme {
+    --animate-temporary-confirm-check: appear 2s ease-in-out;
+    @keyframes appear {
+        0%,
+        100% {
+            transform: translateX(-5px) scale(0);
+            opacity: 0;
+        }
+        20%,
+        80% {
+            transform: translateX(0) scale(1);
+            opacity: 1;
+
+        }
+    }
+}

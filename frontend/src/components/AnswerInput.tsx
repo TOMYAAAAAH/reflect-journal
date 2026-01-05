@@ -1,7 +1,7 @@
 import type {Answer} from "../types/Answer.ts";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import posthog from "posthog-js";
 
 export default function AnswerInput({answers, questionId, month, day}: {
@@ -17,10 +17,17 @@ export default function AnswerInput({answers, questionId, month, day}: {
     const [isSavingByYear, setIsSavingByYear] = useState<Record<number, boolean>>({})
     const [isErrorByYear, setIsErrorByYear] = useState<Record<number, boolean>>({})
 
+    useEffect(() => {
+        setAnswerTextByYear(Object.fromEntries(answers.map(a => [a.year, a.answer_text])));
+    }, [answers]);
+
     const autoResize = (element: HTMLTextAreaElement | null) => {
         if (!element) return
-        element.style.height = 'auto';
-        element.style.height = element.scrollHeight + 'px';
+        if (element.value === "") element.style.height = '0px'; // hide if empty
+        else {
+            element.style.height = 'auto';
+            element.style.height = element.scrollHeight + 'px';
+        }
     }
 
     function handleChange(answer: Answer, newText: string) {
@@ -32,7 +39,6 @@ export default function AnswerInput({answers, questionId, month, day}: {
         const newText = answerTextByYear[answer.year];
         debounceSave(answer, newText, 1)
     }
-
     const timers = useRef<Record<number, number>>({})
 
     function debounceSave(answer: Answer, newText: string, delay: number = DEBOUNCE_MS) {
@@ -134,16 +140,19 @@ export default function AnswerInput({answers, questionId, month, day}: {
 
             {answers.map((answer: Answer) => (
 
-                <div key={answer.year}
-                     className={'flex flex-col gap-2 p-3 items-start rounded-lg bg-pink-50 dark:bg-pink-950'}>
+                <label key={answer.year}
+                       className={'flex flex-col p-3 items-start rounded-lg bg-pink-50 dark:bg-pink-950/40 ' +
+                           'focus-within:ring-2 focus-within:ring-pink-500  ' +
+                           `${answerTextByYear[answer.year] && "gap-2"}`}
+                >
                     <p className={'flex gap-1 items-center'}>{answer.year}
 
                         {isErrorByYear[answer.year] ?
-                            <i className={'pi pi-exclamation-triangle'}></i> :
+                            <i className={'text-xs pi pi-exclamation-triangle'}></i> :
 
                             isSavingByYear[answer.year] ?
-                                <i className={'pi pi-refresh'}></i> :
-                                <i className={'pi pi-check'}></i>
+                                <i className={'text-xs pi pi-sync'}></i> :
+                                <i className={'text-xs pi pi-check animate-temporary-confirm-check opacity-0'}></i>
 
                         }
 
@@ -152,11 +161,13 @@ export default function AnswerInput({answers, questionId, month, day}: {
                               onChange={e => handleChange(answer, e.target.value)}
                               onBlur={() => handleBlur(answer)}
                               ref={autoResize}
-                              className={'w-full h-16'}
-                              >
+                              className={'w-full h-16 focus:outline-none resize-none'}
+                              rows={1}
+
+                    >
                     </textarea>
 
-                </div>
+                </label>
 
             ))}
         </div>
