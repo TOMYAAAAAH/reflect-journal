@@ -2,14 +2,14 @@ import Question from "../components/Question.tsx";
 import {useQuery} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
 import AnswerInput from "../components/AnswerInput.tsx";
-import {Link, useNavigate, useParams} from "react-router-dom";
-import {navigateDayUtil} from "../utils/navigateDay.ts";
+import {Link, useParams} from "react-router-dom";
+import {useDayContext} from "../hooks/useDayContext.ts";
+import {useEffect} from "react";
 
 export default function Day({today}: { today: boolean }) {
 
     let {month, day} = useParams()
     let dayUrl: string;
-    const navigate = useNavigate();
 
     if (today) {
         dayUrl = 'today'
@@ -19,6 +19,17 @@ export default function Day({today}: { today: boolean }) {
     } else {
         dayUrl = `day/${month}/${day}`
     }
+
+    const { setCurrentDay, currentDay } = useDayContext();
+
+    useEffect(() => {
+        if (
+            currentDay.month === Number(month) &&
+            currentDay.day === Number(day)
+        ) return;
+
+        setCurrentDay({ month: Number(month), day: Number(day) });
+    }, [month, day, currentDay, setCurrentDay]);
 
     const {data: questionData, isLoading: questionLoading, error: questionError} = useQuery({
         queryKey: ['question', month, day],
@@ -33,21 +44,10 @@ export default function Day({today}: { today: boolean }) {
     });
 
 
-    const navigateDay = (shift: number) => {
-        const {targetMonth, targetDay} = navigateDayUtil(Number(month), Number(day), shift);
-        navigate(`/day/${targetMonth}/${targetDay}`);
-    }
-
     return (
         <>
 
             <Link to="/login"><i className={'pi pi-sign-in'}></i> Login</Link>
-
-
-            <p>{today ? 'today' : 'other day'}</p>
-
-            <i className={'pi pi-chevron-left'} onClick={() => navigateDay(-1)}></i>
-            <i className={'pi pi-chevron-right'} onClick={() => navigateDay(1)}></i>
 
 
             {month && day && <>
@@ -73,15 +73,6 @@ export default function Day({today}: { today: boolean }) {
 
             }
 
-            {/*
-            <hr/>
-            <p>Health :
-                {indexLoading && <>Loading...</>}
-                {indexError && <>Error loading index</>}
-                {indexData && (
-                    indexData.message
-                )}
-            </p>*/}
         </>
     )
 }

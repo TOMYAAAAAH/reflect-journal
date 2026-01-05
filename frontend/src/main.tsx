@@ -71,12 +71,15 @@ declare global {
 
 window.__TANSTACK_QUERY_CLIENT__ = queryClient;
 
+import { DayProvider } from "./contexts/GlobalProvider.tsx";
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         {/*<PostHogProvider apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY} options={options}>*/}
         <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router}/>
+            <DayProvider>
+                <RouterProvider router={router}/>
+            </DayProvider>
         </QueryClientProvider>
         {/*</PostHogProvider>*/}
     </StrictMode>,

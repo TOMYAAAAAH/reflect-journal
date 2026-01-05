@@ -33,6 +33,6 @@ export default function BackButton() {
 
     return (
         <Link to={url} className={'flex items-center gap-2 rounded-full bg-slate-200 dark:bg-slate-800 px-6 py-2 center'}>
-            <i className={'pi pi-angle-left text-3xl'}></i>{label}</Link>
+            <i className={'pi pi-angle-left text-2xl'}></i>{label}</Link>
     )
 }

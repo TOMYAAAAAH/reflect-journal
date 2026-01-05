@@ -17,6 +17,11 @@ export default function AnswerInput({answers, questionId, month, day}: {
     const [isSavingByYear, setIsSavingByYear] = useState<Record<number, boolean>>({})
     const [isErrorByYear, setIsErrorByYear] = useState<Record<number, boolean>>({})
 
+    const autoResize = (element: HTMLTextAreaElement | null) => {
+        if (!element) return
+        element.style.height = 'auto';
+        element.style.height = element.scrollHeight + 'px';
+    }
 
     function handleChange(answer: Answer, newText: string) {
         setAnswerTextByYear(v => ({...v, [answer.year]: newText}))
@@ -116,7 +121,7 @@ export default function AnswerInput({answers, questionId, month, day}: {
         qc.invalidateQueries({queryKey: ['answers', month, day]})
         setIsSavingByYear(v => ({...v, [year]: false}))
         setIsErrorByYear(v => ({...v, [year]: false}))
-        posthog.capture('my event', { year: year, month: month, day: day, method: method })
+        posthog.capture('my event', {year: year, month: month, day: day, method: method})
     }
 
     function apiError(year: number, error: Error) {
@@ -129,8 +134,9 @@ export default function AnswerInput({answers, questionId, month, day}: {
 
             {answers.map((answer: Answer) => (
 
-                <div key={answer.year} className={'flex flex-col gap-2 items-start'}>
-                    <p>{answer.year}
+                <div key={answer.year}
+                     className={'flex flex-col gap-2 p-3 items-start rounded-lg bg-pink-50 dark:bg-pink-950'}>
+                    <p className={'flex gap-1 items-center'}>{answer.year}
 
                         {isErrorByYear[answer.year] ?
                             <i className={'pi pi-exclamation-triangle'}></i> :
@@ -145,7 +151,9 @@ export default function AnswerInput({answers, questionId, month, day}: {
                     <textarea value={answerTextByYear[answer.year] ?? answer.answer_text}
                               onChange={e => handleChange(answer, e.target.value)}
                               onBlur={() => handleBlur(answer)}
-                              className={'border border-pink-600 rounded-lg p-2 w-96'}>
+                              ref={autoResize}
+                              className={'w-full h-16'}
+                              >
                     </textarea>
 
                 </div>

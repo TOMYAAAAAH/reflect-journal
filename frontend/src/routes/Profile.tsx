@@ -1,4 +1,3 @@
-import {Link} from "react-router-dom";
 import {useUser} from "../hooks/useUser.ts";
 import getMonthFromNumber from "../utils/getMonthFromNumber.ts";
 
@@ -38,7 +37,6 @@ export default function Profile() {
 
     return (
         <>
-            <Link to="/">Home</Link>
             <h1>Profile</h1>
             {isLoading ? 'loading...' :
 
