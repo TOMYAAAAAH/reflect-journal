@@ -13,6 +13,7 @@ import Login from './routes/Login.tsx'
 import Register from './routes/Register.tsx'
 import NotFound from "./routes/NotFound.tsx";
 import Layout from "./Layout.tsx";
+import OnBoarding from "./routes/OnBoarding.tsx";
 
 const router = createBrowserRouter([
     {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
             {path: "/profile", element: <Profile/>},
             {path: "/login", element: <Login/>},
             {path: "/register", element: <Register/>},
+            {path: "/welcome", element: <OnBoarding/>},
             {path: "*", element: <NotFound/>},
         ],
     },

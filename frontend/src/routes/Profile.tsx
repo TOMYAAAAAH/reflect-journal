@@ -1,6 +1,7 @@
 import {useUser} from "../hooks/useUser.ts";
 import getMonthFromNumber from "../utils/getMonthFromNumber.ts";
 import ThemeSelector from "../components/buttons/ThemeSelector.tsx";
+import Button from "../components/buttons/Button.tsx";
 
 export default function Profile() {
 
@@ -35,6 +36,8 @@ export default function Profile() {
             <ThemeSelector/>
 
             <button className={'j-btn rounded-full px-6 h-12'} onClick={logout}>Me déconnecter</button>
+
+            <Button url={'/welcome'} label={'On Boarding'} icon={''}/>
         </>
     )
 }
