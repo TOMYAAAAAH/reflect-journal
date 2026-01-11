@@ -41,9 +41,6 @@ export default function Register() {
 
         <div>
 
-            Log in gurl !
-            <Link to="/">today</Link>
-
             <form className={'flex flex-col gap-4 p-8'} onSubmit={handleSubmit}>
                 <input name={'email'} value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" autoComplete={'on'} required={true}/>
 
@@ -60,7 +57,7 @@ export default function Register() {
 
             </form>
 
-            <Link to="/login">an account ? Login</Link>
+            <Link to="/login">Déjà un compte ? Je me connecte</Link>
 
         </div>
     )

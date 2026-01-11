@@ -1,4 +1,5 @@
-import {Link, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
+import Button from "./buttons/Button.tsx";
 
 export default function TodayButton() {
 
@@ -18,7 +19,6 @@ export default function TodayButton() {
     }
 
     return (
-        <Link to={url} className={'flex items-center gap-2 rounded-full bg-slate-200 dark:bg-slate-800 px-6 py-2 center'}>
-            <i className={'pi pi-sun text-3xl'}></i>Today</Link>
+        <Button url={url} label={'Aujourd\'hui'} icon={''}/>
     )
 }

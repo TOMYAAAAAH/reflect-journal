@@ -15,28 +15,17 @@
 
 }
 
+@layer components {
+    .j-btn {
+        @apply hover:scale-102 transition-all duration-100 bg-amber-100 dark:bg-amber-950 text-black dark:text-white rounded-full;
+    }
+}
+
 body {
     margin: auto;
-    max-width: 768px;
+    @apply max-w-2xl;
 }
 
-a {
-    font-weight: 500;
-    color: #a65675;
-}
-
-
-button {
-    border-radius: 8px;
-    border: 1px solid transparent;
-    padding: 0.6em 1.2em;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
-    background-color: #1a1a1a;
-    cursor: pointer;
-    transition: border-color 0.25s;
-}
 
 @theme {
     --animate-temporary-confirm-check: appear 2s ease-in-out;

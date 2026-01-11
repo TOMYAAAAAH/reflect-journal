@@ -1,29 +1,11 @@
 import {useUser} from "../hooks/useUser.ts";
 import getMonthFromNumber from "../utils/getMonthFromNumber.ts";
+import ThemeSelector from "../components/buttons/ThemeSelector.tsx";
 
 export default function Profile() {
 
     const logout = () => {
         localStorage.removeItem('token');
-    }
-
-
-    function setTheme(theme: string) {
-
-        if (theme === "dark" || theme === "light") {
-            localStorage.setItem("theme", theme);
-            document.documentElement.classList.toggle(
-                "dark",
-                theme === "dark"
-            );
-
-        } else {
-            localStorage.removeItem("theme");
-            document.documentElement.classList.toggle(
-                "dark",
-                window.matchMedia("(prefers-color-scheme: dark)").matches
-            );
-        }
     }
 
     const {data, isLoading} = useUser();
@@ -37,7 +19,9 @@ export default function Profile() {
 
     return (
         <>
-            <h1>Profile</h1>
+            <h2 className={'text-3xl mt-8 mb-4'}>Mon compte</h2>
+
+
             {isLoading ? 'loading...' :
 
                 <>
@@ -46,20 +30,11 @@ export default function Profile() {
                 </>
 
             }
+            <h2 className={'text-3xl mt-8 mb-4'}>Parametres</h2>
 
-            <button onClick={() => setTheme("light")}>
-                Light
-            </button>
+            <ThemeSelector/>
 
-            <button onClick={() => setTheme("dark")}>
-                Dark
-            </button>
-
-            <button onClick={() => setTheme("system")}>
-                System
-            </button>
-
-            <button onClick={logout}>Disconnect</button>
+            <button className={'j-btn rounded-full px-6 h-12'} onClick={logout}>Me déconnecter</button>
         </>
     )
 }

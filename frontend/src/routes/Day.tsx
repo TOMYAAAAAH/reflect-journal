@@ -2,9 +2,10 @@ import Question from "../components/Question.tsx";
 import {useQuery} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
 import AnswerInput from "../components/AnswerInput.tsx";
-import {Link, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useDayContext} from "../hooks/useDayContext.ts";
 import {useEffect} from "react";
+import AnswerConnect from "../components/AnswerConnect.tsx";
 
 export default function Day({today}: { today: boolean }) {
 
@@ -45,10 +46,7 @@ export default function Day({today}: { today: boolean }) {
 
 
     return (
-        <>
-
-            <Link to="/login"><i className={'pi pi-sign-in'}></i> Login</Link>
-
+        <div className={'flex flex-col gap-1'}>
 
             {month && day && <>
 
@@ -70,9 +68,10 @@ export default function Day({today}: { today: boolean }) {
                 )}
 
             </>
-
             }
 
-        </>
+            <AnswerConnect />
+
+        </div>
     )
 }

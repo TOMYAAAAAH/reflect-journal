@@ -18,7 +18,6 @@ export default function Month() {
 
     return (
         <div className={'flex flex-col gap-16'}>
-            <Link to={'/year'}>Year</Link>
 
             {months.map((month) => {
                     const monthName: string = getMonthFromNumber(month);

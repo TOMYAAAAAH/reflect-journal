@@ -1,5 +1,6 @@
-import {Link, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import getMonthFromNumber from "../utils/getMonthFromNumber.ts";
+import Button from "./buttons/Button.tsx";
 
 export default function BackButton() {
 
@@ -22,17 +23,16 @@ export default function BackButton() {
     }
     else if (currentPage === '/profile') {
         url = `/`;
-        label = 'Today';
+        label = 'Retour';
     }
     else if (currentPage.startsWith('/month')) {
         url = `/year`
-        label = 'Year';
+        label = 'Année';
     }
 
     if (url === '') return null;
 
     return (
-        <Link to={url} className={'flex items-center gap-2 rounded-full bg-slate-200 dark:bg-slate-800 px-6 py-2 center'}>
-            <i className={'pi pi-angle-left text-2xl'}></i>{label}</Link>
+        <Button url={url} label={label} icon={'angle-left'}/>
     )
 }
