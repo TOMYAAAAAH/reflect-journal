@@ -6,8 +6,11 @@ import {useParams} from "react-router-dom";
 import {useDayContext} from "../hooks/useDayContext.ts";
 import {useEffect} from "react";
 import AnswerConnect from "../components/AnswerConnect.tsx";
+import {useAuth} from "../hooks/useAuth.ts";
 
 export default function Day({today}: { today: boolean }) {
+
+    const STALE_TIME = 1000 * 60 * 60;
 
     let {month, day} = useParams()
     let dayUrl: string;
@@ -35,14 +38,16 @@ export default function Day({today}: { today: boolean }) {
     const {data: questionData, isLoading: questionLoading, error: questionError} = useQuery({
         queryKey: ['question', month, day],
         queryFn: () => api(`/questions/${dayUrl}`),
-        staleTime: 1000 * 60 * 60, // cache for 1h
+        staleTime: STALE_TIME
     });
 
     const {data: answersData, isLoading: answersLoading, error: answersError} = useQuery({
         queryKey: ['answers', month, day],
         queryFn: () => api(`/answers/${dayUrl}`),
-        staleTime: 1000 * 60 * 60, // cache for 1h
+        staleTime: STALE_TIME
     });
+
+    const { isAuthenticated, isLoading } = useAuth()
 
 
     return (
@@ -59,7 +64,7 @@ export default function Day({today}: { today: boolean }) {
                 )}
 
                 {answersLoading && <p>Loading...</p>}
-                {answersError && <p>Error loading question</p>}
+                {answersError && <p>Error loading answers</p>}
                 {answersData && (
                     <>
                         <AnswerInput answers={answersData.answers} questionId={questionData.question.id} month={month}
@@ -69,8 +74,8 @@ export default function Day({today}: { today: boolean }) {
 
             </>
             }
-
-            <AnswerConnect />
+            { !isAuthenticated && !isLoading &&
+                <AnswerConnect/>}
 
         </div>
     )
