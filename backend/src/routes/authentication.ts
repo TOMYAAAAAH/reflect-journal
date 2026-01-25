@@ -3,7 +3,7 @@ import {prisma} from '../prisma/prisma';
 import bcrypt from 'bcrypt';
 import {getUserIdFromToken} from "../helper/getUserIdFromToken";
 
-export default async function loginRoutes(fastify: FastifyInstance) {
+export default async function authenticationRoutes(fastify: FastifyInstance) {
 
     fastify.post('/login', async (request, reply) => {
         const { email, password } = request.body as { email: string; password: string };

@@ -1,16 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
 import type {User} from "../types/User.ts";
-
 
 type UserDto = {
     user: User
 }
-
-// type Auth = {
-//     isAuthenticated: boolean
-//     isLoading: boolean
-// }
 
 async function fetchMe(): Promise<UserDto | null> {
     try {
@@ -35,6 +29,6 @@ export function useAuth() {
         enabled: hasToken, // hook always runs, query only runs if token exists
     });
 
-    return { isAuthenticated: !!query.data, isLoading: query.isLoading}
+    return {isAuthenticated: !!query.data, isLoading: query.isLoading}
 
 }

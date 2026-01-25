@@ -64,14 +64,14 @@ export default function Day({today}: { today: boolean }) {
     const isUrlValid = validateDay(day);
     const {isAuthenticated, isLoading} = useAuth()
 
-    const {data: questionData, isLoading: questionLoading, error: questionError} = useQuery({
+    const {data: questionData, isLoading: questionIsLoading, error: questionError} = useQuery({
         queryKey: ['question', day.month, day.day],
         queryFn: () => api(`/questions/${dayUrl}`),
         enabled: isUrlValid,
         staleTime: STALE_TIME
     });
 
-    const {data: answersData, isLoading: answersLoading, error: answersError} = useQuery({
+    const {data: answersData, isLoading: answersIsLoading, error: answersError} = useQuery({
         queryKey: ['answers', day.month, day.day],
         queryFn: () => api(`/answers/${dayUrl}`),
         enabled: isUrlValid && isAuthenticated,
@@ -83,15 +83,12 @@ export default function Day({today}: { today: boolean }) {
 
             {isUrlValid ? <>
 
-                    {questionLoading && <p>Loading...</p>}
-                    {questionError && <p>Error loading question</p>}
-                    {questionData && (
-                        <>
-                            <Question question={questionData.question}/>
-                        </>
-                    )}
+                    <Question question={questionData ? questionData.question : undefined}
+                              day={day}
+                              isLoading={questionIsLoading}
+                              error={questionError}/>
 
-                    {answersLoading && <p>Loading...</p>}
+                    {answersIsLoading && <p>Loading...</p>}
                     {answersError && <p>Error loading answers</p>}
                     {answersData && (
                         <>
