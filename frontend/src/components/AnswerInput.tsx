@@ -22,8 +22,7 @@ export default function AnswerInput({answers, questionId, month, day}: {
         if (element.value === "" && document.activeElement !== element) { // empty
             element.style.height = '0';
             element.style.marginTop = '0';
-        }
-        else {
+        } else {
             element.style.height = 'auto';
             element.style.height = element.scrollHeight + 'px';
             element.style.marginTop = 'calc(2 * var(--spacing))';
@@ -39,6 +38,7 @@ export default function AnswerInput({answers, questionId, month, day}: {
         const newText = answerTextByYear[answer.year];
         debounceSave(answer, newText, 1)
     }
+
     const timers = useRef<Record<number, number>>({})
 
     function debounceSave(answer: Answer, newText: string, delay: number = DEBOUNCE_MS) {
@@ -67,7 +67,7 @@ export default function AnswerInput({answers, questionId, month, day}: {
             return
         }
 
-        if (!newText) { // value not inited
+        if (!newText) { // value not init
             setIsSavingByYear(v => ({...v, [answer.year]: false}))
             return
         }
@@ -135,14 +135,20 @@ export default function AnswerInput({answers, questionId, month, day}: {
         console.error(error)
     }
 
+    const inputRefs = useRef<Record<number, HTMLTextAreaElement | null>>({});
+
     return (
         <div className={'flex flex-col gap-4'}>
 
             {answers.map((answer: Answer) => (
 
-                <label key={answer.year}
-                       className={'flex flex-col p-3 items-start rounded-lg bg-pink-50 dark:bg-pink-950/40 ' +
-                           'focus-within:ring-2 focus-within:ring-pink-500 '}
+                <div key={answer.year}
+                     className={'flex flex-col p-3 items-start rounded-lg bg-pink-50 dark:bg-pink-950/40 ' +
+                         'focus-within:ring-2 focus-within:ring-pink-500 '}
+                     onMouseDown={e => {
+                         e.preventDefault();
+                         inputRefs.current[answer.year]?.focus()
+                     }}
                 >
                     <p className={'flex gap-1 items-center'}>{answer.year}
 
@@ -160,14 +166,17 @@ export default function AnswerInput({answers, questionId, month, day}: {
                               onChange={e => handleChange(answer, e.target.value)}
                               onBlur={() => handleBlur(answer)}
                               onFocus={e => autoResize(e.target)}
-                              ref={autoResize}
+                              ref={(el) => {
+                                  inputRefs.current[answer.year] = el;
+                                  if (el) autoResize(el);
+                              }}
                               className={'w-full focus:outline-none resize-none'}
                               rows={1}
 
                     >
                     </textarea>
 
-                </label>
+                </div>
 
             ))}
         </div>
