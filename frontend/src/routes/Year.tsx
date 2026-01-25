@@ -1,13 +1,15 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import getMonthFromNumber from "../utils/getMonthFromNumber.ts";
 import {useQuery} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
 import type {Calendar} from "../types/Calendar.ts";
 import listAllDays from "../utils/listAllDays.ts";
+import {useState} from "react";
 
 export default function Year() {
 
     const allDays = listAllDays();
+    const navigate = useNavigate();
 
     const year = 2026;
 
@@ -25,12 +27,41 @@ export default function Year() {
     }
 
 
+    function navigateToMonth(month: number) {
+
+        document.startViewTransition(() => {
+            setIsYearMode(false);
+            navigate(`/year#${month}`);
+
+        })
+
+    setTimeout(() => {
+        document.getElementById(month.toString())?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+        });
+    }, 50);
+    }
+
+
+
+    function navigateToYear() {
+        document.startViewTransition(() => {
+            setIsYearMode(true);
+            navigate(`/year`);
+        });
+    }
+
+    const [isYearMode, setIsYearMode] = useState<boolean>(true);
+
     return (
+        <div data-theme={isYearMode ? '' : 'month'} className={'scroll-smooth'}>
+            <button className={'p-5 bg-amber-800 sticky top-16 z-10'} onClick={navigateToYear}>to year</button>
 
-        <div className={'grid grid-cols-3 gap-x-3 gap-y-6'}>
+            <div className={'flex flex-wrap gap-x-3 gap-y-6 justify-center'}>
 
 
-            {allDays.map((month) => {
+                {/*allDays.map((month) => {
                     const monthNb = allDays.indexOf(month) + 1;
                     const monthName: string = getMonthFromNumber(monthNb);
 
@@ -42,37 +73,50 @@ export default function Year() {
                         </p>
                     )
                 }
-            )}
+            )*/}
 
-            {allDays.map((month) => {
-                    const monthNb = allDays.indexOf(month) + 1;
-                    const monthName: string = getMonthFromNumber(monthNb);
+                {allDays.map((month) => {
+                        const monthNb = allDays.indexOf(month) + 1;
+                        const monthName: string = getMonthFromNumber(monthNb);
 
-                    return (
+                        return (
 
-                        <Link to={`/month/${monthNb}`} key={monthNb}>
-                            <h2 className={'text-left'}>{monthName.slice(0,3)}</h2>
-                            <div className={'grid grid-cols-7 justify-items-center gap-y-1'}>
-                                {month.map((day) => {
+                            <div
+                                style={{viewTransitionName: `monthName-${monthNb}`}}
+                                onClick={() => isYearMode && navigateToMonth(monthNb)} key={monthNb}
+                                className={'w-3/10 month:w-full '}>
 
-                                        return (
-                                            <div key={day}>
-                                                <div className={`text-[0.5rem] font-bold ${isDayFilled(monthNb, day) && 'text-pink-500'} `}
-                                                     key={day}>
+                                <h2
+                                    className={'text-left text-2xl pl-1 month:text-2xl font-medium pb-2'}>{monthName.slice(0, isYearMode ? 3 : 20)}</h2>
+
+                                <div
+                                    className={'grid grid-cols-7 justify-items-center gap-y-1 month:gap-y-5 '}
+                                    id={monthNb.toString()}>
+                                    {month.map((day) => {
+
+                                            return (
+                                                <Link
+                                                    className={`text-[0.6rem] month:text-2xl font-medium ${isDayFilled(monthNb, day) && 'text-pink-500'} `}
+                                                    key={day}
+                                                    to={!isYearMode ? `/day/${monthNb}/${day}` : ''}>
                                                     {day}
-                                                </div>
+                                                </Link>
 
-                                            </div>
-                                        )
-                                    }
-                                )}
+                                            )
+                                        }
+                                    )}
+                                </div>
                             </div>
-                        </Link>
-                    )
-                }
-            )}
+                        )
+                    }
+                )}
 
 
+            </div>
         </div>
     )
 }
+
+/*
+*
+* transition-[width] duration-500 transform-gpu will-change-[width] ease-[steps(20)]*/

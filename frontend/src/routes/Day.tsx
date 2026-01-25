@@ -37,7 +37,7 @@ export default function Day({today}: { today: boolean }) {
         // If different day and valid day
         if (
             (currentDay.month !== targetDay.month ||
-            currentDay.day !== targetDay.day) &&
+                currentDay.day !== targetDay.day) &&
             validateDay(targetDay)
         ) {
             setCurrentDay(targetDay);
@@ -88,16 +88,20 @@ export default function Day({today}: { today: boolean }) {
                               isLoading={questionIsLoading}
                               error={questionError}/>
 
-                    {answersIsLoading && <p>Loading...</p>}
-                    {answersError && <p>Error loading answers</p>}
-                    {answersData && (
-                        <>
-                            <AnswerInput answers={answersData.answers}
-                                         questionId={questionData.question.id}
-                                         month={day.month}
-                                         day={day.day}/>
-                        </>
-                    )}
+                {isAuthenticated &&
+                    <>
+                        {answersIsLoading && <p>Loading...</p>}
+                        {answersError && <p>Error loading answers</p>}
+                        {answersData && (
+                            <>
+                                <AnswerInput answers={answersData.answers}
+                                             questionId={questionData.question.id}
+                                             month={day.month}
+                                             day={day.day}/>
+                            </>
+                        )}
+                    </>
+                }
 
                 </>
 

@@ -17,28 +17,29 @@
 
 @layer components {
     .j-btn {
-        @apply hover:scale-102 transition-all duration-100 bg-amber-100 dark:bg-amber-950 text-black dark:text-white rounded-full;
+        @apply hover:opacity-80 transition-all duration-100 bg-amber-100 dark:bg-amber-950 text-black dark:text-white rounded-full;
     }
+}
+
+@custom-variant month {
+    &:where([data-theme="month"] *){ @slot }
 }
 
 body {
     margin: auto;
-    @apply max-w-2xl;
+    @apply max-w-xl;
 }
 
 
 @theme {
     --animate-temporary-confirm-check: appear 2s ease-in-out;
     @keyframes appear {
-        100% {
-            transform: translateX(-5px) scale(0);
-            opacity: 0;
-        }
         0%,
-        80% {
-            transform: translateX(0) scale(1);
+        90% {
             opacity: 1;
-
+        }
+        100% {
+            opacity: 0;
         }
     }
 }

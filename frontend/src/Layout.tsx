@@ -29,9 +29,9 @@ export default function Layout() {
     const {isAuthenticated, isLoading} = useAuth()
 
     return (
-        <div className={"bg-amber-50 dark:bg-gray-900 w-full min-h-dvh md:w-2xl dark:text-slate-100"}>
+        <div className={"bg-amber-50 dark:bg-gray-900 w-full min-h-dvh md:w-xl dark:text-slate-100"}>
             <header
-                className={"bg-amber-100/10 fixed top-0 flex items-center justify-between max-w-2xl w-full my-4 px-4"}>
+                className={"bg-amber-100/10 fixed top-0 flex items-center justify-between max-w-xl w-full my-4 px-4"}>
                 <BackButton/>
                 {showDayUi && (
                     <IconButton url={'/profile'} icon={'cog'}/>

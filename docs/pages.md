@@ -2,14 +2,14 @@
 
 ## Summary
 
-|  | Name     | Description                             |
-|--|----------|-----------------------------------------|
-|  | Year     | Calendar with the whole year in a sight |
-|  | Month    | Calendar month by month                 |
-|  | Day      | Question and past answers               |
-|  | Profile  | Parameters                              |
-|  | Login    | Login                                   |
-|  | Register | Register                                |
+| Name     | Description                             |
+|----------|-----------------------------------------|
+| Year     | Calendar with the whole year in a sight |
+| Month    | Calendar month by month                 |
+| Day      | Question and past answers               |
+| Profile  | Parameters                              |
+| Login    | Login                                   |
+| Register | Register                                |
 
 ## Year
 - [x] Shows a grid of 3*4 months
