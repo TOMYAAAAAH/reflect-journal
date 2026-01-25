@@ -1,7 +1,7 @@
 import type {Answer} from "../types/Answer.ts";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
-import {useEffect, useRef, useState} from "react";
+import {useRef, useState} from "react";
 import posthog from "posthog-js";
 
 export default function AnswerInput({answers, questionId, month, day}: {
@@ -11,22 +11,22 @@ export default function AnswerInput({answers, questionId, month, day}: {
     day: number
 }) {
 
-    const DEBOUNCE_MS = 5000;
+    const DEBOUNCE_MS = 2000;
 
     const [answerTextByYear, setAnswerTextByYear] = useState<Record<number, string>>({})
     const [isSavingByYear, setIsSavingByYear] = useState<Record<number, boolean>>({})
     const [isErrorByYear, setIsErrorByYear] = useState<Record<number, boolean>>({})
 
-    useEffect(() => {
-        setAnswerTextByYear(Object.fromEntries(answers.map(a => [a.year, a.answer_text])));
-    }, [answers]);
-
-    const autoResize = (element: HTMLTextAreaElement | null) => {
+    const autoResize = (element: HTMLTextAreaElement) => {
         if (!element) return
-        if (element.value === "") element.style.height = '0px'; // hide if empty
+        if (element.value === "" && document.activeElement !== element) { // empty
+            element.style.height = '0';
+            element.style.marginTop = '0';
+        }
         else {
             element.style.height = 'auto';
             element.style.height = element.scrollHeight + 'px';
+            element.style.marginTop = 'calc(2 * var(--spacing))';
         }
     }
 
@@ -142,8 +142,7 @@ export default function AnswerInput({answers, questionId, month, day}: {
 
                 <label key={answer.year}
                        className={'flex flex-col p-3 items-start rounded-lg bg-pink-50 dark:bg-pink-950/40 ' +
-                           'focus-within:ring-2 focus-within:ring-pink-500  ' +
-                           `${answerTextByYear[answer.year] && "gap-2"}`}
+                           'focus-within:ring-2 focus-within:ring-pink-500 '}
                 >
                     <p className={'flex gap-1 items-center'}>{answer.year}
 
@@ -160,8 +159,9 @@ export default function AnswerInput({answers, questionId, month, day}: {
                     <textarea value={answerTextByYear[answer.year] ?? answer.answer_text}
                               onChange={e => handleChange(answer, e.target.value)}
                               onBlur={() => handleBlur(answer)}
+                              onFocus={e => autoResize(e.target)}
                               ref={autoResize}
-                              className={'w-full h-16 focus:outline-none resize-none'}
+                              className={'w-full focus:outline-none resize-none'}
                               rows={1}
 
                     >

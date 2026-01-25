@@ -30,12 +30,11 @@ body {
 @theme {
     --animate-temporary-confirm-check: appear 2s ease-in-out;
     @keyframes appear {
-        0%,
         100% {
             transform: translateX(-5px) scale(0);
             opacity: 0;
         }
-        20%,
+        0%,
         80% {
             transform: translateX(0) scale(1);
             opacity: 1;
