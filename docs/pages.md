@@ -4,14 +4,14 @@
 
 | Name     | Description                             |
 |----------|-----------------------------------------|
-| Year     | Calendar with the whole year in a sight |
+| Calendar     | Calendar with the whole year in a sight |
 | Month    | Calendar month by month                 |
 | Day      | Question and past answers               |
 | Profile  | Parameters                              |
 | Login    | Login                                   |
 | Register | Register                                |
 
-## Year
+## Calendar
 - [x] Shows a grid of 3*4 months
 - [x] Clicking on a month navigates to the month page
 - [x] A day with an answer on the current year is highlighted

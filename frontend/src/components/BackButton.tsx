@@ -1,6 +1,5 @@
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import getMonthFromNumber from "../utils/getMonthFromNumber.ts";
-import Button from "./buttons/Button.tsx";
 
 export default function BackButton() {
 
@@ -13,12 +12,12 @@ export default function BackButton() {
     let label: string = '';
 
     if (currentPage === '/') {
-        url = `/month/${currentMonth}`
+        url = `/month#${currentMonth}`
         label = getMonthFromNumber(currentMonth);
     }
     else if (currentPage.startsWith('/day')) {
         const month = parseInt(currentPage.split('/')[2]);
-        url = `/month/${month}`
+        url = `/month#${month}`
         label = getMonthFromNumber(month);
     }
     else if (currentPage === '/profile') {
@@ -30,9 +29,23 @@ export default function BackButton() {
         label = 'Année';
     }
 
+    const navigate = useNavigate();
+
     if (url === '') return null;
 
+    function navigateTo(url: string) {
+        if (url === '/year') {
+
+            document.startViewTransition(() => {
+                navigate(url, {replace: true})
+            })
+        } else {
+            navigate(url, {replace: true})
+        }
+    }
+
     return (
-        <Button url={url} label={label} icon={'angle-left'}/>
+        <div onClick={() => navigateTo(url)} className={'j-btn flex items-center gap-2 rounded-full px-6 h-12 justify-center'}>
+            <i className={`pi pi-angle-left text-3xl`}></i>{label}</div>
     )
 }

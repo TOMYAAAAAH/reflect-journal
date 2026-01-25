@@ -8,7 +8,7 @@ export default function Footer({showDayUi, showTodayButton}: { showDayUi: boolea
 
     return (
         <footer
-            className={"bg-amber-100/10 fixed bottom-0 max-w-2xl w-full my-4 justify-center flex"}>
+            className={"bg-amber-100/10 fixed bottom-0 max-w-xl w-full my-4 justify-center flex z-10"}>
             <div className={'flex items-center justify-center rounded-full w-fit'}>
 
                 {showDayUi ?

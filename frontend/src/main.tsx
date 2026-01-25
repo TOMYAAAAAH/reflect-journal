@@ -7,8 +7,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 // ROUTES
 import Day from './routes/Day.tsx'
 import Profile from './routes/Profile.tsx'
-import Year from './routes/Year.tsx'
-import Month from './routes/Month.jsx'
+import Calendar from './routes/Calendar.tsx'
 import Login from './routes/Login.tsx'
 import Register from './routes/Register.tsx'
 import NotFound from "./routes/NotFound.tsx";
@@ -21,8 +20,8 @@ const router = createBrowserRouter([
         children: [
             {path: "/", element: <Day today={true}/>},
             {path: "/day/:paramMonth/:paramDay", element: <Day today={false}/>},
-            {path: "/year", element: <Year/>},
-            {path: "/month/:targetMonth?", element: <Month/>},
+            {path: "/year", element: <Calendar/>},
+            {path: "/month", element: <Calendar/>},
             {path: "/profile", element: <Profile/>},
             {path: "/login", element: <Login/>},
             {path: "/register", element: <Register/>},

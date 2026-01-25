@@ -1,17 +1,21 @@
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import getMonthFromNumber from "../utils/getMonthFromNumber.ts";
 import {useQuery} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
 import type {Calendar} from "../types/Calendar.ts";
 import listAllDays from "../utils/listAllDays.ts";
-import {useState} from "react";
+import {useEffect} from "react";
 
-export default function Year() {
+export default function Calendar() {
 
     const allDays = listAllDays();
     const navigate = useNavigate();
 
-    const year = 2026;
+    const year = new Date().getFullYear();
+
+    const {pathname, hash} = useLocation();
+    const isYearMode = pathname.startsWith('/year');
+    const targetMonth = parseInt(hash.replace('#', '')) || null;
 
     const fetchCalendar = (): Promise<Calendar> => {
         return api(`/calendar/${year}`)
@@ -30,33 +34,25 @@ export default function Year() {
     function navigateToMonth(month: number) {
 
         document.startViewTransition(() => {
-            setIsYearMode(false);
-            navigate(`/year#${month}`);
 
+            navigate(`/month#${month}`);
+        })
+    }
+
+    useEffect(() => {
+
+        if (!targetMonth) return;
+        document.getElementById(targetMonth.toString())?.scrollIntoView({
+            behavior: 'instant',
+            block: 'center',
         })
 
-    setTimeout(() => {
-        document.getElementById(month.toString())?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-        });
-    }, 50);
-    }
+    }, [targetMonth]);
 
-
-
-    function navigateToYear() {
-        document.startViewTransition(() => {
-            setIsYearMode(true);
-            navigate(`/year`);
-        });
-    }
-
-    const [isYearMode, setIsYearMode] = useState<boolean>(true);
 
     return (
         <div data-theme={isYearMode ? '' : 'month'} className={'scroll-smooth'}>
-            <button className={'p-5 bg-amber-800 sticky top-16 z-10'} onClick={navigateToYear}>to year</button>
+            {/*<button className={'p-5 bg-amber-800 sticky top-16 z-10'} onClick={navigateToYear}>to year</button>*/}
 
             <div className={'flex flex-wrap gap-x-3 gap-y-6 justify-center'}>
 
@@ -116,7 +112,3 @@ export default function Year() {
         </div>
     )
 }
-
-/*
-*
-* transition-[width] duration-500 transform-gpu will-change-[width] ease-[steps(20)]*/

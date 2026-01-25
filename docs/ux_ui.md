@@ -48,7 +48,7 @@
 - [ ] change failed
 - [ ] prompt to connect if not connected
 
-### Year
+### Calendar
 - [ ] highlight animation
 
 ### Month
