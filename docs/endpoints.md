@@ -20,7 +20,7 @@
 |----|--------|--------------------------------|----------------------|-------|------|
 | ❗️ | GET    | /v1/questions/:id              | Get question by ID   | -     |      |
 | ✔️ | GET    | /v1/questions/date/:month/:day | Get question by date | -     |      |
-| ✔️ | GET    | /v1/questions/today            | Get today's question | -     |      |
+| ❗  | GET    | /v1/questions/today            | Get today's question | -     |      |
 
 ## 3. Answers Routes `routes/answers.ts`
 
@@ -43,7 +43,7 @@ _If not authenticated, returns only the question_
 | ❗️ | GET    | /v1/day/:month/:day         | Get question and answers by date  | 🔒 & - |      |
 | ❗️ | GET    | /v1/today                   | Get question and answers of today | 🔒 & - |      |
 | ✔️ | GET    | /v1/answers/day/:month/:day | Get answers by date               | 🔒     |      |
-| ✔️ | GET    | /v1/answers/today           | Get answers of today              | 🔒     |      |
+| ❗  | GET    | /v1/answers/today           | Get answers of today              | 🔒     |      |
 
 ## 5. Calendar Routes `routes/calendar.ts`
 
@@ -53,7 +53,7 @@ _If not authenticated, returns only the question_
 
 ## 6. other Routes `routes/health.ts`
 
-|    | Method | Endpoint   | Description         | Auth? | Body |
-|----|--------|------------|---------------------|-------|------|
-| ✔️ | GET    | /v1/       | Get welcome message |       |      |
-| ✔️ | GET    | /v1/health | Get api health      |       |      |
+|    | Method | Endpoint   | Description             | Auth? | Body |
+|----|--------|------------|-------------------------|-------|------|
+| ✔️ | GET    | /v1/       | Get api welcome message |       |      |
+| ✔️ | GET    | /v1/health | Get api health          |       |      |

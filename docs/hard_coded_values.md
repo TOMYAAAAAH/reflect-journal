@@ -1,13 +1,9 @@
-# Hard Coded Values
+# Hard Coded & Default Values
 
 ## Back
-| Where | What           | Value    | Comment |
-|-------|----------------|----------|---------|
-| app   | JWT expires in | 365 days |         |
-|       |                |          |         |
+- app.ts -> JWT token expires in 365 days 
 
 ## Front
-| Where | What                      | Value | Comment |
-|-------|---------------------------|-------|---------|
-| Day   | question query stale time | 1h    |         |
-|       |                           |       |         |
+- Day.tsx -> 1h stale time for question and answer
+- GlobalProvider.tsx -> default currentDay is Today
+- useUser.ts -> 5min stale time for /me

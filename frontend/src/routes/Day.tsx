@@ -7,74 +7,109 @@ import {useDayContext} from "../hooks/useDayContext.ts";
 import {useEffect} from "react";
 import AnswerConnect from "../components/AnswerConnect.tsx";
 import {useAuth} from "../hooks/useAuth.ts";
+import validateDay from "../utils/validateDay.ts";
+import type {Day} from "../types/Day.ts";
 
 export default function Day({today}: { today: boolean }) {
 
     const STALE_TIME = 1000 * 60 * 60;
 
-    let {month, day} = useParams()
-    let dayUrl: string;
-
-    if (today) {
-        dayUrl = 'today'
-        const todayDate = new Date();
-        month = (todayDate.getMonth() + 1).toString();
-        day = todayDate.getDate().toString();
-    } else {
-        dayUrl = `day/${month}/${day}`
-    }
-
-    const { setCurrentDay, currentDay } = useDayContext();
+    const {paramMonth, paramDay} = useParams()
+    const {setCurrentDay, currentDay} = useDayContext();
 
     useEffect(() => {
-        if (
-            currentDay.month === Number(month) &&
-            currentDay.day === Number(day)
-        ) return;
 
-        setCurrentDay({ month: Number(month), day: Number(day) });
-    }, [month, day, currentDay, setCurrentDay]);
+        let targetDay: Day;
+
+        if (today) {
+            const now = new Date();
+            targetDay = {
+                month: now.getMonth() + 1,
+                day: now.getDate(),
+            };
+        } else {
+            targetDay = {
+                month: Number(paramMonth),
+                day: Number(paramDay),
+            };
+        }
+
+        // If different day and valid day
+        if (
+            (currentDay.month !== targetDay.month ||
+            currentDay.day !== targetDay.day) &&
+            validateDay(targetDay)
+        ) {
+            setCurrentDay(targetDay);
+        }
+
+    }, [today, paramMonth, paramDay, currentDay, setCurrentDay]);
+
+    let day: Day;
+
+    if (today) {
+        const now = new Date();
+        day = {
+            month: now.getMonth() + 1,
+            day: now.getDate(),
+        };
+    } else {
+        day = {
+            month: currentDay.month,
+            day: currentDay.day,
+        };
+    }
+
+    const dayUrl = `day/${day.month}/${day.day}`
+    const isUrlValid = validateDay(day);
+    const {isAuthenticated, isLoading} = useAuth()
 
     const {data: questionData, isLoading: questionLoading, error: questionError} = useQuery({
-        queryKey: ['question', month, day],
+        queryKey: ['question', day.month, day.day],
         queryFn: () => api(`/questions/${dayUrl}`),
+        enabled: isUrlValid,
         staleTime: STALE_TIME
     });
 
     const {data: answersData, isLoading: answersLoading, error: answersError} = useQuery({
-        queryKey: ['answers', month, day],
+        queryKey: ['answers', day.month, day.day],
         queryFn: () => api(`/answers/${dayUrl}`),
+        enabled: isUrlValid && isAuthenticated,
         staleTime: STALE_TIME
     });
-
-    const { isAuthenticated, isLoading } = useAuth()
-
 
     return (
         <div className={'flex flex-col gap-1'}>
 
-            {month && day && <>
+            {isUrlValid ? <>
 
-                {questionLoading && <p>Loading...</p>}
-                {questionError && <p>Error loading question</p>}
-                {questionData && (
-                    <>
-                        <Question question={questionData.question}/>
-                    </>
-                )}
+                    {questionLoading && <p>Loading...</p>}
+                    {questionError && <p>Error loading question</p>}
+                    {questionData && (
+                        <>
+                            <Question question={questionData.question}/>
+                        </>
+                    )}
 
-                {answersLoading && <p>Loading...</p>}
-                {answersError && <p>Error loading answers</p>}
-                {answersData && (
-                    <>
-                        <AnswerInput answers={answersData.answers} questionId={questionData.question.id} month={month}
-                                     day={day}/>
-                    </>
-                )}
+                    {answersLoading && <p>Loading...</p>}
+                    {answersError && <p>Error loading answers</p>}
+                    {answersData && (
+                        <>
+                            <AnswerInput answers={answersData.answers}
+                                         questionId={questionData.question.id}
+                                         month={day.month}
+                                         day={day.day}/>
+                        </>
+                    )}
 
-            </>
+                </>
+
+                :
+                <>
+                    woopsie, wrong day
+                </>
             }
-            { !isAuthenticated && !isLoading &&
+            {!isAuthenticated && !isLoading &&
                 <AnswerConnect/>}
 
         </div>

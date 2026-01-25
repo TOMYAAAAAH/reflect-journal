@@ -7,8 +7,8 @@ import posthog from "posthog-js";
 export default function AnswerInput({answers, questionId, month, day}: {
     answers: Answer[],
     questionId: number,
-    month: string,
-    day: string
+    month: number,
+    day: number
 }) {
 
     const DEBOUNCE_MS = 5000;

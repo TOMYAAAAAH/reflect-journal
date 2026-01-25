@@ -20,7 +20,7 @@ const router = createBrowserRouter([
         element: <Layout/>, // routes with profile button
         children: [
             {path: "/", element: <Day today={true}/>},
-            {path: "/day/:month/:day", element: <Day today={false}/>},
+            {path: "/day/:paramMonth/:paramDay", element: <Day today={false}/>},
             {path: "/year", element: <Year/>},
             {path: "/month/:targetMonth?", element: <Month/>},
             {path: "/profile", element: <Profile/>},
