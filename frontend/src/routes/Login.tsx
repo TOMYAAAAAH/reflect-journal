@@ -2,6 +2,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {api} from "../api/client.ts";
 import {useMutation} from "@tanstack/react-query";
+import {useAuth} from "../hooks/useAuth.ts";
 
 export default function Login() {
 
@@ -10,6 +11,7 @@ export default function Login() {
     const [passwordsDisplay, setPasswordsDisplay] = useState(false);
     const navigate = useNavigate();
 
+    const {login} = useAuth();
 
     const registerMutation = useMutation({
         mutationFn: (user: { email: string; password: string }) =>
@@ -20,9 +22,8 @@ export default function Login() {
                 }
             ),
         onSuccess: (data: { token: string }) => {
-            localStorage.setItem('token', data.token);
+            login(data.token);
             navigate("/");
-
         },
         onError: (err) => {
             alert(err?.message || 'Registration failed');

@@ -22,7 +22,8 @@
 }
 
 @custom-variant month {
-    &:where([data-theme="month"] *){ @slot }
+    &:where([data-theme="month"] *){ /*noinspection CssInvalidAtRule*/
+        @slot }
 }
 
 body {

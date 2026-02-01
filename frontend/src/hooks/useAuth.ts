@@ -1,4 +1,4 @@
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {api} from "../api/client.ts";
 import type {User} from "../types/User.ts";
 
@@ -15,6 +15,9 @@ async function fetchMe(): Promise<UserDto | null> {
 }
 
 export function useAuth() {
+
+    const qc = useQueryClient();
+
     const token = typeof window !== "undefined"
         ? window.localStorage.getItem("token")
         : null;
@@ -29,6 +32,16 @@ export function useAuth() {
         enabled: hasToken, // hook always runs, query only runs if token exists
     });
 
-    return {isAuthenticated: !!query.data, isLoading: query.isLoading}
+    const logout = () => {
+        localStorage.removeItem('token');
+        qc.invalidateQueries({queryKey: ["me"]});
+    }
+
+    const login = (token: string) => {
+        localStorage.setItem('token', token);
+        qc.invalidateQueries({queryKey: ["me"]});
+    }
+
+    return {isAuthenticated: !!query.data, isLoading: query.isLoading, logout, login}
 
 }
