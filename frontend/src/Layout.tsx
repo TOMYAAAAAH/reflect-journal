@@ -37,7 +37,7 @@ export default function Layout() {
                     <IconButton url={'/profile'} icon={'cog'}/>
                 )}
             </header>
-            <main className={"px-4 pt-16 pb-20 h-dvh"}>
+            <main className={"px-4 pt-16 pb-20 h-auto min-h-dvh"}>
                 <Outlet/>
             </main>
             <Footer showDayUi={showDayUi} showTodayButton={showTodayButton}/>

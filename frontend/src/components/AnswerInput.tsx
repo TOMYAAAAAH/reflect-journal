@@ -143,7 +143,7 @@ export default function AnswerInput({answers, questionId, month, day}: {
             {answers.map((answer: Answer) => (
 
                 <div key={answer.year}
-                     className={'flex flex-col p-3 items-start rounded-lg bg-pink-50 dark:bg-pink-950/40 ' +
+                     className={'flex flex-col p-3 items-start rounded-lg bg-pink-500/10 ' +
                          'focus-within:ring-2 focus-within:ring-pink-500 '}
                      onMouseDown={e => {
                          e.preventDefault();

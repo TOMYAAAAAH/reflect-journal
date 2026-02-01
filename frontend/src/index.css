@@ -17,7 +17,7 @@
 
 @layer components {
     .j-btn {
-        @apply hover:opacity-80 transition-all duration-100 bg-amber-100 dark:bg-amber-950 text-black dark:text-white rounded-full;
+        @apply transition-all duration-100 bg-amber-100 dark:bg-amber-950 text-black dark:text-white rounded-full;
     }
 }
 

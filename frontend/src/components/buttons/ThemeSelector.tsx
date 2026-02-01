@@ -37,7 +37,7 @@ export default function ThemeSelector() {
         <div className={'bg-slate-500/20 p-1 rounded-full w-fit'}>
             {buttons.map(([value, label]) => (
 
-                <button onClick={() => updateTheme(value)} className={"rounded-full px-4 py-2 " +
+                <button onClick={() => updateTheme(value)} className={"rounded-full px-4 py-2 cursor-pointer " +
                     `${theme === value && 'bg-amber-500/20'}` }>
                     {label}
                 </button>
