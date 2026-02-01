@@ -9,6 +9,7 @@ import AnswerConnect from "../components/AnswerConnect.tsx";
 import {useAuth} from "../hooks/useAuth.ts";
 import validateDay from "../utils/validateDay.ts";
 import type {Day} from "../types/Day.ts";
+import getShiftedDay from "../utils/getShiftedDay.ts";
 
 export default function Day({today}: { today: boolean }) {
 
@@ -77,6 +78,25 @@ export default function Day({today}: { today: boolean }) {
         enabled: isUrlValid && isAuthenticated,
         staleTime: STALE_TIME
     });
+
+    for (const shift of [-1, 1]) {
+        const shiftedDay = getShiftedDay(day, shift)
+        const shiftedDayUrl = `day/${shiftedDay.month}/${shiftedDay.day}`
+
+        useQuery({
+            queryKey: ['question', shiftedDay.month, shiftedDay.day],
+            queryFn: () => api(`/questions/${shiftedDayUrl}`),
+            enabled: isUrlValid,
+            staleTime: STALE_TIME
+        });
+
+        useQuery({
+            queryKey: ['answers', shiftedDay.month, shiftedDay.day],
+            queryFn: () => api(`/answers/${shiftedDayUrl}`),
+            enabled: isUrlValid && isAuthenticated,
+            staleTime: STALE_TIME
+        });
+    }
 
     return (
         <div className={'flex flex-col gap-1'}>
