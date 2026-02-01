@@ -35,6 +35,8 @@ export function useAuth() {
     const logout = () => {
         localStorage.removeItem('token');
         qc.invalidateQueries({queryKey: ["me"]});
+        qc.invalidateQueries({queryKey: ["answers"]});
+        qc.invalidateQueries({queryKey: ["calendar"]});
     }
 
     const login = (token: string) => {
