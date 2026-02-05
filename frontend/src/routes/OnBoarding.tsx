@@ -3,7 +3,7 @@ import LargeButton from "../components/buttons/LargeButton.tsx";
 export default function OnBoarding() {
 
     return (
-        <div className={'flex flex-col justify-center gap-8 w-fit h-full m-auto'}>
+        <div className={'flex flex-col justify-center gap-8 w-fit h-dvh m-auto fixed top-0 left-0 right-0 bottom-0'}>
 
             <h1 className={'text-center leading-10'}>
                 <span className={'text-lg'}>Bienvenue dans ton</span><br/>

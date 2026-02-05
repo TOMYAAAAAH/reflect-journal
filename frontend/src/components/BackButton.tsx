@@ -45,7 +45,7 @@ export default function BackButton() {
     }
 
     return (
-        <div onClick={() => navigateTo(url)} className={'j-btn flex items-center gap-2 rounded-full px-6 h-12 justify-center cursor-pointer'}>
-            <i className={`pi pi-angle-left text-3xl`}></i>{label}</div>
+        <button onClick={() => navigateTo(url)} className={'j-btn flex items-center gap-2 rounded-full px-6 h-12 justify-center cursor-pointer'}>
+            <i className={`pi pi-angle-left text-3xl`}></i>{label}</button>
     )
 }

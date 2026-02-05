@@ -83,10 +83,12 @@ export default function Calendar() {
 
                         return (
 
-                            <div
+                            <button
                                 style={{viewTransitionName: `monthName-${monthNb}`}}
                                 onClick={() => isYearMode && navigateToMonth(monthNb)} key={monthNb}
-                                className={'w-3/10 month:w-full cursor-pointer month:cursor-auto'}>
+                                className={'w-3/10 month:w-full cursor-pointer month:cursor-auto'}
+                                tabIndex={isYearMode ? 0 : -1}
+                            >
 
                                 <h2
                                     className={'text-left text-2xl pl-1 month:text-2xl font-medium pb-2 month:sticky month:top-16'}>{monthName.slice(0, isYearMode ? 3 : 20)}</h2>
@@ -104,6 +106,7 @@ export default function Calendar() {
                                                 <Link
                                                     className={`text-[0.6rem] month:text-2xl w-full text-center month:cursor-pointer py-1 month:py-5 font-medium ${isDayFilled(monthNb, day) && 'text-pink-500'} `}
                                                     key={day}
+                                                    tabIndex={isYearMode ? -1 : 0}
                                                     to={!isYearMode ? `/day/${monthNb}/${day}` : ''}>
                                                     {day}
                                                 </Link>
@@ -112,7 +115,7 @@ export default function Calendar() {
                                         }
                                     )}
                                 </div>
-                            </div>
+                            </button>
                         )
                     }
                 )}
