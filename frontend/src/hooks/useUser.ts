@@ -18,7 +18,7 @@ export function useUser() {
     return useQuery({
         queryKey: ["me"],
         queryFn: fetchMe,
-        staleTime: 5 * 60 * 1000, // cache for 5 min
+        staleTime: 60 * 60 * 1000, // cache for 60 min
         refetchOnWindowFocus: false,
         retry: false, // don’t retry if 401
     });

@@ -8,7 +8,7 @@ import {useNavigate} from "react-router-dom";
 export default function Profile() {
 
     const {data, isLoading} = useUser();
-    const {logout} = useAuth();
+    const {logout, isAuthenticated, isLoading: isAuthLoading} = useAuth();
     const navigate = useNavigate();
 
     const disconnect = () => {
@@ -24,23 +24,64 @@ export default function Profile() {
 
     return (
         <>
-            <h2 className={'text-3xl mt-8 mb-4'}>Mon compte</h2>
+            {isAuthenticated && !isAuthLoading &&
+                <p className={"text-center text-green-500 mt-6"}
+                >Vous êtes connecté <i className={"pi pi-check"}></i></p>
+            }
 
-            {isLoading ? 'loading...' :
+            <h2 className={'text-3xl my-4'}>Préférences</h2>
+
+            <div>
+                <p>Thème</p>
+                <ThemeSelector/>
+            </div>
+
+
+            <Button url={'/welcome'} label={'Revoir la bienvenue'} icon={''}/>
+
+            <hr className={'text-gray-500/20 my-2'}/>
+
+            <h2 className={'text-3xl my-4'}>Compte</h2>
+
+
+            {isAuthenticated && !isLoading &&
 
                 <>
-                    <p>{data?.user?.name}</p>
-                    <p>{getFormatedDate(data?.user?.createdAt)}</p>
+                    <div className="flex items-center justify-between w-full">
+                        <span>Email</span>
+                        <span>{data?.user?.email}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between w-full">
+                        <span>Pseudo</span>
+                        <span>{data?.user?.name}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between w-full">
+                        <span>Création du compte</span>
+                        <span>{getFormatedDate(data?.user?.createdAt)}</span>
+                    </div>
                 </>
-
             }
-            <h2 className={'text-3xl mt-8 mb-4'}>Parametres</h2>
 
-            <ThemeSelector/>
+            <hr className={'text-gray-500/20 my-2'}/>
+
+            Besoin d'aide
+
+            <hr className={'text-gray-500/20 my-2'}/>
+
+            <div className="flex items-center justify-between w-full">
+                <span>Version</span>
+                <span>Alpha 1.1</span>
+            </div>
+
+            <hr className={'text-gray-500/20 my-2'}/>
 
             <button className={'j-btn rounded-full px-6 h-12'} onClick={disconnect}>Me déconnecter</button>
 
-            <Button url={'/welcome'} label={'On Boarding'} icon={''}/>
+
+
+
         </>
     )
 }

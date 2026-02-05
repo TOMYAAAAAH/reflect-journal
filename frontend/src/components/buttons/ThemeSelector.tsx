@@ -25,14 +25,12 @@ export default function ThemeSelector() {
         }
     }
     const buttons = [
+        ["system", "Système"],
         ["light", "Clair"],
-        ["dark", "Sombre"],
-        ["system", "Système"]
+        ["dark", "Sombre"]
     ]
 
     return (<div className={'flex items-center gap-4'}>
-
-        <p>Selection du thème : </p>
 
         <div className={'bg-slate-500/20 p-1 rounded-full w-fit'}>
             {buttons.map(([value, label]) => (
