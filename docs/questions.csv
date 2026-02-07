@@ -1,80 +1,367 @@
-month,day,question,playlist_id
-1,1,"Quelle est votre mission dans la vie ?",1
-1,2,"Les gens peuvent-ils évoluer ?",1
-1,3,"Que lisez-vous en ce moment ?",1
-1,4,"Le meilleur moment de cette journée ?",1
-1,5,"Dans quel restaurant êtes-vous allé dernièrement ?",1
-1,6,"La journée a-t-elle été difficile ? Pourquoi ?",1
-1,7,"Vous avez de la chance... Pourquoi ou pourquoi pas ?",1
-1,8,"La chanson qui tourne en boucle dans votre tête ?",1
-1,9,"Une journée ordinaire ? Pourquoi ou pourquoi pas ?",1
-1,10,"Quelque chose qui vous a marqué aujourd'hui ?",1
-1,11,"Aujourd'hui, qu'avez vous perdu ?",1
-1,12,"Votre accessoire préféré ?",1
-1,13,"La destination idéale de votre prochain voyage ?",1
-1,14,"Plutôt maître ou disciple ?",1
-1,15,"Comment était le déjeuner aujourd'hui ?",1
-1,16,"Devez-vous de l'argent à quelqu'un ? Quelqu'un vous en doit-il ?",1
-1,17,"La plus vieille chose que vous portez aujourd'hui ?",1
-1,18,"En quoi la journée a-t-elle été douce ?",1
-1,19,"Trois aliments que vous avez mangés aujourd'hui ?",1
-1,20,"Une rancœur persistante ? À quel propos ?",1
-1,21,"Qu'attendez-vous avez impatience ?",1
-1,22,"Vous cherchez plutôt la sécurité ou l'aventure ?",1
-1,23,"Besoin d'une petite pause ? Qu'est-ce qui vous épuise",1
+month,day,question_text,playlist_id
+1,1,Quelle est votre mission dans la vie ?,1
+1,2,Les gens peuvent-ils évoluer ?,1
+1,3,Que lisez-vous en ce moment ?,1
+1,4,Le meilleur moment de cette journée ?,1
+1,5,Dans quel restaurant êtes-vous allé dernièrement ?,1
+1,6,La journée a-t-elle été difficile ? Pourquoi ?,1
+1,7,Vous avez de la chance... Pourquoi ou pourquoi pas ?,1
+1,8,La chanson qui tourne en boucle dans votre tête ?,1
+1,9,Une journée ordinaire ? Pourquoi ou pourquoi pas ?,1
+1,10,Quelque chose qui vous a marqué aujourd'hui ?,1
+1,11,"Aujourd'hui, qu'avez-vous perdu ?",1
+1,12,Votre accessoire préféré ?,1
+1,13,La destination idéale de votre prochain voyage ?,1
+1,14,Plutôt maître ou disciple ?,1
+1,15,Comment était le déjeuner aujourd'hui ?,1
+1,16,Devez-vous de l'argent à quelqu'un ? Quelqu'un vous en doit-il ?,1
+1,17,La plus vieille chose que vous portez aujourd'hui ?,1
+1,18,En quoi la journée a-t-elle été douce ?,1
+1,19,Trois aliments que vous avez mangés aujourd'hui ?,1
+1,20,Une rancœur persistante ? À quel propos ?,1
+1,21,Qu'attendez-vous avez impatience ?,1
+1,22,Vous cherchez plutôt la sécurité ou l'aventure ?,1
+1,23,Besoin d'une petite pause ? Qu'est-ce qui vous épuise,1
 1,24,"Si vous deviez créer votre propre entreprise, quel serait son objet ?",1
-1,25,"Qu'est ce qui fait que vous êtes vous ?",1
-1,26,"De quoi auriez-vous le plus besoin ?",1
-1,27,"Le mouvement artistique qui vous décrirait le mieux à ce jour ? Surréalisme ? Modernisme ? Dadaïsme ?",1
+1,25,Qu'est ce qui fait que vous êtes vous ?,1
+1,26,De quoi auriez-vous le plus besoin ?,1
+1,27,Le mouvement artistique qui vous décrirait le mieux à ce jour ? Surréalisme ? Modernisme ? Dadaïsme ?,1
 1,28,"Comment décririez-vous votre ""chez vous"" ?",1
-1,29,"La dernière émission télé que vous ayez regardé ?",1
-1,30,"Que voudriez-vous oublier ?",1
-1,31,"Qui voudriez-vous être ?",1
-2,1,"Votre résolution pour demain ?",1
-2,2,"Avec qui vivez-vous ?",1
-2,3,"Un petit coup de mou ? Grand comment ? Et pourquoi ?",1
-2,4,"Quel temps fait-il ?",1
-2,5,"Le morceau que vous écoutez constamment ?",1
-2,6,"À la recherche de la plénitude ou de l'exaltation ?",1
-2,7,"Trois choses à acheter ?",1
-2,8,"Amoureux ?",1
-2,9,"À quelle heure vous êtes-vous endormi ?",1
+1,29,La dernière émission télé que vous ayez regardé ?,1
+1,30,Que voudriez-vous oublier ?,1
+1,31,Qui voudriez-vous être ?,1
+2,1,Votre résolution pour demain ?,1
+2,2,Avec qui vivez-vous ?,1
+2,3,Un petit coup de mou ? Grand comment ? Et pourquoi ?,1
+2,4,Quel temps fait-il ?,1
+2,5,Le morceau que vous écoutez constamment ?,1
+2,6,À la recherche de la plénitude ou de l'exaltation ?,1
+2,7,Trois choses à acheter ?,1
+2,8,Amoureux ?,1
+2,9,À quelle heure vous êtes-vous endormi ?,1
 2,10,"Si cette journée était un animal, quel serait-il ?",1
-2,11,"Comment êtes-vous allé travaillé aujourd'hui ?",1
-2,12,"Aujourd'hui qu'est-ce qui vous empêche le plus d'avancer ?",1
-2,13,"La question que vous adorez poser ?",1
-2,14,"Avez-vous embrassé quelqu'un aujourd'hui ?",1
-2,15,"Quel remède pour un cœur brisé ?",1
-2,16,"Le dernier spectacle auquel vous ayez assisté ?",1
+2,11,Comment êtes-vous allé travaillé aujourd'hui ?,1
+2,12,Aujourd'hui qu'est-ce qui vous empêche le plus d'avancer ?,1
+2,13,La question que vous adorez poser ?,1
+2,14,Avez-vous embrassé quelqu'un aujourd'hui ?,1
+2,15,Quel remède pour un cœur brisé ?,1
+2,16,Le dernier spectacle auquel vous ayez assisté ?,1
 2,17,"Si vous pouviez changer quelque chose à cette journée, ce serait...",1
-2,18,"La chose la plus chère que vous portez en ce moment ?",1
-2,19,"La personne la plus folle de votre entourage ?",1
-2,20,"De quel mot avez-vous abusé aujourd'hui ?",1
-2,21,"Le mot tendance du moment ?",1
-2,22,"L'émotion persistante de ce jour ?",1
-2,23,"L'achat le moins avouable de votre relevé bancaire ?",1
-2,24,"Qu'avez-vous de trop ?",1
-2,25,"Le dernier rêve dont vous vous souvenez ?",1
-2,26,"Une chose dont vous ne pouvez pas vous passer ?",1
-2,27,"Vous préférez les orignaux ou les remix ? Pourquoi ?",1
-2,28,"Un peu malade dernièrement ?",1
+2,18,La chose la plus chère que vous portez en ce moment ?,1
+2,19,La personne la plus folle de votre entourage ?,1
+2,20,De quel mot avez-vous abusé aujourd'hui ?,1
+2,21,Le mot tendance du moment ?,1
+2,22,L'émotion persistante de ce jour ?,1
+2,23,L'achat le moins avouable de votre relevé bancaire ?,1
+2,24,Qu'avez-vous de trop ?,1
+2,25,Le dernier rêve dont vous vous souvenez ?,1
+2,26,Une chose dont vous ne pouvez pas vous passer ?,1
+2,27,Vous préférez les orignaux ou les remix ? Pourquoi ?,1
+2,28,Un peu malade dernièrement ?,1
 2,29,"Tiens, une année bissextile... Qu'avez-vous fait de cette journée supplémentaire ?",1
-3,1,"En quoi cette journée était perfectible ?",1
-12,14,"En quoi êtes-vous remarquable ?",1
-12,15,"Modération ou excès ?",1
-12,16,"Un truc irrésistible ?",1
+3,1,En quoi cette journée était perfectible ?,1
+3,2,Sucré ou salé ?,1
+3,3,"Étiez-vous seul dans votre lit, hier soir ?",1
+3,4,Qu'aimeriez-vous demander à votre mère ?,1
+3,5,Votre mot favori ?,1
+3,6,Qui est votre ennemie juré ?,1
+3,7,Une expérience à ne pas tenter ?,1
+3,8,La dernière chanson que vous ayez écoutée ?,1
+3,9,Quelqu'un que vous auriez préféré ne pas voir aujourd'hui ?,1
+3,10,Le dernier film loué ?,1
+3,11,"Une chose dont vous avez rêvé aujourd'hui, sans pouvoir l'obtenir ?",1
+3,12,Où habitez-vous ?,1
+3,13,"Si vous disposiez d'une heure de plus dans la journée, qu'en feriez-vous ?",1
+3,14,Qu'est ce qui est vrai ?,1
+3,15,De quoi préféreriez-vous éviter de parler ?,1
+3,16,Que voudriez-vous acheter ?,1
+3,17,Une expérience inédite ?,1
+3,18,Votre spiritualité en trois mots ?,1
+3,19,Votre éthique professionelle ?,1
+3,20,Le dernier livre que vous avez lu ?,1
+3,21,La première chose que vous avez avalée aujourd'hui ?,1
+3,22,Petit reportage tiré de la journée qui vient de s'écouler...,1
+3,23,"Plutôt country ou rock'n'roll (à moins que ce soit hip-hop, folk punk...) ?",1
+3,24,L'objet de vos rêveries du jour ?,1
+3,25,Quelque chose qui vous a fait rire ?,1
+3,26,À qui aimeriez-vous ressembler ?,1
+3,27,La dernière fois que vous vous êtes senti au top ?,1
+3,28,Quel souvenir conserver de la journée écoulée ?,1
+3,29,Quelques lignes d'une chanson ou d'un poème qui vous ressemble aujourd'hui ?,1
+3,30,La couleur du jour ?,1
+3,31,Les inventions dont vous ne sauriez vous passer ?,1
+4,1,Auprès de qui faites-vous illusion ?,1
+4,2,De qui vous sentez-vous le plus proche ?,1
+4,3,Une bonne journée ? Pourquoi ?,1
+4,4,"Si vous deviez faire un vœu à propos de cette journée, quel serait-il ?",1
+4,5,"Ce qui est trop, trop bien dans la vie...",1
+4,6,Un plat à emporter commandé dernièrement ?,1
+4,7,Quelles couleurs portez-vous ?,1
+4,8,Votre passion secrète ?,1
+4,9,"Où vous sentez-vous ""chez vous"" ?",1
+4,10,Une corvée dont vous vous êtes exempté aujourd'hui ?,1
+4,11,Un bruit reflétant votre humeur de la journée ?,1
+4,12,Qu'avez-vous appris récemment ?,1
+4,13,Comment passer idéalement un dimanche matin ?,1
+4,14,"Si vous pouviez aquérir un don (sans effort), que choisiriez-vous ?",1
+4,15,Quel personnage célèbre aimeriez-vous interviewer ?,1
+4,16,Un sujet politique qui vous intéresse ?,1
+4,17,"Selon vous, quel est votre plus grand défaut ?",1
+4,18,Un problème que vous avez résolu aujourd'hui...,1
+4,19,Quelle célébrité aimeriez-vous réssuciter afin de dîner avec elle ?,1
+4,20,Combien de gros mots aujourd'hui ?,1
+4,21,"Qu'aimeriez-vous répondre à la question ""Que faites-vous dans la vie"" ?",1
+4,22,Empêcher quelque chose... mais quoi ?,1
+4,23,Que diraient de vous vos parents ?  (Vous pouvez les appeler pour leur demander !),1
+4,24,La vie est-elle juste ? Oui ? Non ? Parfois ? Pas aujourd'hui ?,1
+4,25,Qui devez-vous appeler ?,1
+4,26,Combien d'argent avez-vous à dépenser ?,1
+4,27,Quel genre de personne êtes-vous ?,1
+4,28,"L'espace d'une journée, à la place de qui voudriez-vous être ?",1
+4,29,Qui pourriez-vous rendre heureux ? Et comment ?,1
+4,30,Trois mots pour décrire votre vie sociale ?,1
+5,1,Plutôt bordélique ou ordonné ?,1
+5,2,Des hésitations ?,1
+5,3,un super-pouvoir à choisir pour la journée ?,1
+5,4,De quand date votre dernière baignade ?,1
+5,5,Le fou rire du jour ?,1
+5,6,La dernière soirée en date ?,1
+5,7,Qui pourrait tenir votre rôle dans un film sur votre vie ? Ce serait un bon film ?,1
+5,8,Qui trouvez-vous mignon ?,1
+5,9,Quelle tâche vous assomme ?,1
+5,10,Par quoi avez-vous débuté la journée ?,1
+5,11,De quoi voudriez-vous qu'on se souvienne à votre sujet ?,1
+5,12,Qu'explorez-vous ?,1
+5,13,"Qui vous aime, à ce jour ?",1
+5,14,Les caractéristiques d'un bon ennemi ?,1
+5,15,Votre plus belle réussite selon vous ?,1
+5,16,Le meilleur jour de la semaine qui vient de s'écouler ?,1
+5,17,Aujourd'hui vous vous êtes débarassé de...,1
+5,18,"Si vous pouviez remonter le temps et changer quelque chose, que choisiriez-vous ?",1
+5,19,La chose la plus créative que vous avez faite récemment ?,1
+5,20,La chose la plus folle que vous avez faite par amour ?,1
+5,21,Quel est votre salaire ?,1
+5,22,De quand date votre dernière conversation intéressante ?,1
+5,23,Votre coupe de cheveux ?,1
+5,24,Qu'est-ce qui vous a motivé aujourd'hui ?,1
+5,25,"Si demain vous pouviez partir n'importe où, où iriez-vous ?",1
+5,26,La liste des soucis du jour ?,1
+5,27,Qu'est-ce qui vous réconforte en ce moment ?,1
+5,28,Plutôt Bretagne ou Côte d'Azur ? Entre les deux ?,1
+5,29,"Si vous n'aviez aucune contrainte, que feriez-vous de votre journée ?",1
+5,30,La meilleure lecture du jour ?,1
+5,31,Combien d'argent dans votre monnaie ? Et sur votre compte bancaire ?,1
+6,1,Comment va votre santé ?,1
+6,2,Devriez-vous faire confiance à votre instinct ?,1
+6,3,Qui vous manque le plus en ce moment ?,1
+6,4,Comment étiez-vous habillé aujourd'hui ?,1
+6,5,Le dernier fruit que vous avez croqué ?,1
+6,6,De quel membre de la famille vous sentez-vous le plus proche ?,1
+6,7,À propos de quoi éprouvez-vous de la gratidtude aujourd'hui ?,1
+6,8,Qu'est-ce qui vous pourrit la vie ?,1
+6,9,Les caractéristiques d'un bon ami ?,1
+6,10,Combien de cafés aujourd'hui ?,1
+6,11,La meilleure chose à faire un vendredi soir ?,1
+6,12,Un obstacle ? Pouvez-vous l'éliminer ?,1
+6,13,L'inquiétude du jour ?,1
+6,14,Avez-vous fait du sport aujourd'hui ?,1
+6,15,Votre gadget préféré ?,1
+6,16,Qu'est-ce qui vous rend cynique ?,1
+6,17,Le meilleur moment de cette journée ? Pourquoi ?,1
+6,18,Le dernier repas que quelqu'un vous ait préparé ?,1
+6,19,La dernière lettre personelle que vous avez reçue ?,1
+6,20,La dernière phrase de votre autobiographie ?,1
+6,21,Qui aimeriez-vous connaître ?,1
+6,22,Votre dernière séance de cinema ?,1
+6,23,La dernière fois que vous avez pleuré ?,1
+6,24,Vos prochaines mondanités ?,1
+6,25,Votre compagnon le plus proche ?,1
+6,26,Votre plus gros péché mignon ?,1
+6,27,La dernière fois que vous avez mangé une pizza ? Laquelle ?,1
+6,28,Un emprunt à la météo pour décrire votre humeur ?,1
+6,29,Votre playlist actuelle ?,1
+6,30,De quoi pourriez-vous vous passé en cet instant ?,1
+7,1,L'eau la glace ou le feu ?,1
+7,2,Qu'avez-vous annulé aujourd'hui ?,1
+7,3,La dernière plage sur laquelle vous vous êtes allongé ?,1
+7,4,Trop drôle...,1
+7,5,Votre devise ?,1
+7,6,Votre meilleur.e ami.e ?,1
+7,7,Le prochain livre que vous comptez lire ?,1
+7,8,Qu'avez-vous à perdre ?,1
+7,9,La journée fut belle pourquoi ?,1
+7,10,Quand avez-vous parlé à vos parent pour la dernière fois ?,1
+7,11,"Si vous étiez un personnage de roman, qui seriez-vous ?",1
+7,12,Tout simplement parfait...,1
+7,13,Qu'est-ce qui vous rend sentimental ?,1
+7,14,Avez-vous un secret ? Plusieurs ?,1
+7,15,Votre plus glorieux naufrage ? Votre talon d'Achille ?,1
+7,16,Portez-vous des chaussettes ?,1
+7,17,Comment vous rendre utile ?,1
+7,18,Les ingrédients d'une journée idéale ?,1
+7,19,Que faut-il que vous jetiez ?,1
+7,20,La douleur du jour ?,1
+7,21,La dernière personne qui vous a mis.e en colère ?,1
+7,22,Où puisez-vous vos bonnes idées ?,1
+7,23,Le dernier petit plat que vous avez préparé ?,1
+7,24,Qu'y a-t-il dans votre frigo ?,1
+7,25,"Si vous pouviez demander à un artiste (vivant ou non) de réaliser votre portrait, qui choisiriez-vous ?",1
+7,26,Plutôt débordé ou oisif ?,1
+7,27,Quelle odeur percevez-vous en ce moment même ?,1
+7,28,Une phrase qui décrirait votre année jusqu'à présent ?,1
+7,29,Votre dernière virée ?,1
+7,30,Une journée particulière... pourquoi ?,1
+7,31,"Alors, aujourd'hui, plutôt réservé ou sociable ?",1
+8,1,Besoin d'une douche froide ?,1
+8,2,La pièce dans laquelle vous vous trouvez ?,1
+8,3,Vos petites entorses à la vérité ?,1
+8,4,Votre dernier voyage en avion ?,1
+8,5,La destruction du jour ?,1
+8,6,Qui êtes-vous ?,1
+8,7,Votre dernier festin ?,1
+8,8,Gagnez-vous assez d'argent ?,1
+8,9,Le dernier SMS envoyé ?,1
+8,10,Que fuyez-vous en ce moment ?,1
+8,11,Combien de visas sur votre passeport ?,1
+8,12,Votre résolution pour demain ?,1
+8,13,Le samedi matin idéal ?,1
+8,14,Avez-vous accompli tout ce que vous projetiez de faire aujourd'hui ?,1
+8,15,La partie de votre corps que vous préférez aujourd'hui ?,1
+8,16,À quelle.s question.s adorez vous répondre ?,1
+8,17,"Si vous deviez passer cinq années en prison, qu'auriez-vous enfin le temps de faire ?",1
+8,18,Votre vêtement préféré ?,1
+8,19,La grosse tuile du jour ?,1
+8,20,Quelle est votre équipe sportive de prédilection ?,1
+8,21,"En trois lignes maximum, un résumé de votre journée ?",1
+8,22,Quelque chose d'inoubliable ?,1
+8,23,Il faut toujours avoir un plan B. Vrai ou faux ?,1
+8,24,Votre recette pour être créatif ?,1
+8,25,Qu'aimeriez-vous dire à votre père ?,1
+8,26,La meilleure chose dans votre vie en ce moment ?,1
+8,27,De quand datent vos derniers exploits sportifs ?,1
+8,28,À quoi ressemble votre danse de la victoire ?,1
+8,29,En quoi a consisté votre diner ?,1
+8,30,Votre joie la plus simple ?,1
+8,31,Le dernier mariage auquel vous avez assisté ?,1
+9,1,Vous seriez plutôt prof ou étudiant ?,1
+9,2,Votre chez vous est-il impéccable ?,1
+9,3,La preuve d'une puissance supérieur ?,1
+9,4,Où vous voyez-vous dans cinq ans ?,1
+9,5,La leçon du jour ?,1
+9,6,La dernière vidéo en ligne visionnée ?,1
+9,7,La chose la plus neuve que vous portez aujourd'hui ?,1
+9,8,De quoi êtes-vous jaloux ?,1
+9,9,Qu'est-ce qui vous vient à l'esprit quand vous pensez à la peur ?,1
+9,10,Un truc véritablement hallucinant ?,1
+9,11,Un bon conseil à donner à un enfant ?,1
+9,12,Après quoi courez-vous en ce moment ?,1
+9,13,"Un souci mineur, mais chronique ?",1
+9,14,Qui pourrait vous aider ?,1
+9,15,Les personnes les plus importantes dans votre vie ?,1
+9,16,Quel genre d'études aimeriez-vous faire ?,1
+9,17,Votre en-cas préféré ?,1
+9,18,La décision du jour ?,1
+9,19,Un nouvel endroit récemment visité ?,1
+9,20,Votre émission de télé préférée ?,1
+9,21,"À votre avis, où mène votre chemin ?",1
+9,22,Une terrible nouvelle récemment apprise ?,1
+9,23,La citation du jour ?,1
+9,24,La dernière fois que vous avez dansé ?,1
+9,25,Plutôt planification ou improvisation ?,1
+9,26,Une journée amusante... Poursquoi ?,1
+9,27,Comment gérez-vous l'hostilité ?,1
+9,28,"En ce moment même, faim de loup ou appétit d'oiseau ?",1
+9,29,Mauvaise nouvelles : vous les préférez avec ou sans enrobage ?,1
+9,30,Comment échappez-vous à la routine ?,1
+10,1,Dans quel domaine vous sentez-vous nul ?,1
+10,2,Une envie irrépressible ?,1
+10,3,Le dernier navet regardé ?,1
+10,4,Comment va votre vie amoureuse ?,1
+10,5,Une question qui vous angoisse ?,1
+10,6,De nouveaux amis ?,1
+10,7,"À ce jour, vos choix vous comblent-ils ?",1
+10,8,Votre rêve le plus fou ?,1
+10,9,Vous voudriez un nouveau/une nouvelle...,1
+10,10,Le nom d'une personne avec qui vous avez eu une vraie conversation récemment ?,1
+10,11,Qu'est-ce qui vous donne la pêche ?,1
+10,12,Le mot du jour ?,1
+10,13,Vous n'avez aucune patience pour...,1
+10,14,Une expression dont vous abusez ?,1
+10,15,Combien de temps passez-vous dans les transports chaque jour ?,1
+10,16,"Aujourd'hui, réveil à quelle heure ?",1
+10,17,La chose la plus précieuse que vous possédez ?,1
+10,18,Avec quel personnage célèbre contemporain voudriez-vous boire un verre ?,1
+10,19,Votre dernier achat par carte de crédit ?,1
+10,20,Sur qui pouvez-vous compter ?,1
+10,21,Un mot nouveau récemment appris ?,1
+10,22,Le haïku du jour (5 syllabes/7 syllabes/5 syllabes) ?,1
+10,23,"Le dernier appel manqué,: qui donc était-ce ?",1
+10,24,Comment ça va ? (en deux rimes),1
+10,25,La chose la plus sincère que vous ayez dites aujourd'hui ?,1
+10,26,Que pensez-vous de votre physique ?,1
+10,27,Votre dernière gaffe ?,1
+10,28,Totalement ridicule...,1
+10,29,Camping ou hôtel ?,1
+10,30,"Savez-vous dire ""stop"" ?",1
+10,31,Des projets pour les jours feriés à venir ?,1
+11,1,Quelque chose que vous n'avez pas réussi à faire aujourd'hui ?,1
+11,2,Votre plus grosse dépense à ce jour ?,1
+11,3,La dernière fois que vous avez tenu un bébé dans vos bras ?,1
+11,4,Aujourd'hui vous avez fait...,1
+11,5,Qu'est-ce qui ne devrait jamais changer ?,1
+11,6,À quelle heure vous êtes-vous couché hier ?,1
+11,7,Votre héros ?,1
+11,8,Quel sujet de conversation vous ennuie à mourir ?,1
+11,9,Avez-vous quitté le bureau à l'heure ?,1
+11,10,Qu'est-ce qui vous fait plaisir ?,1
+11,11,Qu'évitez-vous systématiquement ?,1
+11,12,Quelque chose vous manque-t-il dans la vie ?,1
+11,13,Une chanson en guise d'autoportrait ?,1
+11,14,Qu'est-ce qui vous donne envie de crier ?,1
+11,15,Le réveil fut...,1
+11,16,Votre obsession du moment ?,1
+11,17,Le.s dernier.s ami.s auquel.s vous avez parlé ?,1
+11,18,"Le boulot de vos rêves, aujourd'hui ?",1
+11,19,De quand date votre dernier passage sur un réseau social ?,1
+11,20,Que faut-il absolument que vous fassiez ?,1
+11,21,Vos chaussures préférés ?,1
+11,22,Qu'essayez-vous de faire ?,1
+11,23,Votre met préféré pour un brunch ?,1
+11,24,La dernière personne rayée de votre carnet d'adresses ?,1
+11,25,Quel volume d'eau avez-vous bu aujourd'hui ?,1
+11,26,Trois mots qui décrivent votre famille ?,1
+11,27,Votre modèle ?,1
+11,28,Le dernier risque que vous avez pris ?,1
+11,29,Cinq mots pour décrire votre humeur ?,1
+11,30,"Aujourd'hui, vous avez presque...",1
+12,1,Un épitaphe sur votre tombe ?,1
+12,2,Un souvenir que vous voudriez garder de cette journée ?,1
+12,3,"Alors, heureux ?",1
+12,4,Voudriez-vous connaitre la fin du film ?,1
+12,5,Qui vous manque ?,1
+12,6,"Aujourd'hui, vous avez gagné...",1
+12,7,Où vous voyez-vous l'année prochaine ?,1
+12,8,"Vous sentez-vous ambitieux aujourd'hui ? Un peu, beaucoup, passionnément ?",1
+12,9,Votre dernière bonne action ?,1
+12,10,La surprise du jour ?,1
+12,11,Qu'est-ce qui vous met en joie ?,1
+12,12,Un vœu ?,1
+12,13,Votre plus grand secret ?,1
+12,14,En quoi êtes-vous remarquable ?,1
+12,15,Modération ou excès ?,1
+12,16,Un truc irrésistible ?,1
 12,17,"Si vous deviez déménager pour une nouvelle ville, où iriez-vous ?",1
-12,18,"De quoi aimez-vous parler ?",1
+12,18,De quoi aimez-vous parler ?,1
 12,19,"Si vous pouviez changer une chose à cette journée, quelle serait-elle ?",1
-12,20,"Des vacances de rêve ?",1
+12,20,Des vacances de rêve ?,1
 12,21,"Si vous pouviez exceller dans un domaine, lequel choisiriez-vous ?",1
-12,22,"Une nouvelle rencontre récemment ? Qui donc ?",1
-12,23,"Vos céréales préférées ?",1
-12,24,"Une évolution récente ?",1
-12,25,"Cinq mots pour décrire la journée ?",1
-12,26,"Êtes-vous détendu aujourd'hui ?",1
-12,27,"Votre dernière expérience de paix intérieure ?",1
-12,28,"Rester sous la couette ou partir à l'aventure ?",1
-12,29,"Vos trois vœux prioritaires ?",1
-12,30,"Ce que vous avez mangé de remarquable au cours de la semaine passée ?",1
-12,31,"Le meilleur souvenir de cette année ?",1
+12,22,Une nouvelle rencontre récemment ? Qui donc ?,1
+12,23,Vos céréales préférées ?,1
+12,24,Une évolution récente ?,1
+12,25,Cinq mots pour décrire la journée ?,1
+12,26,Êtes-vous détendu aujourd'hui ?,1
+12,27,Votre dernière expérience de paix intérieure ?,1
+12,28,Rester sous la couette ou partir à l'aventure ?,1
+12,29,Vos trois vœux prioritaires ?,1
+12,30,Ce que vous avez mangé de remarquable au cours de la semaine passée ?,1
+12,31,Le meilleur souvenir de cette année ?,1

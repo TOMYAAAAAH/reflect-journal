@@ -1,9 +1,8 @@
 import {useUser} from "../hooks/useUser.ts";
 import getMonthFromNumber from "../utils/getMonthFromNumber.ts";
 import ThemeSelector from "../components/buttons/ThemeSelector.tsx";
-import Button from "../components/buttons/Button.tsx";
 import {useAuth} from "../hooks/useAuth.ts";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export default function Profile() {
 
@@ -37,7 +36,7 @@ export default function Profile() {
             </div>
 
 
-            <Button url={'/welcome'} label={'Revoir la bienvenue'} icon={''}/>
+            <Link className={"j-btn rounded-full px-6 h-12"} to={'/welcome'}>Revoir la bienvenue</Link>
 
             <hr className={'text-gray-500/20 my-2'}/>
 
@@ -52,10 +51,10 @@ export default function Profile() {
                         <span>{data?.user?.email}</span>
                     </div>
 
-                    <div className="flex items-center justify-between w-full">
-                        <span>Pseudo</span>
-                        <span>{data?.user?.name}</span>
-                    </div>
+                    {/*<div className="flex items-center justify-between w-full">*/}
+                    {/*    <span>Pseudo</span>*/}
+                    {/*    <span>{data?.user?.name}</span>*/}
+                    {/*</div>*/}
 
                     <div className="flex items-center justify-between w-full">
                         <span>Création du compte</span>

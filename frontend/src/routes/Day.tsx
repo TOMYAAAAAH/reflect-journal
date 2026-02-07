@@ -114,10 +114,12 @@ export default function Day({today}: { today: boolean }) {
                         {answersError && <p>Error loading answers</p>}
                         {answersData && (
                             <>
-                                <AnswerInput answers={answersData.answers}
-                                             questionId={questionData.question.id}
-                                             month={day.month}
-                                             day={day.day}/>
+                                <AnswerInput
+                                    key={`${day.month}-${day.day}`}
+                                    answers={answersData.answers}
+                                    questionId={questionData.question.id}
+                                    month={day.month}
+                                    day={day.day}/>
                             </>
                         )}
                     </>
